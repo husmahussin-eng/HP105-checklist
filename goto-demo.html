@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go to Demo</title>
+    <script src="js/api-client.js?v=6"></script>
+</head>
+<body>
+    <script>
+        // Check if logged in
+        if (AuthAPI.isLoggedIn()) {
+            // Already logged in, go to demo
+            window.location.href = 'index.html';
+        } else {
+            // Not logged in, go to login page
+            // Store that we want to go to demo after login
+            sessionStorage.setItem('goto_demo_after_login', 'true');
+            window.location.href = 'login.html';
+        }
+    </script>
+    <p>Redirecting...</p>
+</body>
+</html>
+

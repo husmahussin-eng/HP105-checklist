@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>HP-105 Calendar - Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0.5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header Section - Logo left, Countdown center, Home button right */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 0 0 auto;
+        }
+        
+        .header-logo {
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.375rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+        
+        .header-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
+        .header-title-section {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.2;
+        }
+        
+        .header-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-top: 0.125rem;
+        }
+        
+        .header-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .header-right {
+            flex: 0 0 auto;
+        }
+        
+        /* Checklist Table */
+        .checklist-container {
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .checklist-footer {
+            text-align: right;
+            padding: 0.5rem 1rem;
+            color: #9ca3af;
+            font-size: 0.375rem;
+            margin-top: 1rem;
+        }
+        
+        .calendar-footer {
+            text-align: right;
+            padding: 0.5rem 1rem;
+            color: #9ca3af;
+            font-size: 0.375rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Home Button for Logged-in Users - Top Right Corner */
+        .viewer-home-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1001;
+            background: rgba(30, 64, 175, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            min-height: 40px;
+            display: none;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(30, 64, 175, 0.3);
+            user-select: none;
+            transition: all 0.2s;
+        }
+        
+        .viewer-home-button:hover {
+            background: rgba(30, 58, 138, 0.95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        .viewer-home-button:active {
+            transform: scale(0.95);
+        }
+        
+        .viewer-home-button svg {
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+        
+        .viewer-home-button.show {
+            display: flex;
+        }
+        
+        .checklist-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .checklist-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 0.875rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .checklist-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .checklist-table th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .checklist-table th:last-child {
+            border-right: none;
+        }
+        
+        .checklist-table th:first-child {
+            min-width: 200px;
+            position: sticky;
+            left: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10;
+        }
+        
+        .checklist-table tbody tr {
+            border-top: 1px solid #d1d5db;
+            border-bottom: 1px solid #d1d5db;
+            transition: background-color 0.15s;
+        }
+        
+        .checklist-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        .checklist-table tbody tr:first-child {
+            border-top: 1px solid #d1d5db;
+        }
+        
+        .checklist-table tbody tr:last-child {
+            border-bottom: 1px solid #d1d5db;
+        }
+        
+        .checklist-table tbody td {
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .checklist-table td {
+            padding: 0.75rem 1rem;
+            vertical-align: top;
+            color: #374151;
+            border-right: 1px solid #e5e7eb;
+        }
+        
+        .checklist-table td:last-child {
+            border-right: none;
+        }
+        
+        .checklist-table td:first-child {
+            font-weight: 600;
+            color: #1f2937;
+            background: #f9fafb;
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            min-width: 200px;
+            border-right: 2px solid #d1d5db;
+        }
+        
+        .checklist-table tbody tr:hover td:first-child {
+            background: #f3f4f6;
+        }
+        
+        .checklist-table td:not(:first-child) {
+            min-width: 150px;
+        }
+        
+        .activity-item {
+            display: block;
+            padding: 0.375rem 0.5rem;
+            margin-bottom: 0.25rem;
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
+            border-radius: 0.25rem;
+            font-size: 0.8125rem;
+            line-height: 1.4;
+        }
+        
+        .activity-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .empty-cell {
+            color: #9ca3af;
+            font-style: italic;
+            font-size: 0.75rem;
+        }
+        
+        @media (max-width: 768px) {
+            .checklist-table {
+                font-size: 0.75rem;
+            }
+            
+            .checklist-table th,
+            .checklist-table td {
+                padding: 0.5rem 0.75rem;
+            }
+            
+            .checklist-table th:first-child,
+            .checklist-table td:first-child {
+                min-width: 150px;
+            }
+            
+            .checklist-table td:not(:first-child) {
+                min-width: 120px;
+            }
+            
+            .activity-item {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.375rem;
+            }
+        }
+        
+        /* Countdown Banner - Inline with header */
+        .countdown-banner {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            color: #000000;
+            flex-shrink: 0;
+        }
+        
+        .countdown-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .countdown-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .countdown-text {
+            font-size: 1.05rem;
+            font-weight: 700;
+            white-space: nowrap;
+            color: #000000;
+        }
+        
+        .countdown-date {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            margin-top: 0.125rem;
+        }
+        
+        /* Date Display - Flip Clock Style */
+        .date-display {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .date-segment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .date-value {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.375rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 1.75rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            color: #000000;
+        }
+        
+        .date-label {
+            font-size: 0.54rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #000000;
+        }
+        
+        .date-separator {
+            font-size: 0.9rem;
+            font-weight: 700;
+            opacity: 0.8;
+            margin: 0 0.125rem;
+            color: #000000;
+        }
+        
+        /* Calendar Container */
+        .calendar-wrapper {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        /* Calendar Scrollable Wrapper - Only horizontal scroll, vertical handled by body */
+        .calendar-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: visible;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Calendar Tabs - Animated Button Style */
+        .calendar-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.25rem;
+        }
+        
+        .calendar-tab {
+            padding: 0.625rem 1.25rem;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 44px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(102, 126, 234, 0.2);
+            user-select: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .calendar-tab:hover {
+            color: #667eea;
+            background: #e0e7ff;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        .calendar-tab:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .calendar-tab.active {
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .calendar-tab.active:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+        
+        .calendar-tab svg {
+            width: 1rem;
+            height: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        .calendar-tab:hover svg {
+            transform: scale(1.1);
+        }
+        
+        .calendar-tab.active svg {
+            color: white;
+        }
+        
+        /* Calendar Month */
+        .calendar-month {
+            display: none;
+        }
+        
+        .calendar-month.active {
+            display: block;
+        }
+        
+        .calendar-month-title {
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.375rem;
+        }
+        
+        .calendar-days-header {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(120px, 1fr));
+            gap: 0.25rem;
+            margin-bottom: 0.25rem;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding-bottom: 0.25rem;
+        }
+        
+        .calendar-day-name {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #6b7280;
+            padding: 0.25rem 0;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(120px, 1fr));
+            gap: 0.25rem;
+            min-width: 840px;
+        }
+        
+        .calendar-day {
+            min-height: 80px;
+            padding: 0.5rem 0.375rem;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            transition: all 0.15s;
+            display: flex;
+            flex-direction: column;
+            font-size: 0.625rem;
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            box-shadow: 0 1px 3px rgba(59,130,246,0.1);
+        }
+        
+        .calendar-day-number {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.25rem;
+            font-size: 0.7rem;
+        }
+        
+        .calendar-day-events {
+            font-size: 0.65rem;
+            line-height: 1.3;
+            color: #4b5563;
+            overflow: visible;
+            word-wrap: break-word;
+            flex: 1;
+        }
+        
+        .calendar-day.weekend {
+            background: #fef3c7;
+        }
+        
+        .calendar-day.empty {
+            background: #f9fafb;
+            cursor: default;
+            border-color: #e5e7eb;
+        }
+        
+        .calendar-day.empty:hover {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+            box-shadow: none;
+        }
+        
+        /* Multiple events styling - different colors */
+        .calendar-day.has-multiple-events .calendar-day-number {
+            font-weight: 700;
+        }
+        
+        .calendar-day.has-multiple-events.dec .calendar-day-number {
+            color: #1f2937;
+        }
+        
+        .calendar-day.has-multiple-events.jan .calendar-day-number {
+            color: #991b1b;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.375rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 0.5rem;
+            }
+            
+            .header-left {
+                width: 100%;
+            }
+            
+            .countdown-banner {
+                width: 100%;
+                padding: 0.5rem 0.75rem;
+            }
+            
+            .header-title {
+                font-size: 1rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.7rem;
+            }
+            
+            .header-logo {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .countdown-text {
+                font-size: 0.8rem;
+            }
+            
+            .countdown-icon {
+                font-size: 1rem;
+            }
+            
+            .calendar-wrapper {
+                padding: 0.5rem;
+            }
+            
+            .calendar-tabs {
+                flex-wrap: wrap;
+                gap: 0.25rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .calendar-tab {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+                min-height: 40px;
+            }
+            
+            .calendar-scroll-wrapper {
+                /* Removed max-height to use single body scroll */
+            }
+            
+            .calendar-days {
+                min-width: 840px;
+            }
+            
+            .calendar-days-header {
+                min-width: 840px;
+            }
+            
+            .calendar-day {
+                min-height: 70px;
+                padding: 0.375rem 0.25rem;
+            }
+            
+            .calendar-day-number {
+                font-size: 0.65rem;
+                margin-bottom: 0.125rem;
+            }
+            
+            .calendar-day-events {
+                font-size: 0.6rem;
+                line-height: 1.2;
+            }
+            
+            .calendar-day-name {
+                font-size: 0.6rem;
+                padding: 0.125rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-logo {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .header-title {
+                font-size: 0.9rem;
+            }
+            
+            .countdown-content {
+                flex-wrap: wrap;
+            }
+            
+            .calendar-day {
+                min-height: 50px;
+            }
+        }
+        
+        /* Desktop - Keep compact */
+        @media (min-width: 1024px) {
+            .calendar-day {
+                min-height: 75px;
+                padding: 0.5rem 0.375rem;
+            }
+            
+            .calendar-day-events {
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header - Logo left, Countdown center, Home button right -->
+        <div class="header">
+            <div class="header-left">
+                <div class="header-logo">
+                    <img src="rbpfnew.jpg" alt="RBPF Logo">
+                </div>
+                <div class="header-title-section">
+                    <div class="header-title">HP-105 CHECKLIST</div>
+                    <div class="header-subtitle">Paparan Kalendar</div>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="countdown-banner">
+                    <div class="countdown-content">
+                        <div class="countdown-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <div class="date-display">
+                            <div class="date-segment">
+                                <div class="date-value" id="currentDay">--</div>
+                                <div class="date-label">Hari</div>
+                            </div>
+                            <span class="date-separator">/</span>
+                            <div class="date-segment">
+                                <div class="date-value" id="currentMonth">--</div>
+                                <div class="date-label">Bulan</div>
+                            </div>
+                            <span class="date-separator">/</span>
+                            <div class="date-segment">
+                                <div class="date-value" id="currentYear">----</div>
+                                <div class="date-label">Tahun</div>
+                            </div>
+                        </div>
+                        <div class="countdown-text" id="countdownTimer">Memuatkan...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <!-- Home button will be positioned here if logged in -->
+            </div>
+        </div>
+        
+        <!-- Home Button for Logged-in Users - Top Right Corner -->
+        <a href="index.html" class="viewer-home-button" id="viewerHomeButton">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            <span>Home</span>
+        </a>
+        
+        <!-- Calendar Section -->
+        <div class="calendar-wrapper">
+            <div class="calendar-tabs">
+                <button class="calendar-tab active" onclick="switchCalendarTab('dec')" id="tab-dec">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Disember 2025</span>
+                </button>
+                <button class="calendar-tab" onclick="switchCalendarTab('jan')" id="tab-jan">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Januari 2026</span>
+                </button>
+                <button class="calendar-tab" onclick="switchCalendarTab('checklist')" id="tab-checklist">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                    </svg>
+                    <span>Acara Checklist</span>
+                </button>
+            </div>
+            
+            <!-- December 2025 Calendar -->
+            <div class="calendar-month active" id="calendar-month-dec">
+                <h3 class="calendar-month-title">Disember 2025</h3>
+                <div class="calendar-scroll-wrapper">
+                    <div class="calendar-days-header" style="min-width: 840px;">
+                        <div class="calendar-day-name">Ahd</div>
+                        <div class="calendar-day-name">Isn</div>
+                        <div class="calendar-day-name">Sel</div>
+                        <div class="calendar-day-name">Rab</div>
+                        <div class="calendar-day-name">Kha</div>
+                        <div class="calendar-day-name">Jum</div>
+                        <div class="calendar-day-name">Sab</div>
+                    </div>
+                    <div class="calendar-days" id="calendar-dec-2025"></div>
+                </div>
+                <div class="calendar-footer">DKH@2025</div>
+            </div>
+            
+            <!-- January 2026 Calendar -->
+            <div class="calendar-month" id="calendar-month-jan">
+                <h3 class="calendar-month-title">Januari 2026</h3>
+                <div class="calendar-scroll-wrapper">
+                    <div class="calendar-days-header" style="min-width: 840px;">
+                        <div class="calendar-day-name">Ahd</div>
+                        <div class="calendar-day-name">Isn</div>
+                        <div class="calendar-day-name">Sel</div>
+                        <div class="calendar-day-name">Rab</div>
+                        <div class="calendar-day-name">Kha</div>
+                        <div class="calendar-day-name">Jum</div>
+                        <div class="calendar-day-name">Sab</div>
+                    </div>
+                    <div class="calendar-days" id="calendar-jan-2026"></div>
+                </div>
+                <div class="calendar-footer">DKH@2025</div>
+            </div>
+            
+            <!-- Acara Checklist Tab -->
+            <div class="calendar-month" id="calendar-month-checklist">
+                <div class="checklist-container">
+                    <div class="checklist-table-wrapper">
+                        <table class="checklist-table">
+                            <thead>
+                                <tr>
+                                    <th>Kategori</th>
+                                    <th>Acara / Aktiviti 1</th>
+                                    <th>Acara / Aktiviti 2</th>
+                                    <th>Acara / Aktiviti 3</th>
+                                    <th>Acara / Aktiviti 4</th>
+                                    <th>Acara / Aktiviti 5</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Perbarisan</td>
+                                    <td><span class="activity-item">Latihan Perbarisan</span></td>
+                                    <td><span class="activity-item">Majlis Perbarisan HP105</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Makan Beradat</td>
+                                    <td><span class="activity-item">Raptai mkn beradat</span></td>
+                                    <td><span class="activity-item">Majlis mkn beradat</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Acara Daerah Brunei Muara</td>
+                                    <td><span class="activity-item">Open day (pameran, kawad)</span></td>
+                                    <td><span class="activity-item">Walkaton</span></td>
+                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
+                                    <td><span class="activity-item">Gotong royong</span></td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Acara Daerah Tutong</td>
+                                    <td><span class="activity-item">Open day</span></td>
+                                    <td><span class="activity-item">Kejohanan Bolasepak</span></td>
+                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Acara Daerah Belait</td>
+                                    <td><span class="activity-item">Open day (pameran, kawad)</span></td>
+                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Acara Daerah Temburong</td>
+                                    <td><span class="activity-item">Walkaton & Kempen Derma Darah</span></td>
+                                    <td><span class="activity-item">Kawad OCPD & Penyampaian Sijil Kepujian</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Acara Keugamaan</td>
+                                    <td><span class="activity-item">Majlis doa kesyukuran sempena HP105 di Surau Polis</span></td>
+                                    <td><span class="activity-item">Tahlil & Bacaan Surah Yassin di Kubah Makam Diraja</span></td>
+                                    <td><span class="activity-item">Khutbah sempena HP105 dikeluarkan</span></td>
+                                    <td><span class="activity-item">Design Buku Yassin/Tahlil sudah dipilih</span></td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Pengurus Pameran</td>
+                                    <td><span class="activity-item">Pameran 1hari / 2hari di Stadium Polis Gadong</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Pengurus Permakanan</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Pengurus Kelengkapan</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Pengurus Media Masa, Jemputan dan buku program</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Cenderahati</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Pekerti</td>
+                                    <td><span class="activity-item">Menunggu ketetapan Dato CP</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr>
+                                    <td>Bendahari</td>
+                                    <td><span class="activity-item">Format untuk memohon budget untuk kegunaan semua pengurus</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="checklist-footer">DKH@2025</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Switch calendar tab
+        function switchCalendarTab(month) {
+            document.querySelectorAll('.calendar-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.calendar-month').forEach(monthEl => monthEl.classList.remove('active'));
+            
+            const tab = document.getElementById(`tab-${month}`);
+            const monthEl = document.getElementById(`calendar-month-${month}`);
+            
+            if (tab) tab.classList.add('active');
+            if (monthEl) monthEl.classList.add('active');
+        }
+        
+        // Update countdown - using same logic as index.html
+        function updateCountdown() {
+            const now = new Date();
+            const eventDate = new Date('January 15, 2026 00:00:00');
+            const timeDiff = eventDate.getTime() - now.getTime();
+            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            
+            let countdownText;
+            if (daysDiff > 1) {
+                countdownText = `${daysDiff} hari lagi!`;
+            } else if (daysDiff === 1) {
+                countdownText = "ESOK!";
+            } else if (daysDiff <= 0) {
+                if (now.getDate() === 15 && now.getMonth() === 0 && now.getFullYear() === 2026) {
+                    countdownText = "HARI INI! 🎉";
+                } else {
+                    countdownText = "Acara telah selesai.";
+                }
+            }
+            
+            document.getElementById('countdownTimer').textContent = countdownText;
+            
+            // Update date display
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            
+            document.getElementById('currentDay').textContent = day;
+            document.getElementById('currentMonth').textContent = month;
+            document.getElementById('currentYear').textContent = year;
+        }
+        
+        // Generate calendar - using same logic as index.html
+        function generateCalendar() {
+            // December 2025
+            const decContainer = document.getElementById('calendar-dec-2025');
+            const dec2025 = new Date(2025, 11, 1);
+            const decDaysInMonth = 31;
+            const decFirstDay = dec2025.getDay();
+            
+            let decHTML = '';
+            for (let i = 0; i < decFirstDay; i++) {
+                decHTML += '<div class="calendar-day empty"></div>';
+            }
+            for (let day = 1; day <= decDaysInMonth; day++) {
+                // Only Friday (5) and Sunday (0) are public holidays, Saturday (6) is working day
+                const dayOfWeek = (decFirstDay + day - 1) % 7;
+                const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                decHTML += `
+                    <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} dec">
+                        <div class="calendar-day-number">${day}</div>
+                        <div id="dec-${day}-notes" class="calendar-day-events"></div>
+                    </div>
+                `;
+            }
+            decContainer.innerHTML = decHTML;
+            
+            // January 2026
+            const janContainer = document.getElementById('calendar-jan-2026');
+            const jan2026 = new Date(2026, 0, 1);
+            const janDaysInMonth = 31;
+            const janFirstDay = jan2026.getDay();
+            
+            let janHTML = '';
+            for (let i = 0; i < janFirstDay; i++) {
+                janHTML += '<div class="calendar-day empty"></div>';
+            }
+            for (let day = 1; day <= janDaysInMonth; day++) {
+                const dayOfWeek = (janFirstDay + day - 1) % 7;
+                const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                janHTML += `
+                    <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} jan">
+                        <div class="calendar-day-number">${day}</div>
+                        <div id="jan-${day}-notes" class="calendar-day-events"></div>
+                    </div>
+                `;
+            }
+            janContainer.innerHTML = janHTML;
+        }
+        
+        // Format time AM/PM
+        function formatTimeAMPM(timeString) {
+            if (!timeString) return '';
+            const [hours, minutes] = timeString.split(':');
+            let hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            if (hour === 0) hour = 12;
+            else if (hour > 12) hour = hour - 12;
+            return `${hour}:${minutes} ${ampm}`;
+        }
+        
+        // Load calendar events - using same logic as index.html
+        async function loadAllCalendarEvents() {
+            try {
+                console.log('Memuatkan acara kalendar...');
+                console.log('CalendarEventsAPI tersedia:', typeof CalendarEventsAPI !== 'undefined');
+                
+                if (typeof CalendarEventsAPI === 'undefined') {
+                    console.error('CalendarEventsAPI tidak ditakrifkan! Pastikan api-client.js dimuatkan.');
+                    alert('Ralat: CalendarEventsAPI tidak dijumpai. Sila pastikan api-client.js dimuatkan.');
+                    return;
+                }
+                
+                const result = await CalendarEventsAPI.getAll();
+                console.log('Respons API:', result);
+                
+                if (!result) {
+                    console.error('API mengembalikan null atau undefined');
+                    alert('Ralat: API tidak mengembalikan respons. Sila semak konsol untuk butiran.');
+                    return;
+                }
+                
+                if (!result.success) {
+                    console.error('API mengembalikan ralat:', result);
+                    alert('Ralat memuatkan acara kalendar: ' + (result.message || 'Ralat tidak diketahui'));
+                    return;
+                }
+                
+                const events = result.data || [];
+                console.log('Acara dimuatkan:', events.length, events);
+                
+                if (events.length === 0) {
+                    console.log('Tiada acara dalam pangkalan data - ini adalah normal jika tiada acara ditambah lagi');
+                    // Don't show alert for empty database, just log it
+                    return;
+                }
+                
+                // Clear all existing events
+                document.querySelectorAll('.calendar-day-events').forEach(el => {
+                    el.innerHTML = '';
+                });
+                
+                // Group events by month and day
+                // Normalize month values: 'dec' or 'December' -> 'dec', 'jan' or 'January' -> 'jan'
+                const eventsByDay = {};
+                events.forEach(event => {
+                    let month = event.month ? event.month.toLowerCase() : '';
+                    // Normalize month names
+                    if (month === 'december' || month === '12') month = 'dec';
+                    if (month === 'january' || month === '1') month = 'jan';
+                    
+                    const day = event.day;
+                    const key = `${month}-${day}`;
+                    
+                    console.log(`Processing event: month="${event.month}" -> "${month}", day="${day}", key="${key}"`);
+                    
+                    if (!eventsByDay[key]) {
+                        eventsByDay[key] = [];
+                    }
+                    eventsByDay[key].push(event);
+                });
+                
+                console.log('Events grouped by day:', eventsByDay);
+                console.log('All keys:', Object.keys(eventsByDay));
+                
+                // Display events - using same format as index.html with venue
+                let eventsDisplayed = 0;
+                Object.keys(eventsByDay).forEach(key => {
+                    const dayEvents = eventsByDay[key];
+                    const [month, day] = key.split('-');
+                    const el = document.getElementById(`${key}-notes`);
+                    
+                    console.log(`Looking for element: ${key}-notes`, el);
+                    
+                    if (el) {
+                        // Find the parent calendar-day element
+                        const dayEl = el.closest('.calendar-day');
+                        
+                        let html = '';
+                        const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
+                        dayEvents.forEach((event, index) => {
+                            const displayTime = event.event_time ? formatTimeAMPM(event.event_time) + ' ' : '';
+                            const color = colors[index % colors.length];
+                            const eventTitle = event.event_title || '';
+                            const venue = event.venue ? ` @${event.venue}` : '';
+                            html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}</div>`;
+                        });
+                        el.innerHTML = html;
+                        eventsDisplayed += dayEvents.length;
+                        
+                        // Update day number color if multiple events
+                        if (dayEl && dayEvents.length > 1) {
+                            const dayNumberEl = dayEl.querySelector('.calendar-day-number');
+                            if (dayNumberEl) {
+                                const colors = ['#1f2937', '#991b1b', '#166534'];
+                                dayNumberEl.style.color = colors[(dayEvents.length - 1) % colors.length];
+                                dayNumberEl.style.fontWeight = '700';
+                            }
+                        }
+                    } else {
+                        console.warn('Element not found for:', key, 'Expected ID:', `${key}-notes`);
+                    }
+                });
+                
+                console.log(`Memaparkan ${eventsDisplayed} acara merentasi ${Object.keys(eventsByDay).length} hari`);
+                
+                console.log('Acara kalendar berjaya dimuatkan');
+            } catch (error) {
+                console.error('Ralat memuatkan acara kalendar:', error);
+                alert('Ralat memuatkan acara kalendar. Sila semak konsol untuk butiran.');
+            }
+        }
+        
+        // Fix viewport height for mobile browsers
+        function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        // Check if user is logged in and show home button
+        function checkLoginStatus() {
+            try {
+                if (typeof AuthAPI !== 'undefined' && AuthAPI.isLoggedIn()) {
+                    const homeButton = document.getElementById('viewerHomeButton');
+                    if (homeButton) {
+                        homeButton.classList.add('show');
+                    }
+                }
+            } catch (error) {
+                console.log('AuthAPI not available or user not logged in');
+            }
+        }
+        
+        // Initialize - No authentication required for viewer
+        window.onload = async function() {
+            // This page is accessible without login for viewer roles
+            // No authentication check needed
+            
+            // Check if user is logged in to show home button
+            checkLoginStatus();
+            
+            setViewportHeight();
+            window.addEventListener('resize', setViewportHeight);
+            
+            // Generate calendar first
+            generateCalendar();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Wait for calendar to fully render, then load events
+            setTimeout(async () => {
+                console.log('Starting to load calendar events...');
+                await loadAllCalendarEvents();
+            }, 500);
+        };
+    </script>
+</body>
+</html>
+

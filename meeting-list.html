@@ -1,0 +1,582 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Minit Mesyuarat - RBPF HP-105</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f3f4f6;
+            min-height: 100%;
+            min-height: -webkit-fill-available;
+            position: relative;
+            -webkit-tap-highlight-color: rgba(30, 64, 175, 0.2);
+            touch-action: manipulation;
+        }
+        
+        .sidebar {
+            width: 180px;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            height: -webkit-fill-available;
+            background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+            position: fixed;
+            left: 0;
+            top: 0;
+            color: white;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 1000;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .sidebar-header {
+            position: relative;
+        }
+        
+        .sidebar-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 0.375rem;
+            color: white;
+            width: 36px;
+            height: 36px;
+            min-width: 44px;
+            min-height: 44px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+        
+        .sidebar-close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .sidebar-close-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-close-btn {
+                display: flex;
+            }
+        }
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            background: #f3f4f6;
+        }
+        .top-bar {
+            background: white;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .content-area {
+            padding: 2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        thead {
+            background: #f9fafb;
+        }
+        th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        tr:hover {
+            background: #f9fafb;
+        }
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+        .btn-link {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+        .btn-danger {
+            color: #dc2626;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+        }
+        .btn-danger:hover {
+            color: #b91c1c;
+        }
+        
+        /* Home Button - Opaque, positioned to not block content */
+        .home-button {
+            position: fixed;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 1001;
+            background: rgba(30, 64, 175, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(30, 64, 175, 0.3);
+            user-select: none;
+            transition: all 0.2s;
+        }
+        
+        .home-button:hover {
+            background: rgba(30, 58, 138, 0.95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        .home-button:active {
+            transform: scale(0.95);
+        }
+        
+        .home-button svg {
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+        
+        @media (max-width: 768px) {
+            .home-button {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Hide sidebar on individual pages */
+        .sidebar {
+            display: none !important;
+        }
+        
+        .main-content {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: none !important;
+            }
+            
+            .home-button {
+                display: flex;
+            }
+            
+            .top-bar {
+                padding: 0.75rem 1rem 0.75rem 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Button -->
+    <a href="index.html" class="home-button">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span>Home</span>
+    </a>
+    
+    <!-- Sidebar - Hidden on individual pages -->
+    <div class="sidebar" id="sidebar" style="display: none;">
+        <div style="padding: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <button class="sidebar-close-btn" onclick="closeMobileMenu()" aria-label="Close menu">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1.5rem; height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div style="width: 80px; height: 80px; margin: 0 auto 0.75rem; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0.5rem;">
+                <img src="rbpfnew.jpg" alt="RBPF Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">HP-105 CHECKLIST</div>
+        </div>
+        
+        <div style="padding: 1rem 0;">
+            <div style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.75rem 1.5rem 0.5rem; opacity: 0.6; font-weight: 600;">Main</div>
+            <a href="index.html" style="padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.875rem; color: rgba(255,255,255,0.9); text-decoration: none;">
+                <span>Dashboard</span>
+            </a>
+            <a href="meeting-list.html" style="padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.875rem; color: white; text-decoration: none; background: rgba(255,255,255,0.15); font-weight: 600; border-left: 4px solid #fbbf24;">
+                <span>Minit Mesyuarat</span>
+            </a>
+        </div>
+        
+        <div style="padding: 1.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.5rem; opacity: 0.6; margin-top: auto;">
+            HP105 (DKH) @2025
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div>
+                <h1 style="font-size: 1.25rem; font-weight: 700; color: #1f2937;">Meeting Schedule</h1>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="text-align: right;">
+                    <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;" id="userName">Loading...</div>
+                    <div style="font-size: 0.75rem; color: #6b7280;" id="userRole">-</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Meeting Table -->
+            <div style="background: white; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Title</th>
+                            <th>Date & Time</th>
+                            <th>Venue</th>
+                            <th>Chaired By</th>
+                            <th>Document</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="meetingTableBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                Loading meetings...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Add New Meeting Link -->
+            <div style="text-align: center;">
+                <a href="add-meeting.html" class="btn-primary">
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Add New Meeting
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Update mobile menu icon (hamburger to X and vice versa)
+        function updateMobileMenuIcon() {
+            const toggleButton = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (toggleButton && sidebar) {
+                const isOpen = sidebar.classList.contains('mobile-open');
+                if (isOpen) {
+                    toggleButton.innerHTML = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                } else {
+                    toggleButton.innerHTML = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>`;
+                }
+            }
+        }
+        
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+            if (sidebar.classList.contains('mobile-open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+            updateMobileMenuIcon();
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            updateMobileMenuIcon();
+        }
+        
+        // Fix viewport height for mobile browsers
+        function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setViewportHeight();
+        window.addEventListener('resize', setViewportHeight);
+        
+        // Close mobile menu when clicking on a nav item
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMobileMenuIcon();
+            const navItems = document.querySelectorAll('a[href]');
+            navItems.forEach(item => {
+                if (item.closest('.sidebar')) {
+                    item.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            closeMobileMenu();
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Close mobile menu on window resize
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+            }, 250);
+        });
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+                setViewportHeight();
+            }, 100);
+        });
+        
+        // Check authentication
+        window.onload = function() {
+            if (!AuthAPI.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            loadUserInfo();
+            loadMeetings();
+        };
+        
+        function loadUserInfo() {
+            const user = AuthAPI.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.username;
+                document.getElementById('userRole').textContent = user.role === 'super_admin' ? 'Super Admin' : (user.role === 'admin' ? 'Admin' : 'User');
+            }
+        }
+        
+        let meetings = [];
+        
+        async function loadMeetings() {
+            const tbody = document.getElementById('meetingTableBody');
+            
+            try {
+                const result = await MeetingsAPI.getAll();
+                
+                if (!result || !result.success) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 2rem; color: #dc2626;">
+                                Error loading meetings: ${result ? result.message : 'Unknown error'}
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                meetings = result.data || [];
+                
+                if (meetings.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                No meetings scheduled yet. <a href="add-meeting.html" class="btn-link">Add one now!</a>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const currentUser = AuthAPI.getCurrentUser();
+                const isSuperAdmin = currentUser && currentUser.role === 'super_admin';
+                
+                let html = '';
+                meetings.forEach((meeting, index) => {
+                    const formattedDate = new Date(meeting.meeting_date).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                    
+                    let documentCell = '<span style="color: #9ca3af;">N/A</span>';
+                    if (meeting.document_data && meeting.document_name) {
+                        documentCell = `<a href="#" onclick="viewDocument(${meeting.id}); return false;" class="btn-link">
+                            ${meeting.document_name}
+                        </a>`;
+                    }
+                    
+                    let deleteButton = '';
+                    if (isSuperAdmin) {
+                        deleteButton = `
+                            <button onclick="deleteMeeting(${meeting.id})" class="btn-danger">
+                                Delete
+                            </button>
+                        `;
+                    }
+                    
+                    html += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td style="font-weight: 600;">${meeting.title}</td>
+                            <td>${formattedDate} ${meeting.meeting_time}</td>
+                            <td>${meeting.venue}</td>
+                            <td>${meeting.chaired_by}</td>
+                            <td>${documentCell}</td>
+                            <td>${deleteButton}</td>
+                        </tr>
+                    `;
+                });
+                
+                tbody.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading meetings:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem; color: #dc2626;">
+                            Error: ${error.message}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        function viewDocument(meetingId) {
+            const meeting = meetings.find(m => m.id === meetingId);
+            if (meeting && meeting.document_data) {
+                const fileName = meeting.document_name.toLowerCase();
+                const isPDF = fileName.endsWith('.pdf');
+                
+                if (isPDF) {
+                    const newWindow = window.open();
+                    newWindow.document.write(`
+                        <html>
+                            <head>
+                                <title>${meeting.document_name}</title>
+                                <style>
+                                    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+                                    iframe, embed { width: 100%; height: 100vh; border: none; }
+                                    .download-link { padding: 20px; text-align: center; }
+                                    .download-link a { color: #4F46E5; text-decoration: none; font-weight: bold; }
+                                    .download-link a:hover { text-decoration: underline; }
+                                </style>
+                            </head>
+                            <body>
+                                <embed src="${meeting.document_data}" type="application/pdf" width="100%" height="100%">
+                                <div class="download-link">
+                                    If the document does not display, 
+                                    <a href="${meeting.document_data}" download="${meeting.document_name}">click here to download ${meeting.document_name}</a>
+                                </div>
+                            </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                } else {
+                    const link = document.createElement('a');
+                    link.href = meeting.document_data;
+                    link.download = meeting.document_name;
+                    link.click();
+                }
+            }
+        }
+        
+        async function deleteMeeting(id) {
+            if (confirm('Are you sure you want to delete this meeting?')) {
+                const result = await MeetingsAPI.delete(id);
+                if (result.success) {
+                    await loadMeetings();
+                    alert('Meeting deleted successfully!');
+                } else {
+                    alert('Error deleting meeting: ' + result.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

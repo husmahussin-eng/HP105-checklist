@@ -1,0 +1,41 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: rbpf-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rbpf_root_2026
+      MYSQL_DATABASE: rbpf_checklist
+      MYSQL_USER: rbpf_user
+      MYSQL_PASSWORD: rbpf_password_2026
+      TZ: Asia/Brunei
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: unless-stopped
+    command: --default-time-zone=+08:00
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prbpf_root_2026"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+
+  # PHP Apache Web Application
+  rbpf-checklist:
+    build: .
+    container_name: rbpf-checklist-app
+    environment:
+      TZ: Asia/Brunei
+    ports:
+      - "8080:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+
+volumes:
+  mysql_data:

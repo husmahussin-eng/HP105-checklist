@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: hp105-checklist
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASS
+        sync: false
+    healthCheckPath: /login.html
+
+databases:
+  - name: rbpf-mysql
+    databaseName: rbpf_checklist
+    user: rbpf_user
+    plan: free
+

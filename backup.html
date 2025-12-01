@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Backup Manager - RBPF 105</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=5"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .backup-item {
+            transition: all 0.3s ease;
+            border-left: 4px solid #10b981;
+        }
+        .backup-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    
+    <!-- Header -->
+    <div class="bg-white/10 backdrop-blur-sm border-b border-white/20 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Backup Manager
+            </h1>
+            <button onclick="window.location.href='index.html'" class="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors border border-white/30 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="hidden sm:inline">Kembali ke Utama</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Panel: Create Backup & Info -->
+            <div class="lg:col-span-1 space-y-6">
+                
+                <!-- Create New Backup Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 slide-in">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Cipta Backup Baharu
+                    </h2>
+                    <p class="text-gray-600 text-sm mb-6">
+                        Cipta backup lengkap data sistem checklist Hari Jadi Polis termasuk semua data acara, nota aktiviti dan akaun pengguna.
+                    </p>
+                    <button onclick="createBackup()" class="w-full py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Cipta Backup
+                    </button>
+                </div>
+
+                <!-- Backup Information Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 slide-in" style="animation-delay: 0.1s">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Maklumat Backup
+                    </h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+                            <span class="text-gray-600 font-medium">Jumlah Backup:</span>
+                            <span class="font-bold text-indigo-600" id="totalBackups">0</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+                            <span class="text-gray-600 font-medium">Lokasi Backup:</span>
+                            <span class="text-sm text-gray-700 font-mono">localStorage</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pb-2 border-b border-gray-200">
+                            <span class="text-gray-600 font-medium">Auto Cleanup:</span>
+                            <span class="text-sm text-gray-700">Simpan 10 backup terkini</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                        <div class="flex items-start gap-2">
+                            <svg class="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                            <div>
+                                <p class="text-yellow-800 font-medium text-sm">Amaran:</p>
+                                <p class="text-yellow-700 text-xs mt-1">Memulihkan backup akan menggantikan semua data semasa sistem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Backup History -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-lg p-6 slide-in" style="animation-delay: 0.2s">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Sejarah Backup
+                        </h2>
+                        <button onclick="refreshBackupList()" class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
+
+                    <!-- Backup List -->
+                    <div id="backupList" class="space-y-3 max-h-[600px] overflow-y-auto">
+                        <!-- Backups will be rendered here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="text-center py-12 hidden">
+                        <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                        <p class="text-gray-500 font-medium">Tiada backup tersedia</p>
+                        <p class="text-gray-400 text-sm mt-2">Cipta backup pertama anda sekarang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DKH Signature -->
+    <div class="fixed bottom-2 right-2 text-white opacity-50" style="font-size: 0.5rem;">
+        DKH
+    </div>
+
+    <script>
+        // Check authentication
+        window.onload = async function() {
+            if (!AuthAPI.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            await loadBackups();
+        };
+
+        // Date formatting
+        const DAY_NAMES = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+        const MONTH_NAMES = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogos", "Sep", "Okt", "Nov", "Dis"];
+
+        function formatDateTime(date) {
+            const dayName = DAY_NAMES[date.getDay()];
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = MONTH_NAMES[date.getMonth()];
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            
+            return `${dayName}, ${day} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+
+        // Create backup
+        async function createBackup() {
+            const username = AuthAPI.getUsername() || 'Unknown User';
+            
+            const result = await BackupAPI.create();
+            
+            if (result.success) {
+                alert(`✅ Backup berjaya dicipta!\n\nNama Fail: ${result.data.filename}\nDicipta oleh: ${username}`);
+                await loadBackups();
+            } else {
+                alert(`❌ Gagal mencipta backup: ${result.message}`);
+            }
+        }
+
+        // Load and display backups
+        async function loadBackups() {
+            const result = await BackupAPI.getAll();
+            const backups = result.success && result.data ? result.data : [];
+            const backupList = document.getElementById('backupList');
+            const emptyState = document.getElementById('emptyState');
+            const totalBackupsEl = document.getElementById('totalBackups');
+
+            totalBackupsEl.textContent = backups.length;
+
+            if (backups.length === 0) {
+                backupList.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            backupList.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            backupList.innerHTML = backups.map(backup => `
+                <div class="backup-item bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${backup.filename}</h3>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    ${formatDateTime(backup.created_at)}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                    ${backup.created_by}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="restoreBackup(${backup.id})" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors font-semibold text-sm flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                Pulih
+                            </button>
+                            <button onclick="downloadBackup(${backup.id})" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold text-sm flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Muat Turun
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Restore backup
+        async function restoreBackup(backupId) {
+            if (!confirm('⚠️ AMARAN: Memulihkan backup akan menggantikan semua data semasa sistem.\n\nAdakah anda pasti mahu teruskan?')) {
+                return;
+            }
+
+            const result = await BackupAPI.restore(backupId);
+            
+            if (result.success) {
+                alert(`✅ Backup berjaya dipulihkan!\n\nSistem akan dimuat semula.`);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                alert(`❌ Ralat memulihkan backup: ${result.message}`);
+            }
+        }
+
+        // Download backup
+        async function downloadBackup(backupId) {
+            const result = await BackupAPI.download(backupId);
+            
+            if (!result.success) {
+                alert(`❌ Gagal memuat turun backup: ${result.message}`);
+                return;
+            }
+            
+            const backup = result.data;
+            const blob = new Blob([backup.data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = backup.filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert(`✅ Backup sedang dimuat turun: ${backup.filename}`);
+        }
+
+        // Refresh backup list
+        async function refreshBackupList() {
+            await loadBackups();
+            
+            // Show feedback
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Refreshing...';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
+

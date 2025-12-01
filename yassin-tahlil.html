@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Bacaan Surah Yassin dan Tahlil - RBPF 105th Birthday 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1a3c;
+            background-image: linear-gradient(135deg, #0d1a3c 0%, #152b57 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
+
+        <!-- Back Button -->
+        <div class="mb-4">
+            <a href="index.html" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 font-semibold">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Kembali ke Halaman Utama
+            </a>
+        </div>
+
+        <!-- Header -->
+        <header class="mb-6 pb-4 border-b-2 border-green-500">
+            <div class="flex items-center gap-3 mb-3">
+                <svg class="w-8 h-8 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.409 9.333 5 8 5a2 2 0 00-2 2v2a2 2 0 002 2c1.333 0 2.418.618 3 1M12 6.253v13C13.168 18.59 14.667 19 16 19a2 2 0 002-2v-2a2 2 0 00-2-2c-1.333 0-2.418-.618-3-1m0 0V5.914m0 0a2.247 2.247 0 00-2.246-2.246V4.743M12 6.253a2.247 2.247 0 012.246-2.246V4.743"></path></svg>
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Bacaan Surah Yassin dan Tahlil</h1>
+            </div>
+            <p class="text-gray-600">Sesi keagamaan untuk memberkati acara dan mengenang jasa anggota.</p>
+            <p class="text-sm text-green-600 mt-2">⏰ Masa: Waktu Isyak</p>
+        </header>
+
+        <!-- Content Area -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-3">Maklumat Acara</h2>
+            
+            <!-- Saved Notes List -->
+            <div id="savedNotesList" class="mb-4"></div>
+
+            <!-- Add New Note Section -->
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <h3 class="font-semibold text-gray-700 mb-3">Ruang Nota:</h3>
+                <div class="bg-white p-3 rounded border border-gray-200">
+                    <textarea id="noteInput" class="w-full h-32 p-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Tambah nota di sini..."></textarea>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="saveNote()" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors font-semibold">
+                            Simpan Nota
+                        </button>
+                        <button onclick="clearInput()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors font-semibold">
+                            Padam
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-6 text-center text-xs text-gray-400 border-t pt-3">
+            &copy; 2026 Royal Brunei Police Force (RBPF). Celebrating 105 Years.
+        </footer>
+
+    </div>
+
+    <!-- Signature -->
+    <div class="fixed bottom-2 right-2 text-white opacity-50" style="font-size: 0.5rem;">
+        DKH
+    </div>
+
+    <script>
+        // Check if user is logged in via sessionStorage
+        let username = sessionStorage.getItem('rbpf_username');
+        if (!username) {
+            // Redirect to login if not logged in
+            alert('Sila log masuk terlebih dahulu.');
+            window.location.href = 'login.html';
+        }
+
+        let notes = JSON.parse(localStorage.getItem('yassin_tahlil_notes')) || [];
+        const DAY_NAMES = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+
+        function formatDate(date, user) {
+            const dayName = DAY_NAMES[date.getDay()];
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${dayName}, ${day}/${month}/${year}, ${user}`;
+        }
+
+        function saveNote() {
+            const input = document.getElementById('noteInput');
+            const noteText = input.value.trim();
+            
+            if (noteText === '') {
+                alert('Sila masukkan nota terlebih dahulu.');
+                return;
+            }
+
+            const newNote = {
+                id: Date.now(),
+                text: noteText,
+                date: formatDate(new Date(), username)
+            };
+
+            notes.push(newNote);
+            localStorage.setItem('yassin_tahlil_notes', JSON.stringify(notes));
+            
+            input.value = '';
+            renderNotes();
+        }
+
+        function clearInput() {
+            document.getElementById('noteInput').value = '';
+        }
+
+        function deleteNote(id) {
+            if (confirm('Adakah anda pasti mahu memadamkan nota ini?')) {
+                notes = notes.filter(note => note.id !== id);
+                localStorage.setItem('yassin_tahlil_notes', JSON.stringify(notes));
+                renderNotes();
+            }
+        }
+
+        function editNote(id) {
+            const note = notes.find(n => n.id === id);
+            if (note) {
+                const newText = prompt('Edit nota:', note.text);
+                if (newText !== null && newText.trim() !== '') {
+                    note.text = newText.trim();
+                    note.date = formatDate(new Date(), username);
+                    localStorage.setItem('yassin_tahlil_notes', JSON.stringify(notes));
+                    renderNotes();
+                }
+            }
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('savedNotesList');
+            
+            if (notes.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '<div class="bg-white rounded-lg p-4 border border-gray-200 mb-4">';
+            html += '<h3 class="font-semibold text-gray-700 mb-3">Nota Tersimpan:</h3>';
+            html += '<ul class="space-y-2">';
+            
+            notes.forEach(note => {
+                html += `
+                    <li class="flex items-start gap-2 group">
+                        <span class="text-green-600 mt-1 flex-shrink-0">•</span>
+                        <div class="flex-grow">
+                            <span class="text-gray-700">${note.text}</span>
+                            <span class="text-gray-400 text-sm"> (${note.date})</span>
+                        </div>
+                        <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onclick="editNote(${note.id})" class="text-blue-600 hover:text-blue-800 text-sm px-2 py-1" title="Edit">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </button>
+                            <button onclick="deleteNote(${note.id})" class="text-red-600 hover:text-red-800 text-sm px-2 py-1" title="Padam">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                        </div>
+                    </li>
+                `;
+            });
+            
+            html += '</ul></div>';
+            container.innerHTML = html;
+        }
+
+        renderNotes();
+
+        document.getElementById('noteInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                saveNote();
+            }
+        });
+    </script>
+
+</body>
+</html>

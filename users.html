@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>User Management - RBPF 105</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=6"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    
+    <!-- Header -->
+    <div class="bg-white/10 backdrop-blur-sm border-b border-white/20 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                Senarai Pengguna
+            </h1>
+            <button onclick="window.location.href='index.html'" class="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors border border-white/30 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="hidden sm:inline">Kembali ke Utama</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6">
+        
+        <!-- Add User Button -->
+        <div class="mb-6 flex justify-between items-center">
+            <div>
+                <p class="text-white text-sm">Jumlah Pengguna: <span id="totalUsers" class="font-bold">0</span></p>
+            </div>
+            <button onclick="window.location.href='create-user.html'" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-semibold flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                </svg>
+                Tambah Pengguna Baharu
+            </button>
+        </div>
+
+        <!-- Users Table -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 border-b-2 border-gray-200">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">#</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Full Name</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Jawatan</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Role</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Username</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Password</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Created</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Users will be rendered here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden text-center py-12">
+                <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <p class="text-gray-500 font-medium">Tiada pengguna dijumpai</p>
+                <p class="text-gray-400 text-sm mt-2">Tambah pengguna baharu untuk bermula</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DKH Signature -->
+    <div class="fixed bottom-2 right-2 text-white opacity-50" style="font-size: 0.5rem;">
+        DKH
+    </div>
+
+    <script>
+        // Check authentication
+        window.onload = async function() {
+            if (!AuthAPI.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            await loadUsers();
+        };
+
+        const DAY_NAMES = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
+        }
+
+        // Log activity using API
+        async function logActivity(action, type = 'general') {
+            await ActivityAPI.log(action, type);
+        }
+
+        // Load and display users
+        async function loadUsers() {
+            const result = await UsersAPI.getAll();
+            const users = result.success && result.data ? result.data : [];
+            const tbody = document.getElementById('usersTableBody');
+            const emptyState = document.getElementById('emptyState');
+            const totalUsers = document.getElementById('totalUsers');
+
+            totalUsers.textContent = users.length;
+
+            if (users.length === 0) {
+                tbody.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            tbody.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            const currentUser = AuthAPI.getCurrentUser();
+            const isSuperAdmin = currentUser && currentUser.role === 'super_admin';
+            const currentUserId = parseInt(sessionStorage.getItem('rbpf_user_id')) || 0;
+            
+            tbody.innerHTML = users.map((user, index) => {
+                // Normalize role display - show 'admin' instead of 'user' for non-super_admin
+                const displayRole = user.role === 'super_admin' ? 'super_admin' : 'admin';
+                const roleBadge = getRoleBadgeColor(displayRole);
+                
+                // Show "Change Password" button only for:
+                // 1. Superadmin (can change any user's password)
+                // 2. Current user's own row (can change their own password)
+                const canChangePassword = isSuperAdmin || (currentUserId === user.id);
+                
+                return `
+                <tr class="hover:bg-gray-50 transition-colors fade-in">
+                    <td class="px-4 py-3 text-sm text-gray-700">${index + 1}</td>
+                    <td class="px-4 py-3 text-sm font-semibold text-gray-800">${user.full_name}</td>
+                    <td class="px-4 py-3 text-sm text-gray-700">${user.jawatan || '-'}</td>
+                    <td class="px-4 py-3">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full ${roleBadge}">
+                            ${displayRole}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-sm text-gray-700">${user.username}</td>
+                    <td class="px-4 py-3 text-sm ${isSuperAdmin ? 'text-pink-600' : 'text-gray-400'} font-mono">${isSuperAdmin ? user.password : '••••••••'}</td>
+                    <td class="px-4 py-3 text-xs text-gray-500">${formatDateTime(user.created_at)}</td>
+                    <td class="px-4 py-3">
+                        ${canChangePassword ? `
+                        <button onclick="changePassword(${user.id}, '${user.username.replace(/'/g, "\\'")}')" class="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                            Change Password
+                        </button>
+                        ` : '<span class="text-xs text-gray-400">-</span>'}
+                    </td>
+                </tr>
+            `;
+            }).join('');
+        }
+
+        function getRoleBadgeColor(role) {
+            switch(role.toLowerCase()) {
+                case 'super_admin': return 'bg-purple-100 text-purple-800';
+                case 'admin': return 'bg-blue-100 text-blue-800';
+                case 'user': return 'bg-green-100 text-green-800';
+                case 'viewer': return 'bg-gray-100 text-gray-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+        
+        // Change Password function
+        async function changePassword(userId, username) {
+            // Escape username for display
+            const safeUsername = username.replace(/\\'/g, "'");
+            const newPassword = prompt(`Enter new password for ${safeUsername}:`);
+            if (!newPassword) {
+                return; // User cancelled
+            }
+            
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+            
+            const confirmPassword = prompt('Confirm new password:');
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+            
+            const result = await UsersAPI.resetPassword(userId, newPassword);
+            
+            if (result.success) {
+                alert('Password changed successfully!');
+                await ActivityAPI.log(`Changed password for user: ${safeUsername}`, 'general');
+                await loadUsers(); // Reload to refresh display
+            } else {
+                alert('Failed to change password: ' + (result.message || 'Unknown error'));
+            }
+        }
+    </script>
+</body>
+</html>
+

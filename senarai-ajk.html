@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Senarai AJK - RBPF HP-105</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f3f4f6;
+        }
+        .sidebar {
+            width: 180px;
+            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
+            height: -webkit-fill-available;
+            background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+            position: fixed;
+            left: 0;
+            top: 0;
+            color: white;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 1000;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .sidebar-header {
+            position: relative;
+        }
+        
+        .sidebar-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 0.375rem;
+            color: white;
+            width: 36px;
+            height: 36px;
+            min-width: 44px;
+            min-height: 44px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+        
+        .sidebar-close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .sidebar-close-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-close-btn {
+                display: flex;
+            }
+        }
+        
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .nav-item.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            font-weight: 600;
+            border-left: 4px solid #fbbf24;
+        }
+        .main-content {
+            margin-left: 180px;
+            min-height: 100vh;
+            background: #f3f4f6;
+        }
+        .top-bar {
+            background: white;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .content-area {
+            padding: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background: #f9fafb;
+        }
+        th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        tr:hover {
+            background: #f9fafb;
+        }
+        
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-menu-toggle svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        
+        /* Sidebar Overlay - More opaque like FAM system */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Home Button - Opaque, positioned to not block content */
+        .home-button {
+            position: fixed;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 1001;
+            background: rgba(30, 64, 175, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(30, 64, 175, 0.3);
+            user-select: none;
+            transition: all 0.2s;
+        }
+        
+        .home-button:hover {
+            background: rgba(30, 58, 138, 0.95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        .home-button:active {
+            transform: scale(0.95);
+        }
+        
+        .home-button svg {
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+        
+        @media (max-width: 768px) {
+            .home-button {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        .back-to-dashboard svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        
+        /* Hide sidebar on individual pages - show only on dashboard */
+        .sidebar {
+            display: none !important;
+        }
+        
+        .main-content {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: none !important;
+            }
+            
+            .back-to-dashboard {
+                display: flex;
+            }
+            
+            .top-bar {
+                padding: 0.75rem 1rem 0.75rem 4rem;
+            }
+            
+            .content-area {
+                padding: 1rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            table {
+                font-size: 0.75rem;
+            }
+            
+            th, td {
+                padding: 0.5rem 0.5rem;
+            }
+            
+            .nav-item {
+                padding: 1rem 1.5rem;
+                min-height: 44px;
+                font-size: 0.9375rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .top-bar {
+                padding: 0.5rem 0.75rem 0.5rem 3.5rem;
+            }
+            
+            table {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Button -->
+    <a href="index.html" class="home-button">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span>Home</span>
+    </a>
+    
+    <!-- Sidebar - Hidden on individual pages -->
+    <div class="sidebar" id="sidebar" style="display: none;">
+        <div style="padding: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <button class="sidebar-close-btn" onclick="closeMobileMenu()" aria-label="Close menu">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1.5rem; height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div style="width: 80px; height: 80px; margin: 0 auto 0.75rem; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0.5rem; overflow: hidden;">
+                <img src="rbpfnew.jpg" alt="RBPF Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%; padding: 0.25rem;">
+            </div>
+            <div style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">HP-105 CHECKLIST</div>
+        </div>
+        
+        <div style="padding: 1rem 0;">
+            <div style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.75rem 1.5rem 0.5rem; opacity: 0.6; font-weight: 600;">Main</div>
+            <a href="index.html" class="nav-item">
+                <span>Dashboard</span>
+            </a>
+            <a href="senarai-ajk.html" class="nav-item active">
+                <span>Senarai AJK</span>
+            </a>
+        </div>
+        
+        <div style="padding: 1.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.5rem; opacity: 0.6; margin-top: auto;">
+            HP105 (DKH) @2025
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div>
+                <h1 style="font-size: 1.25rem; font-weight: 700; color: #1f2937;">Senarai Ahli Jawatankuasa HP-105</h1>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="text-align: right;">
+                    <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;" id="userName">Loading...</div>
+                    <div style="font-size: 0.75rem; color: #6b7280;" id="userRole">-</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="card">
+                <p style="margin-bottom: 1.5rem; color: #6b7280; font-size: 0.875rem;">
+                    Senarai nama ahli jawatankuasa bagi sambutan Hari Polis Ke-105 Tahun 2026.
+                </p>
+                
+                <div style="margin-bottom: 1rem;">
+                    <a href="Senarai Nama Ahli Jawatankuasa HP 105 - ver 2.docx" download style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #4f46e5; color: white; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.875rem;">
+                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Muat Turun Dokumen
+                    </a>
+                </div>
+                
+                <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; border-left: 4px solid #f59e0b;">
+                    <p style="color: #92400e; font-size: 0.875rem;">
+                        <strong>Nota:</strong> Sila muat turun dokumen Word untuk melihat senarai lengkap ahli jawatankuasa. 
+                        Dokumen mengandungi maklumat terperinci mengenai struktur jawatankuasa dan senarai nama ahli.
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 3rem; color: #9ca3af;">
+                    <svg style="width: 4rem; height: 4rem; margin: 0 auto 1rem; opacity: 0.5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <p style="font-size: 0.875rem;">Kandungan penuh tersedia dalam dokumen Word</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Check authentication
+        // Update mobile menu icon (hamburger to X and vice versa)
+        function updateMobileMenuIcon() {
+            const toggleButton = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (toggleButton && sidebar) {
+                const isOpen = sidebar.classList.contains('mobile-open');
+                if (isOpen) {
+                    // Show X icon
+                    toggleButton.innerHTML = `
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    `;
+                } else {
+                    // Show hamburger icon
+                    toggleButton.innerHTML = `
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    `;
+                }
+            }
+        }
+        
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+            // Prevent body scroll when menu is open
+            if (sidebar.classList.contains('mobile-open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+            updateMobileMenuIcon();
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            updateMobileMenuIcon();
+        }
+        
+        // Fix viewport height for mobile browsers (iOS Safari)
+        function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setViewportHeight();
+        window.addEventListener('resize', setViewportHeight);
+        
+        // Close mobile menu when clicking on a nav item
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mobile menu icon
+            updateMobileMenuIcon();
+            
+            const navItems = document.querySelectorAll('.nav-item, a[href]');
+            navItems.forEach(item => {
+                if (item.closest('.sidebar')) {
+                    item.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            closeMobileMenu();
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Close mobile menu on window resize if screen becomes larger
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+            }, 250);
+        });
+        
+        // Handle orientation change (iOS/Android)
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+                // Force recalculation of viewport height
+                setViewportHeight();
+            }, 100);
+        });
+        
+        window.onload = function() {
+            if (!AuthAPI.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const user = AuthAPI.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.username;
+                document.getElementById('userRole').textContent = user.role === 'super_admin' ? 'Super Admin' : 'User';
+            }
+        };
+    </script>
+</body>
+</html>
+

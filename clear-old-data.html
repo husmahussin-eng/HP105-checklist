@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Old Data - RBPF Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-purple-900 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+        <div class="text-center mb-6">
+            <svg class="w-20 h-20 mx-auto text-yellow-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Clear Old Data</h1>
+            <p class="text-gray-600">Remove old localStorage data to use the new database system</p>
+        </div>
+
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <p class="text-sm text-blue-800">
+                <strong>Note:</strong> This will clear all old user data, activities, and notes stored in your browser. The new system uses a database instead.
+            </p>
+        </div>
+
+        <div id="status" class="hidden mb-4 p-4 rounded-lg"></div>
+
+        <div class="space-y-3">
+            <button onclick="clearOldData()" class="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Clear Old Browser Data
+            </button>
+
+            <a href="index.html" class="block w-full py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 transition-colors text-center">
+                Back to Checklist
+            </a>
+        </div>
+
+        <div class="mt-6 text-center">
+            <p class="text-xs text-gray-500">After clearing, you'll need to login again</p>
+        </div>
+    </div>
+
+    <script>
+        function clearOldData() {
+            const status = document.getElementById('status');
+            
+            try {
+                // Get all localStorage keys
+                const keys = Object.keys(localStorage);
+                const rbpfKeys = keys.filter(key => key.startsWith('rbpf_'));
+                
+                if (rbpfKeys.length === 0) {
+                    status.className = 'block mb-4 p-4 rounded-lg bg-yellow-100 border border-yellow-400 text-yellow-800';
+                    status.textContent = 'No old data found. Your browser is already clean!';
+                    return;
+                }
+                
+                // Show what will be deleted
+                const itemsToDelete = rbpfKeys.map(key => {
+                    return `- ${key}`;
+                }).join('\n');
+                
+                if (!confirm(`This will delete the following items:\n\n${itemsToDelete}\n\nAre you sure?`)) {
+                    return;
+                }
+                
+                // Clear all RBPF-related localStorage
+                rbpfKeys.forEach(key => {
+                    localStorage.removeItem(key);
+                });
+                
+                // Also clear sessionStorage
+                sessionStorage.clear();
+                
+                status.className = 'block mb-4 p-4 rounded-lg bg-green-100 border border-green-400 text-green-800';
+                status.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <strong>Success!</strong>
+                    </div>
+                    <p class="text-sm">Cleared ${rbpfKeys.length} old items. You can now use the new database system!</p>
+                    <p class="text-sm mt-2">Redirecting to login page in 3 seconds...</p>
+                `;
+                
+                // Redirect to login after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+                
+            } catch (error) {
+                status.className = 'block mb-4 p-4 rounded-lg bg-red-100 border border-red-400 text-red-800';
+                status.textContent = 'Error: ' + error.message;
+            }
+        }
+        
+        // Show current localStorage items on page load
+        window.onload = function() {
+            const keys = Object.keys(localStorage).filter(key => key.startsWith('rbpf_'));
+            if (keys.length > 0) {
+                console.log('Old localStorage items found:', keys);
+            }
+        };
+    </script>
+</body>
+</html>
+

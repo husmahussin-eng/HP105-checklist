@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Login - RBPF 105th Birthday 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=5"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+        }
+        
+        /* Professional styles */
+        .container {
+            width: auto;
+            max-width: 24rem;
+            padding: 0 1rem;
+        }
+        .logo-container { text-align: center; margin-bottom: 0.75rem; }
+        .logo-circle { 
+            display: inline-block; 
+            background: white; 
+            border-radius: 9999px; 
+            padding: 0.625rem; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); 
+            margin-bottom: 0.5rem; 
+        }
+        .logo-circle img { width: 3.5rem; height: 3.5rem; object-fit: contain; }
+        .title { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: white; 
+            margin-bottom: 0.25rem; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: -0.025em;
+        }
+        .subtitle { 
+            color: #dbeafe; 
+            font-size: 0.95rem; 
+            font-weight: 300;
+        }
+        .card { 
+            background: white; 
+            border-radius: 1rem; 
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -5px rgba(0,0,0,0.1); 
+            padding: 1.5rem 1.5rem; 
+            max-height: calc(100vh - 4rem);
+            overflow: hidden;
+            width: fit-content;
+            min-width: 20rem;
+            margin: 0 auto;
+        }
+        .form-group { margin-bottom: 1rem; }
+        .label { 
+            display: block; 
+            font-size: 0.875rem; 
+            font-weight: 600; 
+            color: #374151; 
+            margin-bottom: 0.5rem; 
+        }
+        .input-wrapper { position: relative; }
+        .input { 
+            width: 100%; 
+            padding: 0.625rem 1rem 0.625rem 2.5rem; 
+            border: 2px solid #e5e7eb; 
+            border-radius: 0.75rem; 
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .input:focus { 
+            outline: none; 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1); 
+        }
+        .icon { 
+            position: absolute; 
+            left: 0.75rem; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 1.15rem; 
+            height: 1.15rem; 
+            color: #3b82f6; 
+        }
+        .btn { 
+            width: 100%; 
+            padding: 0.75rem; 
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
+            color: white; 
+            font-weight: 600; 
+            border-radius: 0.75rem; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 1rem; 
+            margin-top: 0.75rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);
+            transition: all 0.2s ease;
+        }
+        .btn:hover { 
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); 
+            box-shadow: 0 10px 15px -3px rgba(37,99,235,0.4);
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-view-only {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9375rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(107,114,128,0.3);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-view-only:hover {
+            background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+            box-shadow: 0 10px 15px -3px rgba(107,114,128,0.4);
+            transform: translateY(-1px);
+        }
+        .btn-view-only:active {
+            transform: translateY(0);
+        }
+        .error { 
+            display: none; 
+            margin-bottom: 1rem; 
+            padding: 0.75rem; 
+            background: #fee2e2; 
+            border-left: 4px solid #ef4444; 
+            color: #991b1b; 
+            border-radius: 0.5rem; 
+            font-size: 0.875rem;
+        }
+        .error.show { display: flex; align-items: center; }
+        .footer { 
+            margin-top: 1rem; 
+            text-align: center; 
+            color: #dbeafe; 
+            font-size: 0.8rem; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-circle">
+                <img src="rbpfnew.jpg" alt="RBPF Logo">
+            </div>
+            <h1 class="title">Checklist System</h1>
+            <p class="subtitle">Hari Jadi Polis Ke-105 Tahun</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="card">
+            <!-- Error Message -->
+            <div id="errorMessage" class="error">
+                <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.5rem; flex-shrink: 0;" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <span id="errorText"></span>
+            </div>
+
+            <form onsubmit="handleLogin(event)">
+                <!-- Username Field -->
+                <div class="form-group">
+                    <label for="username" class="label">Nama Pengguna</label>
+                    <div class="input-wrapper">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            class="input" 
+                            placeholder="Masukkan nama pengguna"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password" class="label">Kata Laluan</label>
+                    <div class="input-wrapper">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="input" 
+                            placeholder="Masukkan kata laluan"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="btn">
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                    <span>Login</span>
+                </button>
+            </form>
+            
+            <!-- View Only Button -->
+            <a href="calendar-viewer.html" class="btn-view-only">
+                <svg style="width: 1.125rem; height: 1.125rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <span>View Only</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2026 Royal Brunei Police Force (RBPF)</p>
+        </div>
+    </div>
+
+    <!-- Signature -->
+    <div style="position: fixed; bottom: 0.5rem; right: 0.5rem; color: white; opacity: 0.5; font-size: 0.625rem; font-weight: 300;">
+        DKH
+    </div>
+
+    <script>
+        // Handle login using API
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            
+            // Call API
+            const result = await AuthAPI.login(username, password);
+            
+            if (result.success) {
+                // Store user data in sessionStorage
+                sessionStorage.setItem('rbpf_user', JSON.stringify(result.data));
+                sessionStorage.setItem('rbpf_user_id', result.data.user_id);
+                sessionStorage.setItem('rbpf_username', result.data.username);
+                sessionStorage.setItem('rbpf_role', result.data.role);
+                
+                // Show success message
+                errorMessage.classList.remove('hidden');
+                errorMessage.classList.remove('bg-red-100', 'border-red-500', 'text-red-700');
+                errorMessage.classList.add('bg-green-100', 'border-green-500', 'text-green-700');
+                errorText.textContent = 'Login berjaya! Mengalihkan...';
+                
+                // Check if user wants to go to demo page
+                const gotoDemo = sessionStorage.getItem('goto_demo_after_login');
+                sessionStorage.removeItem('goto_demo_after_login'); // Clear the flag
+                
+                // Redirect after 1 second
+                setTimeout(() => {
+                    if (gotoDemo === 'true') {
+                        window.location.href = 'index.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 1000);
+            } else {
+                // Show error message
+                errorMessage.classList.remove('hidden');
+                errorMessage.classList.remove('bg-green-100', 'border-green-500', 'text-green-700');
+                errorMessage.classList.add('bg-red-100', 'border-red-500', 'text-red-700');
+                errorText.textContent = result.message || 'Nama pengguna atau kata laluan tidak sah. Sila cuba lagi.';
+                
+                // Shake animation
+                const form = event.target;
+                form.classList.add('animate-shake');
+                setTimeout(() => form.classList.remove('animate-shake'), 500);
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Log Masuk';
+            }
+        }
+
+        // Check if already logged in
+        window.onload = function() {
+            if (AuthAPI.isLoggedIn()) {
+                window.location.href = 'index.html';
+            }
+        };
+    </script>
+
+    <style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s;
+        }
+    </style>
+
+</body>
+</html>
+

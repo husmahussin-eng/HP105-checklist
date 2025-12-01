@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Storage - RBPF Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-6">🔍 LocalStorage Diagnostic Tool</h1>
+            
+            <div class="space-y-4">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                    <h2 class="font-bold text-lg mb-2">📊 Current Login Status</h2>
+                    <p><strong>Logged In:</strong> <span id="loggedIn" class="font-mono"></span></p>
+                    <p><strong>Username:</strong> <span id="username" class="font-mono"></span></p>
+                    <p><strong>Login Time:</strong> <span id="loginTime" class="font-mono"></span></p>
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                    <h2 class="font-bold text-lg mb-2">👥 Registered Users</h2>
+                    <div id="users" class="font-mono text-sm"></div>
+                </div>
+                
+                <div class="bg-purple-50 border-l-4 border-purple-500 p-4">
+                    <h2 class="font-bold text-lg mb-2">📝 Activity Log</h2>
+                    <div id="activities" class="font-mono text-sm"></div>
+                </div>
+                
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <h2 class="font-bold text-lg mb-2">🔧 Test Actions</h2>
+                    <div class="space-x-2">
+                        <button onclick="addTestUser()" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            Add Test User
+                        </button>
+                        <button onclick="clearAll()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                            Clear All Storage
+                        </button>
+                        <button onclick="location.reload()" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <a href="index.html" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    Back to Checklist
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function displayStorage() {
+            // Login Status
+            document.getElementById('loggedIn').textContent = localStorage.getItem('rbpf_logged_in') || 'Not set';
+            document.getElementById('username').textContent = localStorage.getItem('rbpf_username') || 'Not set';
+            document.getElementById('loginTime').textContent = localStorage.getItem('rbpf_login_time') || 'Not set';
+            
+            // Users
+            const users = JSON.parse(localStorage.getItem('rbpf_users') || '[]');
+            const usersDiv = document.getElementById('users');
+            if (users.length === 0) {
+                usersDiv.innerHTML = '<p class="text-red-600">No users found in localStorage</p>';
+            } else {
+                let html = '<table class="w-full"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Username</th><th class="p-2 text-left">Password</th><th class="p-2 text-left">Full Name</th></tr></thead><tbody>';
+                users.forEach(user => {
+                    html += `<tr class="border-t"><td class="p-2">${user.username}</td><td class="p-2">${user.password}</td><td class="p-2">${user.fullName}</td></tr>`;
+                });
+                html += '</tbody></table>';
+                usersDiv.innerHTML = html;
+            }
+            
+            // Activities
+            const activities = JSON.parse(localStorage.getItem('rbpf_activity_log') || '[]');
+            const activitiesDiv = document.getElementById('activities');
+            if (activities.length === 0) {
+                activitiesDiv.innerHTML = '<p class="text-red-600">No activities logged</p>';
+            } else {
+                activitiesDiv.innerHTML = `<p class="text-green-600">${activities.length} activities found</p><p class="text-xs mt-2">Latest: ${activities[0]?.action || 'N/A'}</p>`;
+            }
+        }
+        
+        function addTestUser() {
+            const users = JSON.parse(localStorage.getItem('rbpf_users') || '[]');
+            users.push({
+                id: Date.now(),
+                fullName: 'DSP Dennie',
+                jawatan: 'Deputy Superintendent',
+                username: 'DSP Dennie',
+                password: '123456',
+                role: 'user',
+                createdAt: new Date().toISOString(),
+                createdBy: 'System Test'
+            });
+            localStorage.setItem('rbpf_users', JSON.stringify(users));
+            alert('DSP Dennie test user added!');
+            location.reload();
+        }
+        
+        function clearAll() {
+            if (confirm('Clear ALL localStorage data? This cannot be undone!')) {
+                localStorage.clear();
+                alert('Storage cleared!');
+                location.reload();
+            }
+        }
+        
+        displayStorage();
+    </script>
+</body>
+</html>
+

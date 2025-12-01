@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Activity Log - RBPF 105</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=5"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+
+    <!-- Header -->
+    <div class="bg-white/10 backdrop-blur-sm border-b border-white/20 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                </svg>
+                Activity Log
+            </h1>
+            <button onclick="window.location.href='index.html'" class="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors border border-white/30 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="hidden sm:inline">Kembali ke Utama</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6">
+        <!-- Filter Options -->
+        <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-gray-800">Filter Activities</h2>
+            </div>
+            
+            <!-- Filter Options -->
+            <div class="flex flex-wrap gap-3">
+                <button onclick="filterActivities('all')" id="filter-all" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">
+                    All Activities
+                </button>
+                <button onclick="filterActivities('login')" id="filter-login" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-colors">
+                    Logins
+                </button>
+                <button onclick="filterActivities('notes')" id="filter-notes" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-colors">
+                    Notes Activity
+                </button>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Recent Logins -->
+            <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                    <h2 class="text-xl font-bold text-gray-800">Recent Logins</h2>
+                </div>
+                <div id="recentLogins" class="space-y-3 max-h-[500px] overflow-y-auto">
+                    <!-- Login items will be inserted here -->
+                </div>
+            </div>
+
+            <!-- User Activities -->
+            <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
+                <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    <h2 class="text-xl font-bold text-gray-800">User Activities</h2>
+                </div>
+                <div id="userActivities" class="space-y-3 max-h-[500px] overflow-y-auto">
+                    <!-- Activity items will be inserted here -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Signature -->
+    <div class="fixed bottom-2 right-2 text-white opacity-50" style="font-size: 0.5rem;">
+        DKH
+    </div>
+
+    <script>
+        // Check authentication
+        window.onload = async function() {
+            if (!AuthAPI.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const user = AuthAPI.getCurrentUser();
+            if (user) {
+                document.getElementById('currentUser').textContent = user.username;
+            }
+            
+            await loadActivities();
+            
+            // Log this activity view
+            await ActivityAPI.log('Viewed Activity Log Page', 'activity');
+        };
+
+        const DAY_NAMES = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+
+        function formatDateTime(date) {
+            const dayName = DAY_NAMES[date.getDay()];
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            return `${dayName}, ${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        }
+
+        // Get all activity logs
+        // Load and display activities - Using API
+        async function loadActivities() {
+            const result = await ActivityAPI.getAll();
+            
+            if (result.success && result.data) {
+                const activities = result.data;
+                
+                // Separate logins and other activities
+                const logins = activities.filter(a => a.type === 'login');
+                const userActivities = activities.filter(a => a.type !== 'login');
+                
+                renderLogins(logins);
+                renderActivities(userActivities);
+            } else {
+                // Show empty state if no activities
+                renderLogins([]);
+                renderActivities([]);
+            }
+        }
+
+        // Render login items
+        function renderLogins(logins) {
+            const container = document.getElementById('recentLogins');
+            
+            if (logins.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-8">Tiada rekod log masuk</p>';
+                return;
+            }
+            
+            let html = '';
+            logins.slice(0, 20).forEach(login => {
+                html += `
+                    <div class="border-l-4 border-green-500 bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-grow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                    <span class="font-semibold text-gray-800">${login.username}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span>${login.displayTime}</span>
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    ${login.action}
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">super_admin</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Render activity items
+        function renderActivities(activities) {
+            const container = document.getElementById('userActivities');
+            
+            if (activities.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-8">Tiada aktiviti pengguna</p>';
+                return;
+            }
+            
+            let html = '';
+            activities.slice(0, 20).forEach(activity => {
+                const borderColor = activity.type === 'notes' ? 'border-blue-500' : 'border-purple-500';
+                const bgColor = activity.type === 'notes' ? 'bg-blue-50' : 'bg-purple-50';
+                
+                html += `
+                    <div class="border-l-4 ${borderColor} ${bgColor} p-4 rounded-lg">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-grow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                    <span class="font-semibold text-gray-800">${activity.username}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <span>${activity.displayTime}</span>
+                                </div>
+                                <div class="text-xs text-gray-700">
+                                    <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    ${activity.action}
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">super_admin</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Filter activities
+        let currentFilter = 'all';
+        async function filterActivities(filter) {
+            currentFilter = filter;
+            
+            // Update button styles
+            document.querySelectorAll('[id^="filter-"]').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            document.getElementById(`filter-${filter}`).classList.remove('bg-gray-200', 'text-gray-700');
+            document.getElementById(`filter-${filter}`).classList.add('bg-indigo-600', 'text-white');
+            
+            const result = await ActivityAPI.getAll();
+            if (!result.success || !result.data) return;
+            
+            const activities = result.data;
+            
+            if (filter === 'all') {
+                const logins = activities.filter(a => a.type === 'login');
+                const userActivities = activities.filter(a => a.type !== 'login');
+                renderLogins(logins);
+                renderActivities(userActivities);
+            } else if (filter === 'login') {
+                const logins = activities.filter(a => a.type === 'login');
+                renderLogins(logins);
+                document.getElementById('userActivities').innerHTML = '<p class="text-gray-500 text-sm text-center py-8">Filter: Login sahaja</p>';
+            } else if (filter === 'notes') {
+                const noteActivities = activities.filter(a => a.type === 'notes');
+                document.getElementById('recentLogins').innerHTML = '<p class="text-gray-500 text-sm text-center py-8">Filter: Nota sahaja</p>';
+                renderActivities(noteActivities);
+            }
+        }
+
+        // Test function to manually add a log entry
+        async function testLog() {
+            await ActivityAPI.log('Test log entry - Manual trigger', 'login');
+            alert('Test log added! Refreshing page...');
+            location.reload();
+        }
+    </script>
+
+</body>
+</html>
+
