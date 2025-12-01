@@ -107,3 +107,4 @@ The `api/config.php` automatically uses these if available, otherwise falls back
 - All other API endpoints require login
 - Database must be initialized with `database/schema.sql`
 
+
