@@ -1262,6 +1262,9 @@
                 `;
             }
             janContainer.innerHTML = janHTML;
+
+            // Render static events onto the calendar
+            renderStaticEvents();
         }
         
         // Format time AM/PM
@@ -1289,6 +1292,41 @@
         async function loadAllCalendarEvents() {
             console.log('Static mode: skip calendar events API.');
             return;
+        }
+
+        // Render static events (Dec/Jan) into the calendar grid
+        function renderStaticEvents() {
+            // Clear placeholders
+            document.querySelectorAll('.calendar-day-events').forEach(el => {
+                el.innerHTML = '';
+            });
+
+            // Group events by month-day
+            const grouped = {};
+            staticEvents.forEach(evt => {
+                const key = `${evt.month}-${evt.day}`;
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(evt);
+            });
+
+            // Render
+            Object.keys(grouped).forEach(key => {
+                const el = document.getElementById(`${key}-notes`);
+                if (!el) return;
+                const dayEvents = grouped[key];
+                const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
+                let html = '';
+                dayEvents.forEach((event, idx) => {
+                    const color = colors[idx % colors.length];
+                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.7rem;">• ${event.title}</div>`;
+                });
+                el.innerHTML = html;
+                // Highlight the day box
+                const dayEl = el.closest('.calendar-day');
+                if (dayEl) {
+                    dayEl.classList.add('has-event');
+                }
+            });
         }
         
         // Fix viewport height for mobile browsers
@@ -1466,6 +1504,39 @@
             'Pengurus Kelengkapan': 0,
             'Pengurus Media Masa, Jemputan dan buku program': 0
         };
+
+        // Static snapshot for calendar events (Dec 2025 & Jan 2026)
+        const staticEvents = [
+            // December 2025
+            { month: 'dec', day: 3,  title: 'Mesyuarat 04/2025', activity: 'Mesyuarat' },
+            { month: 'dec', day: 10, title: 'Mesyuarat 05/2025', activity: 'Mesyuarat' },
+            { month: 'dec', day: 17, title: 'Mesyuarat 06/2025', activity: 'Mesyuarat' },
+            { month: 'dec', day: 24, title: 'Bergambar Ramai AJK HP105 @ MES Bergambar Ramai untuk AJK HP105', activity: 'Mesyuarat' },
+            { month: 'dec', day: 24, title: 'Mesyuarat 07/2025', activity: 'Mesyuarat' },
+            { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat' },
+
+            // January 2026
+            { month: 'jan', day: 3,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 5,  title: 'Aktiviti Daerah BM : Kempen Derma Darah @BP BKS BM', activity: 'BM' },
+            { month: 'jan', day: 5,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 6,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 7,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 8,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 10, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 12, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 13, title: 'Raptai mkn beradat @Mess', activity: 'Makan beradat' },
+            { month: 'jan', day: 13, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 14, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 15, title: 'Majlis Makan Beradat @ Mess', activity: 'Makan beradat' },
+            { month: 'jan', day: 15, title: 'Majlis Perbarisan HP105 @PTC', activity: 'Perbarisan' },
+            { month: 'jan', day: 21, title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan KB', activity: 'Acara Daerah Belait' },
+            { month: 'jan', day: 22, title: 'Aktiviti Daerah Temburong : Membersihkan Tanah Perkuburan Islam @TBC', activity: 'Acara Daerah Temburong' },
+            { month: 'jan', day: 23, title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan' },
+            { month: 'jan', day: 24, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran' },
+            { month: 'jan', day: 24, title: 'Aktivit Daerah Temburong : Kempen Derma Darah @TBC', activity: 'Acara Daerah Temburong' },
+            { month: 'jan', day: 25, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran' },
+            { month: 'jan', day: 27, title: 'Aktiviti Daerah Tutong : Kejohanan Bola Sepak', activity: 'Acara Daerah Tutong' }
+        ];
 
         document.addEventListener('DOMContentLoaded', function() {
             // Prefill and lock cenderahati inputs for static view
