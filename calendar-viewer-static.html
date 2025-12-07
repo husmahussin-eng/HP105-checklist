@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
@@ -8,6 +8,7 @@
     <meta name="format-detection" content="telephone=no">
     <title>HP-105 Calendar - Viewer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=6"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -30,7 +31,7 @@
             margin: 0 auto;
         }
         
-        /* Header Section - Logo left, Countdown center */
+        /* Header Section - Logo left, Countdown center, Home button right */
         .header {
             display: flex;
             align-items: center;
@@ -94,6 +95,10 @@
             align-items: center;
         }
         
+        .header-right {
+            flex: 0 0 auto;
+        }
+        
         /* Checklist Table */
         .checklist-container {
             padding: 0.5rem 0;
@@ -114,6 +119,52 @@
             color: #9ca3af;
             font-size: 0.375rem;
             margin-top: 0.5rem;
+        }
+        
+        /* Home Button for Logged-in Users - Top Right Corner */
+        .viewer-home-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1001;
+            background: rgba(30, 64, 175, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            min-height: 40px;
+            display: none;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(30, 64, 175, 0.3);
+            user-select: none;
+            transition: all 0.2s;
+        }
+        
+        .viewer-home-button:hover {
+            background: rgba(30, 58, 138, 0.95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        .viewer-home-button:active {
+            transform: scale(0.95);
+        }
+        
+        .viewer-home-button svg {
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+        
+        .viewer-home-button.show {
+            display: flex;
         }
         
         .checklist-table-wrapper {
@@ -139,7 +190,7 @@
         }
         
         .checklist-table th {
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 0.75rem;
             text-align: left;
             font-weight: 700;
             font-size: 0.875rem;
@@ -153,7 +204,7 @@
         }
         
         .checklist-table th:first-child {
-            min-width: 200px;
+            min-width: 160px;
             position: sticky;
             left: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -184,7 +235,7 @@
         }
         
         .checklist-table td {
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 0.75rem;
             vertical-align: top;
             color: #374151;
             border-right: 1px solid #e5e7eb;
@@ -201,7 +252,7 @@
             position: sticky;
             left: 0;
             z-index: 5;
-            min-width: 200px;
+            min-width: 160px;
             border-right: 2px solid #d1d5db;
         }
         
@@ -210,7 +261,12 @@
         }
         
         .checklist-table td:not(:first-child) {
-            min-width: 150px;
+            min-width: 110px;
+        }
+        
+        /* Cenderahati column - narrower */
+        .checklist-table td:nth-child(2) {
+            min-width: 90px;
         }
         
         .activity-item {
@@ -232,6 +288,64 @@
             color: #9ca3af;
             font-style: italic;
             font-size: 0.75rem;
+        }
+        
+        .cenderahati-input {
+            width: 70px;
+            padding: 0.35rem 0.45rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .cenderahati-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .cenderahati-input:hover {
+            border-color: #9ca3af;
+        }
+        
+        /* Budget Table Specific Styles */
+        .budget-table th:first-child,
+        .budget-table td:first-child {
+            min-width: 60px !important;
+            text-align: center;
+        }
+        
+        .budget-table th:nth-child(2),
+        .budget-table td:nth-child(2) {
+            min-width: 180px !important;
+            font-weight: 600;
+        }
+        
+        .budget-table th:nth-child(3),
+        .budget-table td:nth-child(3) {
+            min-width: 300px !important;
+        }
+        
+        .budget-table th:nth-child(4),
+        .budget-table td:nth-child(4) {
+            min-width: 140px !important;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .budget-table tbody tr:hover {
+            background: #f9fafb;
+        }
+        
+        .budget-total-row {
+            border-top: 3px solid #f59e0b !important;
+        }
+        
+        .budget-total-row td {
+            background: #fef3c7 !important;
+            font-size: 1.1rem !important;
         }
         
         @media (max-width: 768px) {
@@ -663,7 +777,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header - Logo left, Countdown center -->
+        <!-- Header - Logo left, Countdown center, Home button right -->
         <div class="header">
             <div class="header-left">
                 <div class="header-logo">
@@ -705,7 +819,19 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="header-right">
+                <!-- Home button will be positioned here if logged in -->
+            </div>
         </div>
+        
+        <!-- Home Button for Logged-in Users - Top Right Corner -->
+        <a href="index.html" class="viewer-home-button" id="viewerHomeButton">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            <span>Home</span>
+        </a>
         
         <!-- Calendar Section -->
         <div class="calendar-wrapper">
@@ -727,6 +853,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                     </svg>
                     <span>Acara Checklist</span>
+                </button>
+                <button class="calendar-tab" onclick="switchCalendarTab('budget')" id="tab-budget">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Budget</span>
                 </button>
             </div>
             
@@ -774,81 +906,81 @@
                             <thead>
                                 <tr>
                                     <th>Kategori</th>
+                                    <th id="cenderahati-header">Cenderahati (0)</th>
                                     <th>Acara / Aktiviti 1</th>
                                     <th>Acara / Aktiviti 2</th>
                                     <th>Acara / Aktiviti 3</th>
                                     <th>Acara / Aktiviti 4</th>
-                                    <th>Acara / Aktiviti 5</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Perbarisan</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td><span class="activity-item">Latihan Perbarisan</span></td>
                                     <td><span class="activity-item">Majlis Perbarisan HP105</span></td>
-                                    <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Makan Beradat</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td><span class="activity-item">Raptai mkn beradat</span></td>
                                     <td><span class="activity-item">Majlis mkn beradat</span></td>
-                                    <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Brunei Muara</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td><span class="activity-item">Open day (pameran, kawad)</span></td>
                                     <td><span class="activity-item">Walkaton</span></td>
                                     <td><span class="activity-item">Kempen Derma Darah</span></td>
                                     <td><span class="activity-item">Gotong royong</span></td>
-                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Tutong</td>
-                                    <td><span class="activity-item">Open day</span></td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td><span class="activity-item">Kejohanan Bolasepak</span></td>
-                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
+                                    <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Belait</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td><span class="activity-item">Open day (pameran, kawad)</span></td>
                                     <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Temburong</td>
-                                    <td><span class="activity-item">Walkaton & Kempen Derma Darah</span></td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
                                     <td><span class="activity-item">Kawad OCPD & Penyampaian Sijil Kepujian</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                    <td><span class="activity-item">Membersihkan Tanah Perkuburan Islam</span></td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Keugamaan</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td><span class="activity-item">Majlis doa kesyukuran sempena HP105 di Surau Polis</span></td>
                                     <td><span class="activity-item">Tahlil & Bacaan Surah Yassin di Kubah Makam Diraja</span></td>
                                     <td><span class="activity-item">Khutbah sempena HP105 dikeluarkan</span></td>
                                     <td><span class="activity-item">Design Buku Yassin/Tahlil sudah dipilih</span></td>
-                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Pengurus Pameran</td>
-                                    <td><span class="activity-item">Pameran 1hari / 2hari di Stadium Polis Gadong</span></td>
-                                    <td class="empty-cell">-</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td><span class="activity-item">Pameran 2 hari @ Stadium Polis</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Pengurus Permakanan</td>
-                                    <td class="empty-cell">-</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
@@ -856,7 +988,7 @@
                                 </tr>
                                 <tr>
                                     <td>Pengurus Kelengkapan</td>
-                                    <td class="empty-cell">-</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
@@ -864,35 +996,144 @@
                                 </tr>
                                 <tr>
                                     <td>Pengurus Media Masa, Jemputan dan buku program</td>
-                                    <td class="empty-cell">-</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="checklist-footer">DKH@2025</div>
+                </div>
+            </div>
+            
+            <!-- Budget Tab -->
+            <div class="calendar-month" id="calendar-month-budget">
+                <div class="checklist-container">
+                    <div class="checklist-table-wrapper">
+                        <table class="checklist-table budget-table">
+                            <thead>
                                 <tr>
+                                    <th style="min-width: 60px;">Bil</th>
+                                    <th style="min-width: 180px;">Perkara</th>
+                                    <th style="min-width: 300px;">Keterangan</th>
+                                    <th style="min-width: 140px;">Perbelanjaan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Perbarisan</td>
+                                    <td>Anggaran Perbelanjaan merangkumi hari latihan dan raptai perbarisan</td>
+                                    <td><strong>$ 34,073.75</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Kelengkapan</td>
+                                    <td>Perbelanjaan penyewaan kem, backdrop, fabric ceiling</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Makan Beradat</td>
+                                    <td>Makan beradat pada 15/01/2026</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Raptai Makan Beradat</td>
+                                    <td>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026</td>
+                                    <td><strong>$ 20,929.00</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Keagamaan</td>
+                                    <td>Mencetak surah yassin sebanyak 500 softcover dan 50 softcover</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Pameran</td>
+                                    <td>Pameran diadakan selama dua(2) hari</td>
+                                    <td><strong>$ 12,800.00</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Aktiviti Daerah Brunei Muara</td>
+                                    <td>Open day</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Walkaton</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Kempen Derma Darah</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Gotong Royong</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Aktiviti Daerah Tutong</td>
+                                    <td>Kejohanan Bolasepak</td>
+                                    <td><strong>$ 1,638.50</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Aktiviti Daerah Belait</td>
+                                    <td>Open day</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Kempen Derma Darah</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Aktiviti Daerah Temburong</td>
+                                    <td>Kempen Derma Darah</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Gotong Royong</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Kawad OCPD & Penyampaian Sijil kepujian</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
                                     <td>Cenderahati</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                    <td>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</td>
+                                    <td><strong>belum ada</strong></td>
                                 </tr>
                                 <tr>
-                                    <td>Pekerti</td>
-                                    <td><span class="activity-item">Menunggu ketetapan Dato CP</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                    <td>8</td>
+                                    <td>PRO</td>
+                                    <td>Pencetakan poster Sambutan HP ke -105</td>
+                                    <td><strong>belum ada</strong></td>
                                 </tr>
-                                <tr>
-                                    <td>Bendahari</td>
-                                    <td><span class="activity-item">Format untuk memohon budget untuk kegunaan semua pengurus</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                <tr class="budget-total-row">
+                                    <td colspan="3" style="text-align: right; font-weight: 700; background: #fef3c7;">Jumlah Keseluruhan</td>
+                                    <td style="font-weight: 700; font-size: 1.1rem; background: #fef3c7;"><strong>$ 69,441.25</strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -916,7 +1157,7 @@
             if (monthEl) monthEl.classList.add('active');
         }
         
-        // Update countdown - Pure client-side JavaScript (auto-updates every second)
+        // Update countdown - using same logic as index.html
         function updateCountdown() {
             const now = new Date();
             const eventDate = new Date('January 15, 2026 00:00:00');
@@ -948,7 +1189,7 @@
             document.getElementById('currentYear').textContent = year;
         }
         
-        // Generate calendar
+        // Generate calendar - using same logic as index.html
         function generateCalendar() {
             // December 2025
             const decContainer = document.getElementById('calendar-dec-2025');
@@ -961,6 +1202,7 @@
                 decHTML += '<div class="calendar-day empty"></div>';
             }
             for (let day = 1; day <= decDaysInMonth; day++) {
+                // Only Friday (5) and Sunday (0) are public holidays, Saturday (6) is working day
                 const dayOfWeek = (decFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
                 decHTML += `
@@ -997,68 +1239,58 @@
         
         // Format time AM/PM
         function formatTimeAMPM(timeString) {
+            // Return empty string if no time provided
             if (!timeString) return '';
+            
+            // Check if timeString is a valid time format (HH:MM or H:MM)
+            if (!timeString.includes(':')) return '';
+            
             const [hours, minutes] = timeString.split(':');
             let hour = parseInt(hours);
+            
+            // If parsing failed or resulted in NaN, return empty string
+            if (isNaN(hour) || !minutes) return '';
+            
             const ampm = hour >= 12 ? 'PM' : 'AM';
             if (hour === 0) hour = 12;
             else if (hour > 12) hour = hour - 12;
+            
             return `${hour}:${minutes} ${ampm}`;
         }
         
-        // Embedded calendar events data (fallback if JSON file can't be loaded)
-        const embeddedEventsData = {
-            "events": [
-                {"month": "dec", "day": 25, "event_title": "Majlis doa kesyukuran HP105 @Surau Polis", "event_time": "18:00", "venue": ""},
-                {"month": "jan", "day": 3, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 5, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 6, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 7, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 8, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 10, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 12, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 13, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 13, "event_title": "Raptai mkn beradat @Mess", "event_time": "14:00", "venue": ""},
-                {"month": "jan", "day": 14, "event_title": "Latihan Perbarisan @PTC", "event_time": "", "venue": ""},
-                {"month": "jan", "day": 15, "event_title": "Majlis Perbarisan HP105 @PTC", "event_time": "08:30", "venue": ""},
-                {"month": "jan", "day": 15, "event_title": "Majlis mkn beradat @ Mess", "event_time": "20:00", "venue": ""},
-                {"month": "jan", "day": 23, "event_title": "Khutbah sempena HP105 dikeluarkan", "event_time": "", "venue": ""}
-            ],
-            "last_updated": "2025-12-01T15:25:07+01:00"
-        };
-        
-        // Load calendar events from JSON file (static, no API needed)
+        // Load calendar events - using same logic as index.html
         async function loadAllCalendarEvents() {
             try {
-                console.log('Memuatkan acara kalendar dari JSON...');
+                console.log('Memuatkan acara kalendar...');
+                console.log('CalendarEventsAPI tersedia:', typeof CalendarEventsAPI !== 'undefined');
                 
-                let data = null;
-                
-                // Try to load from calendar-events.json file first
-                try {
-                    const response = await fetch('calendar-events.json?t=' + Date.now()); // Cache bust
-                    
-                    if (response.ok) {
-                        data = await response.json();
-                        console.log('✅ Loaded from calendar-events.json file');
-                    } else {
-                        console.warn('⚠️ calendar-events.json not found or empty. Using embedded data.');
-                        data = embeddedEventsData;
-                    }
-                } catch (fetchError) {
-                    // If fetch fails (CORS error when opening from file://), use embedded data
-                    console.warn('⚠️ Could not load calendar-events.json (CORS or file not found). Using embedded data.');
-                    console.warn('💡 This is normal when opening from file://. Will work fine on GitHub Pages.');
-                    data = embeddedEventsData;
+                if (typeof CalendarEventsAPI === 'undefined') {
+                    console.error('CalendarEventsAPI tidak ditakrifkan! Pastikan api-client.js dimuatkan.');
+                    alert('Ralat: CalendarEventsAPI tidak dijumpai. Sila pastikan api-client.js dimuatkan.');
+                    return;
                 }
                 
-                const events = data.events || [];
+                const result = await CalendarEventsAPI.getAll();
+                console.log('Respons API:', result);
                 
-                console.log('✅ Acara dimuatkan:', events.length, 'acara');
-                console.log('📅 Data acara:', events);
+                if (!result) {
+                    console.error('API mengembalikan null atau undefined');
+                    alert('Ralat: API tidak mengembalikan respons. Sila semak konsol untuk butiran.');
+                    return;
+                }
+                
+                if (!result.success) {
+                    console.error('API mengembalikan ralat:', result);
+                    alert('Ralat memuatkan acara kalendar: ' + (result.message || 'Ralat tidak diketahui'));
+                    return;
+                }
+                
+                const events = result.data || [];
+                console.log('Acara dimuatkan:', events.length, events);
                 
                 if (events.length === 0) {
-                    console.log('Tiada acara dalam fail JSON');
+                    console.log('Tiada acara dalam pangkalan data - ini adalah normal jika tiada acara ditambah lagi');
+                    // Don't show alert for empty database, just log it
                     return;
                 }
                 
@@ -1068,15 +1300,18 @@
                 });
                 
                 // Group events by month and day
+                // Normalize month values: 'dec' or 'December' -> 'dec', 'jan' or 'January' -> 'jan'
                 const eventsByDay = {};
                 events.forEach(event => {
                     let month = event.month ? event.month.toLowerCase() : '';
                     // Normalize month names
-                    if (month === 'december' || month === '12' || month === 'dec') month = 'dec';
-                    if (month === 'january' || month === '1' || month === 'jan') month = 'jan';
+                    if (month === 'december' || month === '12') month = 'dec';
+                    if (month === 'january' || month === '1') month = 'jan';
                     
                     const day = event.day;
                     const key = `${month}-${day}`;
+                    
+                    console.log(`Processing event: month="${event.month}" -> "${month}", day="${day}", key="${key}"`);
                     
                     if (!eventsByDay[key]) {
                         eventsByDay[key] = [];
@@ -1084,24 +1319,27 @@
                     eventsByDay[key].push(event);
                 });
                 
-                console.log('📊 Events grouped by day:', eventsByDay);
-                console.log('🔑 Keys to display:', Object.keys(eventsByDay));
+                console.log('Events grouped by day:', eventsByDay);
+                console.log('All keys:', Object.keys(eventsByDay));
                 
-                // Display events
+                // Display events - using same format as index.html with venue
                 let eventsDisplayed = 0;
-                let eventsNotFound = 0;
                 Object.keys(eventsByDay).forEach(key => {
                     const dayEvents = eventsByDay[key];
                     const [month, day] = key.split('-');
                     const el = document.getElementById(`${key}-notes`);
                     
+                    console.log(`Looking for element: ${key}-notes`, el);
+                    
                     if (el) {
+                        // Find the parent calendar-day element
                         const dayEl = el.closest('.calendar-day');
                         
                         let html = '';
                         const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
                         dayEvents.forEach((event, index) => {
-                            const displayTime = event.event_time ? formatTimeAMPM(event.event_time) + ' ' : '';
+                            const formattedTime = formatTimeAMPM(event.event_time);
+                            const displayTime = formattedTime ? formattedTime + ' ' : '';
                             const color = colors[index % colors.length];
                             const eventTitle = event.event_title || '';
                             const venue = event.venue ? ` @${event.venue}` : '';
@@ -1109,7 +1347,6 @@
                         });
                         el.innerHTML = html;
                         eventsDisplayed += dayEvents.length;
-                        console.log(`✅ Displayed ${dayEvents.length} event(s) on ${key}`);
                         
                         // Update day number color if multiple events
                         if (dayEl && dayEvents.length > 1) {
@@ -1121,24 +1358,16 @@
                             }
                         }
                     } else {
-                        eventsNotFound++;
-                        console.warn(`⚠️ Element not found for: ${key}-notes`);
+                        console.warn('Element not found for:', key, 'Expected ID:', `${key}-notes`);
                     }
                 });
                 
-                console.log(`✅ Memaparkan ${eventsDisplayed} acara merentasi ${Object.keys(eventsByDay).length} hari`);
-                if (eventsNotFound > 0) {
-                    console.warn(`⚠️ ${eventsNotFound} event(s) could not be displayed (element not found)`);
-                }
-            } catch (error) {
-                console.error('❌ Ralat memuatkan acara kalendar:', error);
-                console.error('Error details:', error.message, error.stack);
+                console.log(`Memaparkan ${eventsDisplayed} acara merentasi ${Object.keys(eventsByDay).length} hari`);
                 
-                // If it's a CORS error (opening from file://), show helpful message
-                if (error.message && error.message.includes('fetch')) {
-                    console.warn('💡 Note: If opening from file://, fetch() may be blocked by CORS.');
-                    console.warn('💡 This will work fine when hosted on GitHub Pages.');
-                }
+                console.log('Acara kalendar berjaya dimuatkan');
+            } catch (error) {
+                console.error('Ralat memuatkan acara kalendar:', error);
+                alert('Ralat memuatkan acara kalendar. Sila semak konsol untuk butiran.');
             }
         }
         
@@ -1148,24 +1377,184 @@
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
         
-        // Initialize
+        // Check if user is logged in and show home button
+        function checkLoginStatus() {
+            try {
+                if (typeof AuthAPI !== 'undefined' && AuthAPI.isLoggedIn()) {
+                    const homeButton = document.getElementById('viewerHomeButton');
+                    if (homeButton) {
+                        homeButton.classList.add('show');
+                    }
+                }
+            } catch (error) {
+                console.log('AuthAPI not available or user not logged in');
+            }
+        }
+        
+        // Initialize - No authentication required for viewer
         window.onload = async function() {
+            // This page is accessible without login for viewer roles
+            // No authentication check needed
+            
+            // Check if user is logged in to show home button
+            checkLoginStatus();
+            
             setViewportHeight();
             window.addEventListener('resize', setViewportHeight);
             
             // Generate calendar first
             generateCalendar();
-            
-            // Update countdown immediately and then every second (pure client-side JavaScript)
             updateCountdown();
             setInterval(updateCountdown, 1000);
             
-            // Wait for calendar to fully render, then load events from JSON
+            // Wait for calendar to fully render, then load events
             setTimeout(async () => {
-                console.log('Starting to load calendar events from JSON...');
+                console.log('Starting to load calendar events...');
                 await loadAllCalendarEvents();
+                await loadCenderahatiData();
             }, 500);
         };
+        
+        // ============================================
+        // Cenderahati Functions
+        // ============================================
+        
+        async function loadCenderahatiData() {
+            try {
+                console.log('Loading cenderahati data...');
+                const response = await CenderahatiAPI.getAll();
+                
+                if (response.success && response.data) {
+                    console.log('Cenderahati data loaded:', response.data);
+                    
+                    // Update all input fields with saved values
+                    document.querySelectorAll('.cenderahati-input').forEach(input => {
+                        const row = input.closest('tr');
+                        const categoryCell = row.querySelector('td:first-child');
+                        if (categoryCell) {
+                            const category = categoryCell.textContent.trim();
+                            if (response.data[category]) {
+                                input.value = response.data[category].count;
+                            }
+                        }
+                    });
+                    
+                    // Update total after loading data
+                    updateCenderahatiTotal();
+                } else {
+                    console.log('No cenderahati data found or failed to load');
+                }
+            } catch (error) {
+                console.error('Error loading cenderahati data:', error);
+            }
+        }
+        
+        async function saveCenderahatiData(category, count) {
+            try {
+                console.log(`Saving cenderahati for ${category}: ${count}`);
+                const response = await CenderahatiAPI.save(category, count);
+                
+                if (response.success) {
+                    console.log('Cenderahati saved successfully:', response);
+                    // Show success indicator
+                    showSaveIndicator('✓ Saved', 'success');
+                    // Update total after saving
+                    updateCenderahatiTotal();
+                } else {
+                    console.error('Failed to save cenderahati:', response);
+                    showSaveIndicator('✗ Error', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving cenderahati:', error);
+                showSaveIndicator('✗ Error', 'error');
+            }
+        }
+        
+        function updateCenderahatiTotal() {
+            let total = 0;
+            document.querySelectorAll('.cenderahati-input').forEach(input => {
+                const value = parseInt(input.value) || 0;
+                total += value;
+            });
+            
+            const header = document.getElementById('cenderahati-header');
+            if (header) {
+                header.textContent = `Cenderahati (${total})`;
+            }
+            
+            console.log('Cenderahati total updated:', total);
+        }
+        
+        function showSaveIndicator(message, type) {
+            // Create or get existing indicator
+            let indicator = document.getElementById('cenderahati-save-indicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.id = 'cenderahati-save-indicator';
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    z-index: 10000;
+                    transition: opacity 0.3s;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                `;
+                document.body.appendChild(indicator);
+            }
+            
+            indicator.textContent = message;
+            indicator.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
+            indicator.style.color = 'white';
+            indicator.style.opacity = '1';
+            indicator.style.display = 'block';
+            
+            // Hide after 2 seconds
+            setTimeout(() => {
+                indicator.style.opacity = '0';
+                setTimeout(() => {
+                    indicator.style.display = 'none';
+                }, 300);
+            }, 2000);
+        }
+        
+        // Add event listeners to cenderahati inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach event listeners after a short delay to ensure inputs are rendered
+            setTimeout(() => {
+                document.querySelectorAll('.cenderahati-input').forEach(input => {
+                    // Update total in real-time as user types
+                    input.addEventListener('input', function() {
+                        updateCenderahatiTotal();
+                    });
+                    
+                    input.addEventListener('change', async function() {
+                        const row = this.closest('tr');
+                        const categoryCell = row.querySelector('td:first-child');
+                        if (categoryCell) {
+                            const category = categoryCell.textContent.trim();
+                            const count = parseInt(this.value) || 0;
+                            await saveCenderahatiData(category, count);
+                        }
+                    });
+                    
+                    // Also save on blur (when user clicks away)
+                    input.addEventListener('blur', async function() {
+                        const row = this.closest('tr');
+                        const categoryCell = row.querySelector('td:first-child');
+                        if (categoryCell) {
+                            const category = categoryCell.textContent.trim();
+                            const count = parseInt(this.value) || 0;
+                            await saveCenderahatiData(category, count);
+                        }
+                    });
+                });
+                
+                console.log('Cenderahati event listeners attached');
+            }, 600);
+        });
     </script>
 </body>
 </html>
