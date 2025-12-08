@@ -1549,16 +1549,16 @@
         // -----------------------------
         const checklistFallback = [
             { category: 'Perbarisan', activity1: 'Latihan Perbarisan', activity2: 'Majlis Perbarisan HP105', activity3: '', activity4: '' },
-            { category: 'Makan Beradat', activity1: 'Raptai mkn beradat', activity2: 'Majlis mkn beradat', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Brunei Muara', activity1: 'Open day (pameran, kawad)', activity2: 'Walkaton', activity3: 'Kempen Derma Darah', activity4: 'Gotong royong' },
+            { category: 'Makan Beradat', activity1: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026 (belum termasuk support staffs)', activity2: 'Makan beradat pada 15/01/2026', activity3: '', activity4: '' },
+            { category: 'Acara Daerah Brunei Muara', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Gotong Royong', activity4: 'Walkaton' },
             { category: 'Acara Daerah Tutong', activity1: 'Kejohanan Bolasepak', activity2: '', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Belait', activity1: 'Open day (pameran, kawad)', activity2: 'Kempen Derma Darah', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Temburong', activity1: 'Walkaton & Kempen Derma Darah', activity2: 'Kawad OCPD & Penyampaian Sijil Kepujian', activity3: '', activity4: '' },
-            { category: 'Acara Keugamaan', activity1: 'Majlis doa kesyukuran sempena HP105 di Surau Polis', activity2: 'Tahlil & Bacaan Surah Yassin di Kubah Makam Diraja', activity3: 'Khutbah sempena HP105 dikeluarkan', activity4: 'Design Buku Yassin/Tahlil sudah dipilih' },
-            { category: 'Pengurus Pameran', activity1: 'Pameran 2 hari @ Stadium Polis Gadong', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Permakanan', activity1: '', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Kelengkapan', activity1: '', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Media Masa, Jemputan dan buku program', activity1: '', activity2: '', activity3: '', activity4: '' }
+            { category: 'Acara Daerah Belait', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Kempen Derma Darah', activity4: '' },
+            { category: 'Acara Daerah Temburong', activity1: 'Gotong Royong', activity2: 'Community Engagement @ POLSARA', activity3: '', activity4: '' },
+            { category: 'Acara Keugamaan', activity1: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)', activity2: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', activity3: '', activity4: '' },
+            { category: 'Pengurus Pameran', activity1: 'Pameran diadakan selama dua(2) hari', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Permakanan', activity1: 'Pencetakan poster Sambutan HP ke -105', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Kelengkapan', activity1: 'Perbelanjaan penyewaan kem, backdrop, fabric', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Media Masa, Jemputan dan buku program', activity1: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', activity2: '', activity3: '', activity4: '' }
         ];
         function collectChecklistRow(row) {
             const tds = row.querySelectorAll('td');
@@ -1598,7 +1598,7 @@
             }
         }
 
-        async function applyChecklistFallback() {
+        async function applyChecklistFallback(force = false) {
             try {
                 const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
                 rows.forEach(row => {
@@ -1606,6 +1606,11 @@
                     const category = tds[0] ? tds[0].textContent.trim() : '';
                     const rowData = checklistFallback.find(r => r.category.toLowerCase() === category.toLowerCase());
                     if (!rowData) return;
+                    if (!force) {
+                        // If the row already has any content, skip unless force is true
+                        const existing = [tds[2], tds[3], tds[4], tds[5]].some(td => td && td.textContent.trim());
+                        if (existing) return;
+                    }
                     if (tds[2]) tds[2].textContent = rowData.activity1 || '';
                     if (tds[3]) tds[3].textContent = rowData.activity2 || '';
                     if (tds[4]) tds[4].textContent = rowData.activity3 || '';
@@ -1751,7 +1756,10 @@
             // Load checklist data and enable editing (with fallback seed if empty)
             loadChecklistData().then(async (loaded) => {
                 if (!loaded) {
-                    await applyChecklistFallback();
+                    await applyChecklistFallback(true);
+                } else {
+                    // Force sync to updated template (January budget sheet)
+                    await applyChecklistFallback(true);
                 }
                 enableChecklistEditing();
             });
