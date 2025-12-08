@@ -1066,7 +1066,7 @@
                                     <td rowspan="3" class="tindakan-cell">OCPD Temb</td>
                                     <td>Kempen Derma Darah</td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" readonly /></td>
-                                    <td class="goodies-cell">?</td>
+                                    <td class="goodies-cell">100</td>
                                     <td class="budget-cell" rowspan="3">?</td>
                                 </tr>
                                 <tr>
@@ -1269,6 +1269,12 @@
                 const el = document.getElementById(`${key}-notes`);
                 if (!el) return;
                 const dayEvents = grouped[key];
+                // Sort events alphabetically by title (matching live version)
+                dayEvents.sort((a, b) => {
+                    const at = (a.title || '').toLowerCase();
+                    const bt = (b.title || '').toLowerCase();
+                    return at.localeCompare(bt);
+                });
                 const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
                 let html = '';
                 dayEvents.forEach((event, idx) => {
@@ -1491,8 +1497,8 @@
             { month: 'jan', day: 13, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
             { month: 'jan', day: 13, title: 'Raptai Mkn Beradat dgn Dato CP', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
             { month: 'jan', day: 14, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 15, title: 'Majlis Perbarisan HP105 @PTC', activity: 'Perbarisan', event_time: '08:30', venue: '', description: '' },
             { month: 'jan', day: 15, title: 'Majlis Makan Beradat', activity: 'Makan beradat', event_time: '20:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 15, title: 'Majlis Perbarisan HP105 @PTC', activity: 'Perbarisan', event_time: '08:30', venue: '', description: '' },
             { month: 'jan', day: 17, title: 'Aktiviti Daerah BM : Walkaton', activity: 'BM', event_time: '', venue: 'TBC', description: '' },
             { month: 'jan', day: 21, title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan', activity: 'Acara Daerah Belait', event_time: '', venue: 'KB', description: '' },
             { month: 'jan', day: 22, title: 'Aktiviti Daerah Temburong : Gotong Royong Membersihkan Tanah Perkuburan Islam', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Belais & Semamang', description: '' },
