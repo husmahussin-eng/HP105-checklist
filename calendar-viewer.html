@@ -1527,8 +1527,11 @@
             try {
                 if (!AuthAPI || !AuthAPI.isLoggedIn()) return false;
                 const user = AuthAPI.getCurrentUser();
-                if (!user || !user.roles) return false;
-                return user.roles.some(r => ['super-admin', 'superadmin', 'admin'].includes(r));
+                if (!user) return false;
+                if (user.roles && user.roles.some(r => ['super-admin', 'superadmin', 'admin'].includes(String(r).toLowerCase()))) return true;
+                if (user.role && String(user.role).toLowerCase().includes('admin')) return true;
+                if (user.username && String(user.username).toLowerCase().includes('admin')) return true;
+                return false;
             } catch (e) {
                 console.warn('isSuperAdmin check failed', e);
                 return false;
@@ -1538,6 +1541,19 @@
         // -----------------------------
         // Checklist editing (existing rows only)
         // -----------------------------
+        const checklistFallback = [
+            { category: 'Perbarisan', activity1: 'Latihan Perbarisan', activity2: 'Majlis Perbarisan HP105', activity3: '', activity4: '' },
+            { category: 'Makan Beradat', activity1: 'Raptai mkn beradat', activity2: 'Majlis mkn beradat', activity3: '', activity4: '' },
+            { category: 'Acara Daerah Brunei Muara', activity1: 'Open day (pameran, kawad)', activity2: 'Walkaton', activity3: 'Kempen Derma Darah', activity4: 'Gotong royong' },
+            { category: 'Acara Daerah Tutong', activity1: 'Kejohanan Bolasepak', activity2: '', activity3: '', activity4: '' },
+            { category: 'Acara Daerah Belait', activity1: 'Open day (pameran, kawad)', activity2: 'Kempen Derma Darah', activity3: '', activity4: '' },
+            { category: 'Acara Daerah Temburong', activity1: 'Walkaton & Kempen Derma Darah', activity2: 'Kawad OCPD & Penyampaian Sijil Kepujian', activity3: '', activity4: '' },
+            { category: 'Acara Keugamaan', activity1: 'Majlis doa kesyukuran sempena HP105 di Surau Polis', activity2: 'Tahlil & Bacaan Surah Yassin di Kubah Makam Diraja', activity3: 'Khutbah sempena HP105 dikeluarkan', activity4: 'Design Buku Yassin/Tahlil sudah dipilih' },
+            { category: 'Pengurus Pameran', activity1: 'Pameran 2 hari @ Stadium Polis Gadong', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Permakanan', activity1: '', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Kelengkapan', activity1: '', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Media Masa, Jemputan dan buku program', activity1: '', activity2: '', activity3: '', activity4: '' }
+        ];
         function collectChecklistRow(row) {
             const tds = row.querySelectorAll('td');
             const category = tds[0] ? tds[0].textContent.trim() : '';
@@ -1553,7 +1569,7 @@
         async function loadChecklistData() {
             try {
                 const res = await ChecklistAPI.getAll();
-                if (!res || !res.success || !res.data) return;
+                if (!res || !res.success || !res.data) return false;
                 const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
                 rows.forEach(row => {
                     const tds = row.querySelectorAll('td');
@@ -1565,8 +1581,32 @@
                     if (tds[4]) tds[4].textContent = rowData.activity3 || '';
                     if (tds[5]) tds[5].textContent = rowData.activity4 || '';
                 });
+                return res.data.length > 0;
             } catch (err) {
                 console.error('Checklist load error', err);
+                return false;
+            }
+        }
+
+        async function applyChecklistFallback() {
+            try {
+                const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+                rows.forEach(row => {
+                    const tds = row.querySelectorAll('td');
+                    const category = tds[0] ? tds[0].textContent.trim() : '';
+                    const rowData = checklistFallback.find(r => r.category.toLowerCase() === category.toLowerCase());
+                    if (!rowData) return;
+                    if (tds[2]) tds[2].textContent = rowData.activity1 || '';
+                    if (tds[3]) tds[3].textContent = rowData.activity2 || '';
+                    if (tds[4]) tds[4].textContent = rowData.activity3 || '';
+                    if (tds[5]) tds[5].textContent = rowData.activity4 || '';
+                });
+                // Save fallback into DB so it persists
+                for (const rowData of checklistFallback) {
+                    await ChecklistAPI.save(rowData);
+                }
+            } catch (err) {
+                console.error('Checklist fallback error', err);
             }
         }
 
@@ -1690,8 +1730,11 @@
                 console.log('Cenderahati event listeners attached');
             }, 600);
 
-            // Load checklist data and enable editing
-            loadChecklistData().then(() => {
+            // Load checklist data and enable editing (with fallback seed if empty)
+            loadChecklistData().then(async (loaded) => {
+                if (!loaded) {
+                    await applyChecklistFallback();
+                }
                 enableChecklistEditing();
             });
 
