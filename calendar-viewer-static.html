@@ -179,6 +179,13 @@
         .checklist-table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            width: 100%;
+            position: relative;
+        }
+        
+        .checklist-container {
+            width: 100%;
+            padding: 0.5rem;
         }
         
         .checklist-table {
@@ -390,27 +397,100 @@
         }
         
         @media (max-width: 768px) {
-            .checklist-table {
-                font-size: 0.75rem;
+            .checklist-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -0.5rem;
+                padding: 0 0.5rem;
             }
             
-            .checklist-table th,
+            .checklist-table {
+                font-size: 0.7rem;
+                min-width: 800px;
+            }
+            
+            .checklist-table th {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.7rem;
+                white-space: nowrap;
+            }
+            
             .checklist-table td {
-                padding: 0.5rem 0.75rem;
+                padding: 0.4rem 0.5rem;
+                font-size: 0.7rem;
             }
             
             .checklist-table th:first-child,
             .checklist-table td:first-child {
-                min-width: 150px;
+                min-width: 35px;
+                max-width: 45px;
+                position: sticky;
+                left: 0;
+                z-index: 10;
             }
             
-            .checklist-table td:not(:first-child) {
-                min-width: 120px;
+            .checklist-table th:nth-child(2),
+            .checklist-table td:nth-child(2) {
+                min-width: 70px;
+                max-width: 100px;
+            }
+            
+            .checklist-table th:nth-child(3),
+            .checklist-table td:nth-child(3) {
+                min-width: 70px;
+                max-width: 100px;
+            }
+            
+            .checklist-table th:nth-child(4),
+            .checklist-table td:nth-child(4) {
+                min-width: 200px;
+                max-width: 300px;
+            }
+            
+            .checklist-table th:nth-child(5),
+            .checklist-table td:nth-child(5) {
+                min-width: 60px;
+                max-width: 80px;
+            }
+            
+            .checklist-table th:nth-child(6),
+            .checklist-table td:nth-child(6) {
+                min-width: 60px;
+                max-width: 80px;
+            }
+            
+            .checklist-table th:nth-child(7),
+            .checklist-table td:nth-child(7) {
+                min-width: 80px;
+                max-width: 120px;
+            }
+            
+            .cenderahati-input {
+                width: 100%;
+                max-width: 60px;
+                padding: 0.25rem 0.35rem;
+                font-size: 0.7rem;
             }
             
             .activity-item {
-                font-size: 0.7rem;
-                padding: 0.25rem 0.375rem;
+                font-size: 0.65rem;
+                padding: 0.2rem 0.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .checklist-table {
+                font-size: 0.65rem;
+                min-width: 750px;
+            }
+            
+            .checklist-table th,
+            .checklist-table td {
+                padding: 0.35rem 0.4rem;
+            }
+            
+            .checklist-table th {
+                font-size: 0.65rem;
             }
         }
         
@@ -741,15 +821,35 @@
             }
             
             .calendar-tabs {
-                flex-wrap: wrap;
-                gap: 0.25rem;
-                margin-bottom: 0.5rem;
+                flex-wrap: nowrap;
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 0.5rem;
             }
             
             .calendar-tab {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.8rem;
-                min-height: 40px;
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                min-height: 44px;
+                min-width: 120px;
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
+            
+            .calendar-tab svg {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .checklist-container {
+                padding: 0.25rem;
+            }
+            
+            .checklist-table-wrapper {
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             }
             
             .calendar-days {
