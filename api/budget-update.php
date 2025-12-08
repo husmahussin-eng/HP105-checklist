@@ -33,10 +33,13 @@ try {
         $bil = $input['bil'];
         $perkara = isset($input['perkara']) ? $input['perkara'] : null;
         $keterangan = isset($input['keterangan']) ? $input['keterangan'] : null;
-        // Allow empty perbelanjaan -> NULL; otherwise cast to float
-        $perbelanjaan = null;
+        // Allow empty perbelanjaan; default to 0.0; cast to float to avoid SQL errors
+        $perbelanjaan = 0.0;
         if (isset($input['perbelanjaan']) && $input['perbelanjaan'] !== '') {
             $perbelanjaan = floatval($input['perbelanjaan']);
+            if (is_nan($perbelanjaan)) {
+                $perbelanjaan = 0.0;
+            }
         }
         $user = isset($input['username']) ? $input['username'] : 'System';
 

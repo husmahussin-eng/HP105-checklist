@@ -1667,13 +1667,16 @@
             // Strip currency symbols/commas; allow empty
             let perbelanjaan = tds[3] ? tds[3].textContent.trim() : '';
             perbelanjaan = perbelanjaan.replace(/[\$,]/g, '').trim();
+            if (perbelanjaan === '') {
+                perbelanjaan = '0';
+            }
             return { bil, perkara, keterangan, perbelanjaan };
         }
 
         async function saveBudgetRow(row) {
             try {
                 const payload = collectBudgetRow(row);
-                if (!payload.bil) return;
+                if (!payload.bil) return; // skip rows without bil
                 const res = await BudgetAPI.update(payload);
                 if (!res || !res.success) {
                     alert('Gagal simpan budget untuk bil ' + payload.bil);
