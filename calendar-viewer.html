@@ -1570,18 +1570,22 @@
             try {
                 const res = await ChecklistAPI.getAll();
                 if (!res || !res.success || !res.data) return false;
+                let hasContent = false;
                 const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
                 rows.forEach(row => {
                     const tds = row.querySelectorAll('td');
                     const category = tds[0] ? tds[0].textContent.trim() : '';
                     const rowData = res.data.find(r => (r.category || '').toLowerCase() === category.toLowerCase());
                     if (!rowData) return;
+                    if (rowData.activity1 || rowData.activity2 || rowData.activity3 || rowData.activity4) {
+                        hasContent = true;
+                    }
                     if (tds[2]) tds[2].textContent = rowData.activity1 || '';
                     if (tds[3]) tds[3].textContent = rowData.activity2 || '';
                     if (tds[4]) tds[4].textContent = rowData.activity3 || '';
                     if (tds[5]) tds[5].textContent = rowData.activity4 || '';
                 });
-                return res.data.length > 0;
+                return hasContent;
             } catch (err) {
                 console.error('Checklist load error', err);
                 return false;
