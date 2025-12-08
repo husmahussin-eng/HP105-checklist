@@ -207,13 +207,15 @@
         }
         
         .checklist-table th {
-            padding: 0.45rem 0.55rem;
+            padding: 0.6rem 0.55rem;
             text-align: left;
             font-weight: 700;
             font-size: 0.82rem;
             white-space: normal;
             word-break: break-word;
+            line-height: 1.4;
             border: 2px solid #444;
+            vertical-align: top;
         }
         
         .checklist-table th:first-child {
@@ -362,32 +364,38 @@
             font-size: 0.75rem;
         }
         
+        /* Cenderahati column - plain text like Goodies, no input box */
         .cenderahati-input {
-            width: 70px;
-            padding: 0.35rem 0.45rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
+            border: none;
+            background: transparent;
+            padding: 0;
+            width: auto;
+            font-size: inherit;
             text-align: center;
-            transition: all 0.2s;
-        }
-        
-        .cenderahati-input:focus {
+            color: inherit;
+            font-weight: inherit;
+            box-shadow: none;
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
+        .cenderahati-input:focus,
         .cenderahati-input:hover {
-            border-color: #9ca3af;
+            border: none;
+            box-shadow: none;
+            outline: none;
         }
 
         /* Read-only styling for static snapshot */
         .cenderahati-input.readonly {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-            color: #475569;
+            background: transparent;
+            border: none;
+            color: inherit;
             cursor: default;
+        }
+        
+        /* Cenderahati cell styling to match Goodies */
+        .checklist-table td:nth-child(5) {
+            text-align: center;
         }
         
         /* Hide budget tab/page entirely */
@@ -466,10 +474,12 @@
             }
             
             .cenderahati-input {
-                width: 100%;
-                max-width: 60px;
-                padding: 0.25rem 0.35rem;
-                font-size: 0.7rem;
+                border: none;
+                background: transparent;
+                padding: 0;
+                width: auto;
+                font-size: inherit;
+                text-align: center;
             }
             
             .activity-item {
@@ -491,6 +501,18 @@
             
             .checklist-table th {
                 font-size: 0.65rem;
+                padding: 0.45rem 0.35rem;
+                line-height: 1.3;
+                white-space: normal;
+                word-break: break-word;
+            }
+            
+            .cenderahati-input {
+                border: none;
+                background: transparent;
+                padding: 0;
+                width: auto;
+                font-size: inherit;
             }
         }
         
