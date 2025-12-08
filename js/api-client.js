@@ -1,5 +1,9 @@
 // API Client for RBPF Checklist System
-const API_BASE_URL = window.location.origin + '/api';
+// Get the base directory path (handles subdirectories like /HP105-checklist/)
+const currentPath = window.location.pathname;
+const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+const API_BASE_URL = window.location.origin + basePath + '/api';
+console.log('API Base URL:', API_BASE_URL);
 
 // Helper function to make API calls
 async function apiCall(endpoint, method = 'GET', data = null) {
@@ -168,6 +172,17 @@ const MeetingsAPI = {
         });
     },
     
+    async updateDocument(meetingId, documentName, documentData) {
+        const currentUser = AuthAPI.getCurrentUser();
+        return await apiCall('meetings.php', 'PUT', {
+            action: 'update_document',
+            id: meetingId,
+            document_name: documentName,
+            document_data: documentData,
+            updated_by: currentUser ? currentUser.username : 'System'
+        });
+    },
+    
     async delete(meetingId) {
         const currentUser = AuthAPI.getCurrentUser();
         return await apiCall('meetings.php', 'DELETE', {
@@ -211,25 +226,35 @@ const CalendarEventsAPI = {
         return await apiCall(`calendar-events.php?month=${month}&day=${day}`, 'GET');
     },
     
-    async create(month, day, eventTime, eventTitle, venue) {
+    async create(month, day, status, title, description, activity = '') {
         const currentUser = AuthAPI.getCurrentUser();
         return await apiCall('calendar-events.php', 'POST', {
             month,
             day,
-            event_time: eventTime,
-            event_title: eventTitle,
-            venue: venue,
+            status: status,
+            title: title,
+            description: description,
+            activity: activity,
+            // Legacy fields for backward compatibility
+            event_time: status,
+            event_title: title,
+            venue: description,
             created_by: currentUser ? currentUser.username : 'System'
         });
     },
     
-    async update(eventId, eventTime, eventTitle, venue) {
+    async update(eventId, status, title, description, activity = '') {
         const currentUser = AuthAPI.getCurrentUser();
         return await apiCall('calendar-events.php', 'PUT', {
             id: eventId,
-            event_time: eventTime,
-            event_title: eventTitle,
-            venue: venue,
+            status: status,
+            title: title,
+            description: description,
+            activity: activity,
+            // Legacy fields for backward compatibility
+            event_time: status,
+            event_title: title,
+            venue: description,
             username: currentUser ? currentUser.username : ''
         });
     },
@@ -282,6 +307,70 @@ const BudgetAPI = {
             items: items,
             username: currentUser ? currentUser.username : 'System'
         });
+    },
+
+    async update(item) {
+        const currentUser = AuthAPI.getCurrentUser();
+        return await apiCall('budget-update.php', 'PUT', {
+            bil: item.bil,
+            perkara: item.perkara,
+            keterangan: item.keterangan,
+            perbelanjaan: item.perbelanjaan,
+            username: currentUser ? currentUser.username : 'System'
+        });
+    }
+};
+
+// Checklist API (Acara Checklist table)
+const ChecklistAPI = {
+    async getAll() {
+        return await apiCall('checklist.php', 'GET');
+    },
+
+    async save(row) {
+        const currentUser = AuthAPI.getCurrentUser();
+        return await apiCall('checklist.php', 'PUT', {
+            category: row.category,
+            activity1: row.activity1,
+            activity2: row.activity2,
+            activity3: row.activity3,
+            activity4: row.activity4,
+            username: currentUser ? currentUser.username : 'System'
+        });
+    }
+};
+
+// Timeline Metadata API (Tindakan and Status columns)
+const TimelineMetadataAPI = {
+    async getAll() {
+        return await apiCall('timeline-metadata.php', 'GET');
+    },
+    
+    async save(month, activity, tindakan, status) {
+        const currentUser = AuthAPI.getCurrentUser();
+        return await apiCall('timeline-metadata.php', 'POST', {
+            month,
+            activity,
+            tindakan,
+            status,
+            username: currentUser ? currentUser.username : 'System'
+        });
+    }
+};
+
+// Cenderahati API (Gift count per category)
+const CenderahatiAPI = {
+    async getAll() {
+        return await apiCall('cenderahati.php', 'GET');
+    },
+    
+    async save(category, count) {
+        const currentUser = AuthAPI.getCurrentUser();
+        return await apiCall('cenderahati.php', 'POST', {
+            category,
+            count: parseInt(count) || 0,
+            username: currentUser ? currentUser.username : 'System'
+        });
     }
 };
 
@@ -295,4 +384,7 @@ window.CalendarAPI = CalendarAPI;
 window.CalendarEventsAPI = CalendarEventsAPI;
 window.BudgetAPI = BudgetAPI;
 window.BackupAPI = BackupAPI;
+window.TimelineMetadataAPI = TimelineMetadataAPI;
+window.CenderahatiAPI = CenderahatiAPI;
+window.ChecklistAPI = ChecklistAPI;
 
