@@ -906,7 +906,10 @@
                             <thead>
                                 <tr>
                                     <th>Kategori</th>
+                                    <th>Tindakan</th>
                                     <th id="cenderahati-header">Cenderahati (0)</th>
+                                    <th>Goodies bag (Notebook, pen &amp; bag)</th>
+                                    <th>Budget</th>
                                     <th>Acara / Aktiviti 1</th>
                                     <th>Acara / Aktiviti 2</th>
                                     <th>Acara / Aktiviti 3</th>
@@ -916,7 +919,10 @@
                             <tbody>
                                 <tr>
                                     <td>Perbarisan</td>
+                                    <td class="tindakan-cell">P. Perbarisan</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">$34,073.75</td>
                                     <td><span class="activity-item">Latihan Perbarisan</span></td>
                                     <td><span class="activity-item">Majlis Perbarisan HP105</span></td>
                                     <td class="empty-cell">-</td>
@@ -924,23 +930,32 @@
                                 </tr>
                                 <tr>
                                     <td>Makan Beradat</td>
+                                    <td class="tindakan-cell">P. permakanan / Setiausaha Mes</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td><span class="activity-item">Raptai mkn beradat</span></td>
-                                    <td><span class="activity-item">Majlis mkn beradat</span></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">belum ada</td>
+                                    <td><span class="activity-item">Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026 (belum termasuk support staffs)</span></td>
+                                    <td><span class="activity-item">Makan beradat pada 15/01/2026</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Brunei Muara</td>
+                                    <td class="tindakan-cell">OCPD BM</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td><span class="activity-item">Open day (pameran, kawad)</span></td>
-                                    <td><span class="activity-item">Walkaton</span></td>
+                                    <td class="goodies-cell">350</td>
+                                    <td class="budget-cell">-</td>
+                                    <td><span class="activity-item">Open day</span></td>
                                     <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td><span class="activity-item">Gotong royong</span></td>
+                                    <td><span class="activity-item">Gotong Royong</span></td>
+                                    <td><span class="activity-item">Walkaton</span></td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Tutong</td>
+                                    <td class="tindakan-cell">OCPD TT</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td class="goodies-cell">210</td>
+                                    <td class="budget-cell">$2,328.50</td>
                                     <td><span class="activity-item">Kejohanan Bolasepak</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
@@ -948,56 +963,77 @@
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Belait</td>
+                                    <td class="tindakan-cell">OCPD Belait</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td><span class="activity-item">Open day (pameran, kawad)</span></td>
+                                    <td class="goodies-cell">500</td>
+                                    <td class="budget-cell">-</td>
+                                    <td><span class="activity-item">Open day</span></td>
                                     <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td class="empty-cell">-</td>
+                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Daerah Temburong</td>
+                                    <td class="tindakan-cell">OCPD Temb</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td><span class="activity-item">Kawad OCPD & Penyampaian Sijil Kepujian</span></td>
-                                    <td><span class="activity-item">Membersihkan Tanah Perkuburan Islam</span></td>
+                                    <td class="goodies-cell">370</td>
+                                    <td class="budget-cell">-</td>
+                                    <td><span class="activity-item">Gotong Royong</span></td>
+                                    <td><span class="activity-item">Community Engagement @ POLSARA</span></td>
+                                    <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Acara Keugamaan</td>
+                                    <td class="tindakan-cell">BUI</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td><span class="activity-item">Majlis doa kesyukuran sempena HP105 di Surau Polis</span></td>
-                                    <td><span class="activity-item">Tahlil & Bacaan Surah Yassin di Kubah Makam Diraja</span></td>
-                                    <td><span class="activity-item">Khutbah sempena HP105 dikeluarkan</span></td>
-                                    <td><span class="activity-item">Design Buku Yassin/Tahlil sudah dipilih</span></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">$1,275.00 / $1,950.00</td>
+                                    <td><span class="activity-item">Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)</span></td>
+                                    <td><span class="activity-item">Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</span></td>
+                                    <td class="empty-cell">-</td>
+                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Pengurus Pameran</td>
+                                    <td class="tindakan-cell">P. Pameran</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td><span class="activity-item">Pameran 2 hari @ Stadium Polis</span></td>
+                                    <td class="goodies-cell">600</td>
+                                    <td class="budget-cell">$12,800.00</td>
+                                    <td><span class="activity-item">Pameran diadakan selama dua(2) hari</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Pengurus Permakanan</td>
+                                    <td class="tindakan-cell">P. Permakanan</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="empty-cell">-</td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">belum ada</td>
+                                    <td><span class="activity-item">Pencetakan poster Sambutan HP ke -105</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Pengurus Kelengkapan</td>
+                                    <td class="tindakan-cell">-</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="empty-cell">-</td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">belum ada</td>
+                                    <td><span class="activity-item">Perbelanjaan penyewaan kem, backdrop, fabric</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Pengurus Media Masa, Jemputan dan buku program</td>
+                                    <td class="tindakan-cell">-</td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="empty-cell">-</td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">belum ada</td>
+                                    <td><span class="activity-item">Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</span></td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
                                     <td class="empty-cell">-</td>
@@ -1548,27 +1584,27 @@
         // Checklist editing (existing rows only)
         // -----------------------------
         const checklistFallback = [
-            { category: 'Perbarisan', activity1: 'Latihan Perbarisan', activity2: 'Majlis Perbarisan HP105', activity3: '', activity4: '' },
-            { category: 'Makan Beradat', activity1: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026 (belum termasuk support staffs)', activity2: 'Makan beradat pada 15/01/2026', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Brunei Muara', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Gotong Royong', activity4: 'Walkaton' },
-            { category: 'Acara Daerah Tutong', activity1: 'Kejohanan Bolasepak', activity2: '', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Belait', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Kempen Derma Darah', activity4: '' },
-            { category: 'Acara Daerah Temburong', activity1: 'Gotong Royong', activity2: 'Community Engagement @ POLSARA', activity3: '', activity4: '' },
-            { category: 'Acara Keugamaan', activity1: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)', activity2: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', activity3: '', activity4: '' },
-            { category: 'Pengurus Pameran', activity1: 'Pameran diadakan selama dua(2) hari', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Permakanan', activity1: 'Pencetakan poster Sambutan HP ke -105', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Kelengkapan', activity1: 'Perbelanjaan penyewaan kem, backdrop, fabric', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Media Masa, Jemputan dan buku program', activity1: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', activity2: '', activity3: '', activity4: '' }
+            { category: 'Perbarisan', tindakan: 'P. Perbarisan', goodies: '-', budget: '$34,073.75', activity1: 'Latihan Perbarisan', activity2: 'Majlis Perbarisan HP105', activity3: '', activity4: '' },
+            { category: 'Makan Beradat', tindakan: 'P. permakanan / Setiausaha Mes', goodies: '-', budget: 'belum ada', activity1: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026 (belum termasuk support staffs)', activity2: 'Makan beradat pada 15/01/2026', activity3: '', activity4: '' },
+            { category: 'Acara Daerah Brunei Muara', tindakan: 'OCPD BM', goodies: '350', budget: '-', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Gotong Royong', activity4: 'Walkaton' },
+            { category: 'Acara Daerah Tutong', tindakan: 'OCPD TT', goodies: '210', budget: '$2,328.50', activity1: 'Kejohanan Bolasepak', activity2: '', activity3: '', activity4: '' },
+            { category: 'Acara Daerah Belait', tindakan: 'OCPD Belait', goodies: '500', budget: '-', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Kempen Derma Darah', activity4: '' },
+            { category: 'Acara Daerah Temburong', tindakan: 'OCPD Temb', goodies: '370', budget: '-', activity1: 'Gotong Royong', activity2: 'Community Engagement @ POLSARA', activity3: '', activity4: '' },
+            { category: 'Acara Keugamaan', tindakan: 'BUI', goodies: '-', budget: '$1,275.00 / $1,950.00', activity1: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)', activity2: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', activity3: '', activity4: '' },
+            { category: 'Pengurus Pameran', tindakan: 'P. Pameran', goodies: '600', budget: '$12,800.00', activity1: 'Pameran diadakan selama dua(2) hari', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Permakanan', tindakan: 'P. Permakanan', goodies: '-', budget: 'belum ada', activity1: 'Pencetakan poster Sambutan HP ke -105', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Kelengkapan', tindakan: '-', goodies: '-', budget: 'belum ada', activity1: 'Perbelanjaan penyewaan kem, backdrop, fabric', activity2: '', activity3: '', activity4: '' },
+            { category: 'Pengurus Media Masa, Jemputan dan buku program', tindakan: '-', goodies: '-', budget: 'belum ada', activity1: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', activity2: '', activity3: '', activity4: '' }
         ];
         function collectChecklistRow(row) {
             const tds = row.querySelectorAll('td');
             const category = tds[0] ? tds[0].textContent.trim() : '';
             return {
                 category,
-                activity1: tds[2] ? tds[2].textContent.trim() : '',
-                activity2: tds[3] ? tds[3].textContent.trim() : '',
-                activity3: tds[4] ? tds[4].textContent.trim() : '',
-                activity4: tds[5] ? tds[5].textContent.trim() : ''
+                activity1: tds[5] ? tds[5].textContent.trim() : '',
+                activity2: tds[6] ? tds[6].textContent.trim() : '',
+                activity3: tds[7] ? tds[7].textContent.trim() : '',
+                activity4: tds[8] ? tds[8].textContent.trim() : ''
             };
         }
 
@@ -1586,10 +1622,10 @@
                     if (rowData.activity1 || rowData.activity2 || rowData.activity3 || rowData.activity4) {
                         hasContent = true;
                     }
-                    if (tds[2]) tds[2].textContent = rowData.activity1 || '';
-                    if (tds[3]) tds[3].textContent = rowData.activity2 || '';
-                    if (tds[4]) tds[4].textContent = rowData.activity3 || '';
-                    if (tds[5]) tds[5].textContent = rowData.activity4 || '';
+                    if (tds[5]) tds[5].textContent = rowData.activity1 || '';
+                    if (tds[6]) tds[6].textContent = rowData.activity2 || '';
+                    if (tds[7]) tds[7].textContent = rowData.activity3 || '';
+                    if (tds[8]) tds[8].textContent = rowData.activity4 || '';
                 });
                 return hasContent;
             } catch (err) {
@@ -1608,17 +1644,26 @@
                     if (!rowData) return;
                     if (!force) {
                         // If the row already has any content, skip unless force is true
-                        const existing = [tds[2], tds[3], tds[4], tds[5]].some(td => td && td.textContent.trim());
+                        const existing = [tds[5], tds[6], tds[7], tds[8]].some(td => td && td.textContent.trim());
                         if (existing) return;
                     }
-                    if (tds[2]) tds[2].textContent = rowData.activity1 || '';
-                    if (tds[3]) tds[3].textContent = rowData.activity2 || '';
-                    if (tds[4]) tds[4].textContent = rowData.activity3 || '';
-                    if (tds[5]) tds[5].textContent = rowData.activity4 || '';
+                    if (tds[1]) tds[1].textContent = rowData.tindakan || '';
+                    if (tds[3]) tds[3].textContent = rowData.goodies || '';
+                    if (tds[4]) tds[4].textContent = rowData.budget || '';
+                    if (tds[5]) tds[5].textContent = rowData.activity1 || '';
+                    if (tds[6]) tds[6].textContent = rowData.activity2 || '';
+                    if (tds[7]) tds[7].textContent = rowData.activity3 || '';
+                    if (tds[8]) tds[8].textContent = rowData.activity4 || '';
                 });
                 // Save fallback into DB so it persists
                 for (const rowData of checklistFallback) {
-                    await ChecklistAPI.save(rowData);
+                    await ChecklistAPI.save({
+                        category: rowData.category,
+                        activity1: rowData.activity1,
+                        activity2: rowData.activity2,
+                        activity3: rowData.activity3,
+                        activity4: rowData.activity4
+                    });
                 }
             } catch (err) {
                 console.error('Checklist fallback error', err);
@@ -1644,7 +1689,7 @@
             rows.forEach(row => {
                 const tds = row.querySelectorAll('td');
                 // Editable: Acara/Aktiviti 1..4 (skip category and cenderahati input)
-                [2,3,4,5].forEach(idx => {
+                [5,6,7,8].forEach(idx => {
                     const cell = tds[idx];
                     if (!cell) return;
                     cell.contentEditable = true;
