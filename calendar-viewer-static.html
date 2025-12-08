@@ -1427,7 +1427,8 @@
                     const color = colors[idx % colors.length];
                     const eventTitle = event.title || '';
                     const venue = event.venue ? ` @${event.venue}` : '';
-                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}</div>`;
+                    const description = event.description ? ` ${event.description}` : '';
+                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}${description}</div>`;
                 });
                 el.innerHTML = html;
                 // Highlight the day box
