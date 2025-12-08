@@ -327,42 +327,10 @@
             cursor: default;
         }
         
-        /* Budget Table Specific Styles */
-        .budget-table th:first-child,
-        .budget-table td:first-child {
-            min-width: 60px !important;
-            text-align: center;
-        }
-        
-        .budget-table th:nth-child(2),
-        .budget-table td:nth-child(2) {
-            min-width: 180px !important;
-            font-weight: 600;
-        }
-        
-        .budget-table th:nth-child(3),
-        .budget-table td:nth-child(3) {
-            min-width: 300px !important;
-        }
-        
-        .budget-table th:nth-child(4),
-        .budget-table td:nth-child(4) {
-            min-width: 140px !important;
-            text-align: right;
-            font-weight: 600;
-        }
-        
-        .budget-table tbody tr:hover {
-            background: #f9fafb;
-        }
-        
-        .budget-total-row {
-            border-top: 3px solid #f59e0b !important;
-        }
-        
-        .budget-total-row td {
-            background: #fef3c7 !important;
-            font-size: 1.1rem !important;
+        /* Hide budget tab/page entirely */
+        #calendar-month-budget,
+        #tab-budget {
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -868,12 +836,6 @@
                     </svg>
                     <span>Acara Checklist</span>
                 </button>
-                <button class="calendar-tab" onclick="switchCalendarTab('budget')" id="tab-budget">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>Budget</span>
-                </button>
             </div>
             
             <!-- December 2025 Calendar -->
@@ -1105,138 +1067,6 @@
                 </div>
             </div>
             
-            <!-- Budget Tab -->
-            <div class="calendar-month" id="calendar-month-budget">
-                <div class="checklist-container">
-                    <div class="checklist-table-wrapper">
-                        <table class="checklist-table budget-table">
-                            <thead>
-                                <tr>
-                                    <th style="min-width: 60px;">Bil</th>
-                                    <th style="min-width: 180px;">Perkara</th>
-                                    <th style="min-width: 300px;">Keterangan</th>
-                                    <th style="min-width: 140px;">Perbelanjaan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Perbarisan</td>
-                                    <td>Anggaran Perbelanjaan merangkumi hari latihan dan raptai perbarisan</td>
-                                    <td><strong>$ 34,073.75</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Kelengkapan</td>
-                                    <td>Perbelanjaan penyewaan kem, backdrop, fabric ceiling</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Makan Beradat</td>
-                                    <td>Makan beradat pada 15/01/2026</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>Raptai Makan Beradat</td>
-                                    <td>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026</td>
-                                    <td><strong>$ 20,929.00</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Keagamaan</td>
-                                    <td>Mencetak surah yassin sebanyak 500 softcover dan 50 softcover</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Pameran</td>
-                                    <td>Pameran diadakan selama dua(2) hari</td>
-                                    <td><strong>$ 12,800.00</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Aktiviti Daerah Brunei Muara</td>
-                                    <td>Open day</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Walkaton</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Kempen Derma Darah</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Gotong Royong</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Aktiviti Daerah Tutong</td>
-                                    <td>Kejohanan Bolasepak</td>
-                                    <td><strong>$ 1,638.50</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Aktiviti Daerah Belait</td>
-                                    <td>Open day</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Kempen Derma Darah</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Aktiviti Daerah Temburong</td>
-                                    <td>Kempen Derma Darah</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Gotong Royong</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Kawad OCPD & Penyampaian Sijil kepujian</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Cenderahati</td>
-                                    <td>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</td>
-                                    <td><strong>belum ada</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>PRO</td>
-                                    <td>Pencetakan poster Sambutan HP ke -105</td>
-                                    <td><strong>belum ada</strong></td>
-                                </tr>
-                                <tr class="budget-total-row">
-                                    <td colspan="3" style="text-align: right; font-weight: 700; background: #fef3c7;">Jumlah Keseluruhan</td>
-                                    <td style="font-weight: 700; font-size: 1.1rem; background: #fef3c7;"><strong>$ 69,441.25</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="checklist-footer">DKH@2025</div>
-                </div>
-            </div>
         </div>
     </div>
     
@@ -1386,8 +1216,12 @@
                 const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
                 let html = '';
                 dayEvents.forEach((event, idx) => {
+                    const formattedTime = formatTimeAMPM(event.event_time);
+                    const displayTime = formattedTime ? formattedTime + ' ' : '';
                     const color = colors[idx % colors.length];
-                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.7rem;">• ${event.title}</div>`;
+                    const eventTitle = event.title || '';
+                    const venue = event.venue ? ` @${event.venue}` : '';
+                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}</div>`;
                 });
                 el.innerHTML = html;
                 // Highlight the day box
@@ -1574,37 +1408,43 @@
             'Pengurus Media Masa, Jemputan dan buku program': 0
         };
 
-        // Static snapshot for calendar events (Dec 2025 & Jan 2026)
+        // Static snapshot for calendar events (Dec 2025 & Jan 2026) - Updated from live database
         const staticEvents = [
             // December 2025
-            { month: 'dec', day: 3,  title: 'Mesyuarat 04/2025', activity: 'Mesyuarat' },
-            { month: 'dec', day: 10, title: 'Mesyuarat 05/2025', activity: 'Mesyuarat' },
-            { month: 'dec', day: 17, title: 'Mesyuarat 06/2025', activity: 'Mesyuarat' },
-            { month: 'dec', day: 24, title: 'Bergambar Ramai AJK HP105 @ MES Bergambar Ramai untuk AJK HP105', activity: 'Mesyuarat' },
-            { month: 'dec', day: 24, title: 'Mesyuarat 07/2025', activity: 'Mesyuarat' },
-            { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat' },
+            { month: 'dec', day: 3,  title: 'Mesyuarat 04/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: 'Pending: 1) Jumlah cenderahati HP1052) Budget permakanan3) Melantik Timbalan Bendahari Pg Wafi4) Memo utk MOH bagi Kempen derma darah' },
+            { month: 'dec', day: 10, title: 'Mesyuarat 05/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
+            { month: 'dec', day: 17, title: 'Mesyuarat 06/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
+            { month: 'dec', day: 24, title: 'Bergambar Ramai AJK HP105 @ MES', activity: 'Mesyuarat', event_time: 'not-started', venue: 'Bergambar Ramai untuk AJK HP105', description: '' },
+            { month: 'dec', day: 24, title: 'Mesyuarat 07/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
+            { month: 'dec', day: 31, title: 'Majlis Doa Kesyukuran HP105', activity: 'Mesyuarat', event_time: '', venue: 'Surau Polis Gadong', description: '' },
+            { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
 
             // January 2026
-            { month: 'jan', day: 3,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 5,  title: 'Aktiviti Daerah BM : Kempen Derma Darah @BP BKS BM', activity: 'BM' },
-            { month: 'jan', day: 5,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 6,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 7,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 8,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 10, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 12, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 13, title: 'Raptai Mkn Beradat dgn Dato CP', activity: 'Makan beradat' },
-            { month: 'jan', day: 13, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 14, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 15, title: 'Majlis Makan Beradat @ Mess', activity: 'Makan beradat' },
-            { month: 'jan', day: 15, title: 'Majlis Perbarisan HP105 @PTC', activity: 'Perbarisan' },
-            { month: 'jan', day: 21, title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan KB', activity: 'Acara Daerah Belait' },
-            { month: 'jan', day: 22, title: 'Aktiviti Daerah Temburong : Membersihkan Tanah Perkuburan Islam @TBC', activity: 'Acara Daerah Temburong' },
-            { month: 'jan', day: 23, title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan' },
-            { month: 'jan', day: 24, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran' },
-            { month: 'jan', day: 24, title: 'Aktivit Daerah Temburong : Kempen Derma Darah @TBC', activity: 'Acara Daerah Temburong' },
-            { month: 'jan', day: 25, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran' },
-            { month: 'jan', day: 27, title: 'Aktiviti Daerah Tutong : Kejohanan Bola Sepak', activity: 'Acara Daerah Tutong' }
+            { month: 'jan', day: 3,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 5,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 5,  title: 'Aktiviti Daerah BM : Kempen Derma Darah @BP BKS', activity: 'BM', event_time: 'not-started', venue: '', description: 'Budget for support staff food' },
+            { month: 'jan', day: 6,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 6,  title: 'Tahlil & Bacaan Surah Yassin @ Kubah Makam Diraja', activity: 'Mesyuarat', event_time: '', venue: 'TBC', description: '' },
+            { month: 'jan', day: 7,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 8,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 8,  title: 'Tahlil & Bacaan Surah Yassin @ Kubah Makam Diraja', activity: 'Mesyuarat', event_time: '', venue: 'TBC', description: '' },
+            { month: 'jan', day: 9,  title: 'Aktiviti Daerah BM : Gotong Royong', activity: 'BM', event_time: '', venue: 'TBC', description: '' },
+            { month: 'jan', day: 10, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 10, title: 'Raptai Mkn Beradat dgn Pengerusi', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 12, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 13, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 13, title: 'Raptai Mkn Beradat dgn Dato CP', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 14, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 15, title: 'Majlis Perbarisan HP105 @PTC', activity: 'Perbarisan', event_time: '08:30', venue: '', description: '' },
+            { month: 'jan', day: 15, title: 'Majlis Makan Beradat', activity: 'Makan beradat', event_time: '20:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 17, title: 'Aktiviti Daerah BM : Walkaton', activity: 'BM', event_time: '', venue: 'TBC', description: '' },
+            { month: 'jan', day: 21, title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan', activity: 'Acara Daerah Belait', event_time: '', venue: 'KB', description: '' },
+            { month: 'jan', day: 22, title: 'Aktiviti Daerah Temburong : Gotong Royong Membersihkan Tanah Perkuburan Islam', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Belais & Semamang', description: '' },
+            { month: 'jan', day: 23, title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan', event_time: '', venue: 'Majlis Keugamaan', description: '' },
+            { month: 'jan', day: 24, title: 'Aktiviti Daerah Temburong : Kempen Derma Darah @Dewan Serbaguna, Kompleks Bumi Putera', activity: 'Acara Daerah Temburong', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 27, title: 'Aktiviti Daerah Tutong : Kejohanan Bola Sepak @Komplek Sukan Tutong', activity: 'Acara Daerah Tutong', event_time: '', venue: '', description: '1) Mini Pameran' },
+            { month: 'jan', day: 28, title: 'Aktiviti Daerah Temburong : Community engagement', activity: 'Acara Daerah Temburong', event_time: '', venue: 'bangunan POLSARA', description: '' },
+            { month: 'jan', day: 31, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran', event_time: '', venue: '', description: '31/01/2026 - 01/02/2026' }
         ];
 
         document.addEventListener('DOMContentLoaded', function() {
