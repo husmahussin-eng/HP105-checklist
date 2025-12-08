@@ -33,7 +33,11 @@ try {
         $bil = $input['bil'];
         $perkara = isset($input['perkara']) ? $input['perkara'] : null;
         $keterangan = isset($input['keterangan']) ? $input['keterangan'] : null;
-        $perbelanjaan = isset($input['perbelanjaan']) ? $input['perbelanjaan'] : null;
+        // Allow empty perbelanjaan -> NULL; otherwise cast to float
+        $perbelanjaan = null;
+        if (isset($input['perbelanjaan']) && $input['perbelanjaan'] !== '') {
+            $perbelanjaan = floatval($input['perbelanjaan']);
+        }
         $user = isset($input['username']) ? $input['username'] : 'System';
 
         $stmt = $pdo->prepare("
