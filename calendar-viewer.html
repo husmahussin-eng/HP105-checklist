@@ -1326,6 +1326,12 @@
                 let eventsDisplayed = 0;
                 Object.keys(eventsByDay).forEach(key => {
                     const dayEvents = eventsByDay[key];
+                    // Sort events alphabetically by title so items like "Latihan..." appear before others
+                    dayEvents.sort((a, b) => {
+                        const at = (a.event_title || a.title || '').toLowerCase();
+                        const bt = (b.event_title || b.title || '').toLowerCase();
+                        return at.localeCompare(bt);
+                    });
                     const [month, day] = key.split('-');
                     const el = document.getElementById(`${key}-notes`);
                     
