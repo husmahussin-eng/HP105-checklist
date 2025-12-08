@@ -43,15 +43,15 @@
             left: 0;
             top: 0;
             color: white;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: hidden;
             z-index: 1000;
             box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
         }
         
         .sidebar-header {
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             position: relative;
@@ -94,9 +94,9 @@
         }
         
         .sidebar-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 0.75rem;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 0.5rem;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -115,14 +115,16 @@
         }
         
         .sidebar-title {
-            font-size: 1.125rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
             letter-spacing: -0.025em;
         }
         
         .sidebar-nav {
-            padding: 1rem 0;
+            padding: 0.5rem 0;
+            flex: 1;
+            overflow: hidden;
         }
         
         .nav-section {
@@ -130,25 +132,25 @@
         }
         
         .nav-section-title {
-            font-size: 0.625rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            padding: 0.75rem 1.5rem 0.5rem;
+            padding: 0.5rem 1.5rem 0.3rem;
             opacity: 0.6;
             font-weight: 600;
         }
         
         .nav-item {
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             color: rgba(255,255,255,0.9);
             text-decoration: none;
-            min-height: 44px;
+            min-height: 40px;
             touch-action: manipulation;
             -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
             user-select: none;
@@ -680,6 +682,15 @@
                 margin-bottom: 0.5rem;
             }
             
+            .user-info {
+                gap: 0.5rem;
+            }
+            
+            .user-avatar {
+                width: 36px;
+                height: 36px;
+            }
+            
             .calendar-tab {
                 padding: 0.5rem 1rem;
                 font-size: 0.8rem;
@@ -827,23 +838,23 @@
                 <div class="nav-section-title">Main</div>
                 
                 <a href="meeting-list.html" class="nav-item">
-                    <span>Minit Mesyuarat</span>
+                    <span>Mesyuarat</span>
                 </a>
                 
-                <a href="senarai-ajk.html" class="nav-item">
-                    <span>Senarai AJK</span>
-                </a>
-                
-                <a href="acara-aktiviti.html" class="nav-item">
-                    <span>Acara/Aktiviti</span>
+                <a href="timeline-hp105-viewer.html" class="nav-item">
+                    <span>Timeline</span>
                 </a>
                 
                 <a href="budget.html" class="nav-item">
                     <span>Budget</span>
                 </a>
                 
+                <a href="senarai-ajk.html" class="nav-item">
+                    <span>Senarai AJK</span>
+                </a>
+
                 <a href="calendar-viewer.html" class="nav-item">
-                    <span>Viewer Page</span>
+                    <span>Viewer</span>
                 </a>
             </div>
         </div>
@@ -940,6 +951,7 @@
                     <span>January 2026</span>
                 </button>
             </div>
+            
             <div class="calendar-grid">
                 <!-- December 2025 -->
                 <div class="calendar-month active" id="calendar-month-dec">
@@ -1337,12 +1349,22 @@
         let editingEventId = null;
         
         function formatTimeAMPM(timeString) {
-            if (!timeString) return 'All Day';
+            // Return empty string if no time provided
+            if (!timeString) return '';
+            
+            // Check if timeString is a valid time format (HH:MM or H:MM)
+            if (!timeString.includes(':')) return '';
+            
             const [hours, minutes] = timeString.split(':');
             let hour = parseInt(hours);
+            
+            // If parsing failed or resulted in NaN, return empty string
+            if (isNaN(hour) || !minutes) return '';
+            
             const ampm = hour >= 12 ? 'PM' : 'AM';
             if (hour === 0) hour = 12;
             else if (hour > 12) hour = hour - 12;
+            
             return `${hour}:${minutes} ${ampm}`;
         }
         
@@ -1420,7 +1442,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: start;">
                             <div style="flex-grow: 1;">
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                                    <span style="color: #3b82f6; font-weight: 700; font-size: 0.875rem;">${formattedTime}</span>
+                                    ${formattedTime ? `<span style="color: #3b82f6; font-weight: 700; font-size: 0.875rem;">${formattedTime}</span>` : ''}
                                     <span style="color: #1f2937; font-weight: 600; font-size: 0.875rem;">${event.event_title}</span>
                                 </div>
                                 ${event.venue ? `<div style="color: #6b7280; font-size: 0.75rem;">📍 ${event.venue}</div>` : ''}
@@ -1505,7 +1527,8 @@
                         let html = '';
                         const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
                         events.forEach((event, index) => {
-                            const displayTime = event.event_time ? formatTimeAMPM(event.event_time) + ' ' : '';
+                            const formattedTime = formatTimeAMPM(event.event_time);
+                            const displayTime = formattedTime ? formattedTime + ' ' : '';
                             const color = colors[index % colors.length];
                             html += `<div style="margin-bottom: 3px; line-height: 1.3; color: ${color}; font-weight: ${events.length > 1 ? '600' : '400'};">• ${displayTime}${event.event_title}</div>`;
                         });
