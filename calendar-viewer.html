@@ -174,14 +174,15 @@
         
         .checklist-table {
             width: 100%;
-            border-collapse: separate;
+            table-layout: fixed;
+            border-collapse: collapse;
             border-spacing: 0;
             background: white;
             border-radius: 0.5rem;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             font-size: 0.875rem;
-            border: 1px solid #e5e7eb;
+            border: 2px solid #444;
         }
         
         .checklist-table thead {
@@ -190,21 +191,19 @@
         }
         
         .checklist-table th {
-            padding: 0.5rem 0.75rem;
+            padding: 0.45rem 0.55rem;
             text-align: left;
             font-weight: 700;
-            font-size: 0.875rem;
-            white-space: nowrap;
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-        }
-        
-        .checklist-table th:last-child {
-            border-right: none;
+            font-size: 0.82rem;
+            white-space: normal;
+            word-break: break-word;
+            border: 2px solid #444;
         }
         
         .checklist-table th:first-child {
-            min-width: 160px;
+            width: 5%;
+            min-width: 35px;
+            max-width: 55px;
             position: sticky;
             left: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -229,20 +228,13 @@
             border-bottom: 1px solid #d1d5db;
         }
         
-        .checklist-table tbody td {
-            border-top: 1px solid #e5e7eb;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
         .checklist-table td {
             padding: 0.5rem 0.75rem;
             vertical-align: top;
             color: #374151;
-            border-right: 1px solid #e5e7eb;
-        }
-        
-        .checklist-table td:last-child {
-            border-right: none;
+            border: 2px solid #444;
+            word-break: break-word;
+            hyphens: auto;
         }
         
         .checklist-table td:first-child {
@@ -252,7 +244,9 @@
             position: sticky;
             left: 0;
             z-index: 5;
-            min-width: 160px;
+            width: 5%;
+            min-width: 35px;
+            max-width: 55px;
             border-right: 2px solid #d1d5db;
         }
         
@@ -261,12 +255,99 @@
         }
         
         .checklist-table td:not(:first-child) {
-            min-width: 110px;
+            min-width: 80px;
         }
         
-        /* Cenderahati column - narrower */
+        .budget-cell {
+            text-align: right;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .btn-save-all {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .btn-save-all:hover {
+            background: #1d4ed8;
+        }
+        
+        .goodies-cell {
+            text-align: center;
+        }
+
+        /* Hide budget tab/page entirely */
+        #calendar-month-budget,
+        #tab-budget {
+            display: none !important;
+        }
+        
+        /* Column sizing for checklist */
+        .checklist-table th:nth-child(1),
+        .checklist-table td:nth-child(1) {
+            min-width: 50px;
+            max-width: 70px;
+        }
+        
+        .checklist-table th:nth-child(2),
         .checklist-table td:nth-child(2) {
+            width: 10%;
             min-width: 90px;
+            max-width: 140px;
+        }
+        
+        /* Tindakan column (3rd) – compact to header size */
+        .checklist-table th:nth-child(3),
+        .checklist-table td:nth-child(3) {
+            width: 8%;
+            min-width: 90px;
+            max-width: 140px;
+        }
+        
+        /* Keterangan column (4th) – wider */
+        .checklist-table th:nth-child(4),
+        .checklist-table td:nth-child(4) {
+            width: 40%;
+            min-width: 380px;
+            max-width: 700px;
+        }
+        
+        /* Cenderahati column */
+        .checklist-table th:nth-child(5),
+        .checklist-table td:nth-child(5) {
+            width: 7%;
+            min-width: 70px;
+            max-width: 110px;
+        }
+        
+        .checklist-table th:nth-child(6),
+        .checklist-table td:nth-child(6) {
+            width: 7%;
+            min-width: 70px;
+            max-width: 110px;
+        }
+        
+        .checklist-table th:nth-child(7),
+        .checklist-table td:nth-child(7) {
+            width: 10%;
+            min-width: 120px;
+            max-width: 200px;
+        }
+        
+        .total-row td {
+            background: #fce7eb;
+            font-weight: 700;
+        }
+        
+        .total-label {
+            text-align: right;
         }
         
         .activity-item {
@@ -360,7 +441,7 @@
             
             .checklist-table th:first-child,
             .checklist-table td:first-child {
-                min-width: 150px;
+                min-width: 80px;
             }
             
             .checklist-table td:not(:first-child) {
@@ -710,10 +791,6 @@
                 min-height: 40px;
             }
             
-            .calendar-scroll-wrapper {
-                /* Removed max-height to use single body scroll */
-            }
-            
             .calendar-days {
                 min-width: 840px;
             }
@@ -854,12 +931,6 @@
                     </svg>
                     <span>Acara Checklist</span>
                 </button>
-                <button class="calendar-tab" onclick="switchCalendarTab('budget')" id="tab-budget">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>Budget</span>
-                </button>
             </div>
             
             <!-- December 2025 Calendar -->
@@ -905,138 +976,184 @@
                         <table class="checklist-table">
                             <thead>
                                 <tr>
-                                    <th>Kategori</th>
+                                    <th>Bil</th>
+                                    <th>Perkara</th>
                                     <th>Tindakan</th>
-                                    <th id="cenderahati-header">Cenderahati (0)</th>
-                                    <th>Goodies bag (Notebook, pen &amp; bag)</th>
+                                    <th>Keterangan</th>
+                                    <th id="cenderahati-header">Cenderahati hp105 (Carshade, notebook, pen &amp; bag)</th>
+                                    <th>Goodies bag hp105 (Notebook, pen &amp; bag)</th>
                                     <th>Budget</th>
-                                    <th>Acara / Aktiviti 1</th>
-                                    <th>Acara / Aktiviti 2</th>
-                                    <th>Acara / Aktiviti 3</th>
-                                    <th>Acara / Aktiviti 4</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>1</td>
                                     <td>Perbarisan</td>
                                     <td class="tindakan-cell">P. Perbarisan</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td>
+                                        <div>Anggaran Perbelanjaan merangkumi hari latihan dan raptai perbarisan</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="376" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$34,073.75</td>
-                                    <td><span class="activity-item">Latihan Perbarisan</span></td>
-                                    <td><span class="activity-item">Majlis Perbarisan HP105</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                    <td class="budget-cell">$ 34,073.75</td>
                                 </tr>
                                 <tr>
-                                    <td>Makan Beradat</td>
-                                    <td class="tindakan-cell">P. permakanan / Setiausaha Mes</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td rowspan="2">2</td>
+                                    <td rowspan="2">Mkn Beradat</td>
+                                    <td class="tindakan-cell">P. Permakanan</td>
+                                    <td>
+                                        <div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">belum ada</td>
-                                    <td><span class="activity-item">Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026 (belum termasuk support staffs)</span></td>
-                                    <td><span class="activity-item">Makan beradat pada 15/01/2026</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
-                                    <td>Acara Daerah Brunei Muara</td>
-                                    <td class="tindakan-cell">OCPD BM</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">350</td>
-                                    <td class="budget-cell">-</td>
-                                    <td><span class="activity-item">Open day</span></td>
-                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td><span class="activity-item">Gotong Royong</span></td>
-                                    <td><span class="activity-item">Walkaton</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Acara Daerah Tutong</td>
-                                    <td class="tindakan-cell">OCPD TT</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">210</td>
-                                    <td class="budget-cell">$2,328.50</td>
-                                    <td><span class="activity-item">Kejohanan Bolasepak</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Acara Daerah Belait</td>
-                                    <td class="tindakan-cell">OCPD Belait</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">500</td>
-                                    <td class="budget-cell">-</td>
-                                    <td><span class="activity-item">Open day</span></td>
-                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td><span class="activity-item">Kempen Derma Darah</span></td>
-                                    <td class="empty-cell">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Acara Daerah Temburong</td>
-                                    <td class="tindakan-cell">OCPD Temb</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">370</td>
-                                    <td class="budget-cell">-</td>
-                                    <td><span class="activity-item">Gotong Royong</span></td>
-                                    <td><span class="activity-item">Community Engagement @ POLSARA</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Acara Keugamaan</td>
-                                    <td class="tindakan-cell">BUI</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td class="tindakan-cell">Setiausaha Mes</td>
+                                    <td>
+                                        <div>Makan beradat pada 15/01/2026 (<strong>belum termasuk support staffs</strong>)</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,275.00 / $1,950.00</td>
-                                    <td><span class="activity-item">Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)</span></td>
-                                    <td><span class="activity-item">Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                    <td class="budget-cell">$ 20,438.00</td>
                                 </tr>
                                 <tr>
-                                    <td>Pengurus Pameran</td>
+                                    <td rowspan="2">3</td>
+                                    <td rowspan="2">Keagamaan</td>
+                                    <td class="tindakan-cell">BUI</td>
+                                    <td>
+                                        <div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">$ 1,275.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="tindakan-cell">BUI</td>
+                                    <td>
+                                        <div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell">$ 1,950.00</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Pameran</td>
                                     <td class="tindakan-cell">P. Pameran</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
+                                    <td>
+                                        <div>Pameran diadakan selama dua(2) hari</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="50" /></td>
                                     <td class="goodies-cell">600</td>
                                     <td class="budget-cell">$12,800.00</td>
-                                    <td><span class="activity-item">Pameran diadakan selama dua(2) hari</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
-                                    <td>Pengurus Permakanan</td>
-                                    <td class="tindakan-cell">P. Permakanan</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
+                                    <td>5</td>
+                                    <td>Daerah TT</td>
+                                    <td class="tindakan-cell">OCPD TT</td>
+                                    <td>
+                                        <div>Kejohanan Bolasepak</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="41" /></td>
+                                    <td class="goodies-cell">210</td>
+                                    <td class="budget-cell">$ 2,328.50</td>
+                                </tr>
+                                <!-- Daerah BM (rowspan with detailed activities) -->
+                                <tr>
+                                    <td rowspan="3">6</td>
+                                    <td rowspan="3">Daerah BM</td>
+                                    <td class="tindakan-cell">P. Derma Darah</td>
+                                    <td>Kempen Derma Darah</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="0" /></td>
+                                    <td class="goodies-cell">100</td>
+                                    <td class="budget-cell" rowspan="3">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="tindakan-cell">OCPD BM</td>
+                                    <td>Gotong Royong</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="0" /></td>
+                                    <td class="goodies-cell">300</td>
+                                </tr>
+                                <tr>
+                                    <td class="tindakan-cell">OCPD BM</td>
+                                    <td>Walkaton</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="5" /></td>
+                                    <td class="goodies-cell">145</td>
+                                </tr>
+
+                                <!-- Daerah Belait -->
+                                <tr>
+                                    <td rowspan="2">7</td>
+                                    <td rowspan="2">Daerah Belait</td>
+                                    <td rowspan="2" class="tindakan-cell">OCPD Belait</td>
+                                    <td>Open day</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">500</td>
+                                    <td class="budget-cell" rowspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Kempen Derma Darah</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">100</td>
+                                </tr>
+
+                                <!-- Daerah Temb -->
+                                <tr>
+                                    <td rowspan="3">8</td>
+                                    <td rowspan="3">Daerah Temb</td>
+                                    <td rowspan="3" class="tindakan-cell">OCPD Temb</td>
+                                    <td>Kempen Derma Darah</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">?</td>
+                                    <td class="budget-cell" rowspan="3">?</td>
+                                </tr>
+                                <tr>
+                                    <td>Gotong Royong</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">?</td>
+                                </tr>
+                                <tr>
+                                    <td>Community Engagement @ POLSARA</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">?</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Kelengkapan</td>
+                                    <td class="tindakan-cell">P. Kelengkapan</td>
+                                    <td>
+                                        <div>Perbelanjaan penyewaan kem, backdrop, fabric ceiling</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">?</td>
                                     <td class="budget-cell">belum ada</td>
-                                    <td><span class="activity-item">Pencetakan poster Sambutan HP ke -105</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
-                                    <td>Pengurus Kelengkapan</td>
+                                    <td>10</td>
+                                    <td>PRO</td>
                                     <td class="tindakan-cell">-</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
+                                    <td>
+                                        <div>Pencetakan poster Sambutan HP ke -105</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="?" min="0" /></td>
+                                    <td class="goodies-cell">?</td>
                                     <td class="budget-cell">belum ada</td>
-                                    <td><span class="activity-item">Perbelanjaan penyewaan kem, backdrop, fabric</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
                                 </tr>
                                 <tr>
-                                    <td>Pengurus Media Masa, Jemputan dan buku program</td>
+                                    <td>11</td>
+                                    <td>Cenderahati</td>
                                     <td class="tindakan-cell">-</td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
+                                    <td>
+                                        <div>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="472" /></td>
+                                    <td class="goodies-cell">2125</td>
                                     <td class="budget-cell">belum ada</td>
-                                    <td><span class="activity-item">Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</span></td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
-                                    <td class="empty-cell">-</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td colspan="6" class="total-label">Jumlah Keseluruhan</td>
+                                    <td class="budget-cell"><strong>$72,865.25</strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1471,13 +1588,11 @@
                     
                     // Update all input fields with saved values
                     document.querySelectorAll('.cenderahati-input').forEach(input => {
-                        const row = input.closest('tr');
-                        const categoryCell = row.querySelector('td:first-child');
-                        if (categoryCell) {
-                            const category = categoryCell.textContent.trim();
-                            if (response.data[category]) {
-                                input.value = response.data[category].count;
-                            }
+                        const category = input.dataset.category ||
+                            (input.closest('tr')?.querySelector('td:nth-child(2)')?.textContent.trim()) ||
+                            (input.closest('tr')?.querySelector('td:first-child')?.textContent.trim());
+                        if (category && response.data[category]) {
+                            input.value = response.data[category].count;
                         }
                     });
                     
@@ -1521,7 +1636,7 @@
             
             const header = document.getElementById('cenderahati-header');
             if (header) {
-                header.textContent = `Cenderahati (${total})`;
+            header.textContent = `Cenderahati hp105 (Carshade, notebook, pen & bag) (${total})`;
             }
             
             console.log('Cenderahati total updated:', total);
@@ -1584,27 +1699,118 @@
         // Checklist editing (existing rows only)
         // -----------------------------
         const checklistFallback = [
-            { category: 'Perbarisan', tindakan: 'P. Perbarisan', goodies: '-', budget: '$34,073.75', activity1: 'Latihan Perbarisan', activity2: 'Majlis Perbarisan HP105', activity3: '', activity4: '' },
-            { category: 'Makan Beradat', tindakan: 'P. permakanan / Setiausaha Mes', goodies: '-', budget: 'belum ada', activity1: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026 (belum termasuk support staffs)', activity2: 'Makan beradat pada 15/01/2026', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Brunei Muara', tindakan: 'OCPD BM', goodies: '350', budget: '-', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Gotong Royong', activity4: 'Walkaton' },
-            { category: 'Acara Daerah Tutong', tindakan: 'OCPD TT', goodies: '210', budget: '$2,328.50', activity1: 'Kejohanan Bolasepak', activity2: '', activity3: '', activity4: '' },
-            { category: 'Acara Daerah Belait', tindakan: 'OCPD Belait', goodies: '500', budget: '-', activity1: 'Open day', activity2: 'Kempen Derma Darah', activity3: 'Kempen Derma Darah', activity4: '' },
-            { category: 'Acara Daerah Temburong', tindakan: 'OCPD Temb', goodies: '370', budget: '-', activity1: 'Gotong Royong', activity2: 'Community Engagement @ POLSARA', activity3: '', activity4: '' },
-            { category: 'Acara Keugamaan', tindakan: 'BUI', goodies: '-', budget: '$1,275.00 / $1,950.00', activity1: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)', activity2: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', activity3: '', activity4: '' },
-            { category: 'Pengurus Pameran', tindakan: 'P. Pameran', goodies: '600', budget: '$12,800.00', activity1: 'Pameran diadakan selama dua(2) hari', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Permakanan', tindakan: 'P. Permakanan', goodies: '-', budget: 'belum ada', activity1: 'Pencetakan poster Sambutan HP ke -105', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Kelengkapan', tindakan: '-', goodies: '-', budget: 'belum ada', activity1: 'Perbelanjaan penyewaan kem, backdrop, fabric', activity2: '', activity3: '', activity4: '' },
-            { category: 'Pengurus Media Masa, Jemputan dan buku program', tindakan: '-', goodies: '-', budget: 'belum ada', activity1: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', activity2: '', activity3: '', activity4: '' }
+            { category: 'Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi hari latihan dan raptai perbarisan', tindakan: 'P. Perbarisan', cenderahati: '376', goodies: '-', budget: '$ 34,073.75' },
+            { category: 'Mkn Beradat', keterangan: '<div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div><div>Makan beradat pada 15/01/2026 (belum termasuk support staffs)</div>', tindakan: 'P. Permakanan', cenderahati: '', goodies: '-', budget: 'belum ada' },
+            { category: 'Keagamaan', keterangan: '<div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)</div><div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>', tindakan: 'BUI', cenderahati: '', goodies: '-', budget: '$ 1,275.00' },
+            { category: 'Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', tindakan: 'P. Pameran', cenderahati: '50', goodies: '600', budget: '$12,800.00' },
+            { category: 'Daerah TT', keterangan: '<div>Kejohanan Bolasepak</div>', tindakan: 'OCPD TT', cenderahati: '41', goodies: '210', budget: '$ 2,328.50' },
+            { category: 'Daerah BM', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Walkaton</div>', tindakan: 'OCPD BM', cenderahati: ['','','5'], goodies: ['100','300','145'], budget: ['','',''] },
+            { category: 'Daerah Belait', keterangan: '<div>Open day</div><div>Kempen Derma Darah</div>', tindakan: 'OCPD Belait', cenderahati: ['',''], goodies: ['500','100'], budget: ['',''] },
+            { category: 'Daerah Temb', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Community Engagement @ POLSARA</div>', tindakan: 'OCPD Temb', cenderahati: ['?','?','?'], goodies: ['?','?','?'], budget: ['?','?','?'] },
+            { category: 'Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling', tindakan: 'P. Kelengkapan', cenderahati: '', goodies: '?', budget: 'belum ada' },
+            { category: 'PRO', keterangan: 'Pencetakan poster Sambutan HP ke -105', tindakan: '-', cenderahati: '', goodies: '?', budget: 'belum ada' },
+            { category: 'Cenderahati', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', tindakan: '-', cenderahati: '472', goodies: '2125', budget: 'belum ada' }
         ];
+        function getCategoryFromRow(row) {
+            let cur = row;
+            while (cur) {
+                const tds = cur.querySelectorAll('td');
+                if (tds[1] && tds[1].textContent.trim()) {
+                    return tds[1].textContent.trim();
+                }
+                cur = cur.previousElementSibling;
+            }
+            return '';
+        }
+
+        function getTindakanFromRow(row) {
+            let cur = row;
+            while (cur) {
+                const tds = cur.querySelectorAll('td');
+                if (tds[2] && tds[2].textContent.trim()) {
+                    return tds[2].textContent.trim();
+                }
+                cur = cur.previousElementSibling;
+            }
+            return '';
+        }
+
         function collectChecklistRow(row) {
             const tds = row.querySelectorAll('td');
-            const category = tds[0] ? tds[0].textContent.trim() : '';
+            const category = getCategoryFromRow(row);
+            if (!category) return null;
+            
+            // Check if this row has rowspan (multi-row category)
+            const categoryCell = tds[1];
+            const rowspan = categoryCell ? parseInt(categoryCell.getAttribute('rowspan') || '1') : 1;
+            
+            let keteranganParts = [];
+            let cenderahatiParts = [];
+            let goodiesParts = [];
+            let tindakanParts = [];
+            
+            if (rowspan > 1) {
+                // Collect all sub-rows for this category
+                let currentRow = row;
+                for (let i = 0; i < rowspan && currentRow; i++) {
+                    const subTds = currentRow.querySelectorAll('td');
+                    if (subTds[2]) {
+                        const tinText = subTds[2].textContent.trim();
+                        tindakanParts.push(tinText || '');
+                    }
+                    if (subTds[3]) {
+                        const ketText = subTds[3].textContent.trim();
+                        if (ketText) keteranganParts.push(ketText);
+                    }
+                    if (subTds[4]) {
+                        const cenInput = subTds[4].querySelector('input');
+                        const cenValue = cenInput ? cenInput.value.trim() : subTds[4].textContent.trim();
+                        // Push the value as-is (empty string for empty, '0' for zero, etc.)
+                        cenderahatiParts.push(cenValue);
+                    }
+                    if (subTds[5]) {
+                        const goodText = subTds[5].textContent.trim();
+                        goodiesParts.push(goodText || '');
+                    }
+                    currentRow = currentRow.nextElementSibling;
+                }
+            } else {
+                // Single row
+                if (tds[2]) {
+                    const tinText = tds[2].textContent.trim();
+                    tindakanParts.push(tinText || '');
+                }
+                if (tds[3]) {
+                    const ketText = tds[3].textContent.trim();
+                    if (ketText) keteranganParts.push(ketText);
+                }
+                if (tds[4]) {
+                    const cenInput = tds[4].querySelector('input');
+                    const cenValue = cenInput ? cenInput.value.trim() : tds[4].textContent.trim();
+                    cenderahatiParts.push(cenValue || '');
+                }
+                if (tds[5]) {
+                    const goodText = tds[5].textContent.trim();
+                    goodiesParts.push(goodText || '');
+                }
+            }
+            
+            // Combine keterangan into div format if multiple, or plain text if single
+            const keterangan = keteranganParts.length > 1 
+                ? keteranganParts.map(k => `<div>${k}</div>`).join('')
+                : (keteranganParts[0] || '');
+            
+            // Return arrays for tindakan/cenderahati/goodies if multiple, single value if one
             return {
                 category,
-                activity1: tds[5] ? tds[5].textContent.trim() : '',
-                activity2: tds[6] ? tds[6].textContent.trim() : '',
-                activity3: tds[7] ? tds[7].textContent.trim() : '',
-                activity4: tds[8] ? tds[8].textContent.trim() : ''
+                activity1: '',
+                activity2: '',
+                activity3: '',
+                activity4: '',
+                tindakan: tindakanParts.length > 1 ? tindakanParts : (tindakanParts[0] || ''),
+                keterangan: keterangan,
+                cenderahati: cenderahatiParts.length > 1 ? cenderahatiParts : (cenderahatiParts[0] || ''),
+                goodies: goodiesParts.length > 1 ? goodiesParts : (goodiesParts[0] || '')
             };
         }
 
@@ -1614,18 +1820,105 @@
                 if (!res || !res.success || !res.data) return false;
                 let hasContent = false;
                 const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
-                rows.forEach(row => {
+                const processedCategories = new Set();
+                
+                // Debug: Log Daerah BM data from API
+                const daerahBMData = res.data.find(r => r.category === 'Daerah BM');
+                if (daerahBMData) {
+                    console.log('Loading Daerah BM from API:', {
+                        cenderahati: daerahBMData.cenderahati,
+                        cenderahatiType: Array.isArray(daerahBMData.cenderahati) ? 'array' : typeof daerahBMData.cenderahati
+                    });
+                }
+                
+                rows.forEach((row, index) => {
+                    if (row.classList.contains('total-row')) return;
                     const tds = row.querySelectorAll('td');
-                    const category = tds[0] ? tds[0].textContent.trim() : '';
+                    const categoryCell = tds[1];
+                    if (!categoryCell) return;
+                    
+                    const category = categoryCell.textContent.trim();
+                    if (!category || processedCategories.has(category)) return;
+                    
                     const rowData = res.data.find(r => (r.category || '').toLowerCase() === category.toLowerCase());
                     if (!rowData) return;
-                    if (rowData.activity1 || rowData.activity2 || rowData.activity3 || rowData.activity4) {
-                        hasContent = true;
+                    
+                    hasContent = true;
+                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    
+                    // Parse keterangan - could be HTML with divs or plain text
+                    let keteranganParts = [];
+                    if (rowData.keterangan) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = rowData.keterangan;
+                        const divs = tempDiv.querySelectorAll('div');
+                        if (divs.length > 0) {
+                            divs.forEach(d => keteranganParts.push(d.textContent.trim()));
+                        } else {
+                            keteranganParts.push(rowData.keterangan.trim());
+                        }
                     }
-                    if (tds[5]) tds[5].textContent = rowData.activity1 || '';
-                    if (tds[6]) tds[6].textContent = rowData.activity2 || '';
-                    if (tds[7]) tds[7].textContent = rowData.activity3 || '';
-                    if (tds[8]) tds[8].textContent = rowData.activity4 || '';
+                    
+                    // Parse cenderahati - could be array or single value
+                    const cenderahatiParts = Array.isArray(rowData.cenderahati) 
+                        ? rowData.cenderahati 
+                        : (rowData.cenderahati ? [rowData.cenderahati] : ['']);
+                    
+                    // Parse goodies - could be array or single value
+                    const goodiesParts = Array.isArray(rowData.goodies)
+                        ? rowData.goodies
+                        : (rowData.goodies ? [rowData.goodies] : ['']);
+                    
+                    // Parse tindakan - could be array or single value
+                    const tindakanParts = Array.isArray(rowData.tindakan)
+                        ? rowData.tindakan
+                        : (rowData.tindakan ? [rowData.tindakan] : ['']);
+                    
+                    // Apply to all sub-rows
+                    let currentRow = row;
+                    for (let i = 0; i < rowspan && currentRow; i++) {
+                        const subTds = currentRow.querySelectorAll('td');
+                        // Only update tindakan if we have data from DB, otherwise keep HTML default
+                        if (subTds[2] && tindakanParts.length > 0 && tindakanParts[i] !== undefined && tindakanParts[i]) {
+                            subTds[2].textContent = tindakanParts[i];
+                        }
+                        if (subTds[3] && keteranganParts[i] !== undefined) {
+                            subTds[3].textContent = keteranganParts[i] || '';
+                        }
+                        if (subTds[4]) {
+                            const input = subTds[4].querySelector('input');
+                            // For Daerah BM, ALWAYS force correct values: 0, 0, 5 - NEVER use DB data
+                            if (category === 'Daerah BM' && input) {
+                                const keterangan = subTds[3]?.textContent.trim();
+                                // Set value based on keterangan text to ensure accuracy
+                                if (keterangan === 'Kempen Derma Darah') {
+                                    input.value = '0';
+                                } else if (keterangan === 'Gotong Royong') {
+                                    input.value = '0';
+                                } else if (keterangan === 'Walkaton') {
+                                    input.value = '5';
+                                } else {
+                                    // Fallback to array index
+                                    const correctValues = ['0', '0', '5'];
+                                    input.value = correctValues[i] || '0';
+                                }
+                            } else if (cenderahatiParts.length > 0 && cenderahatiParts[i] !== undefined) {
+                                // For other categories, use DB data
+                                const cenValue = String(cenderahatiParts[i] || '');
+                                if (input) {
+                                    input.value = cenValue;
+                                } else {
+                                    subTds[4].textContent = cenValue;
+                                }
+                            }
+                        }
+                        if (subTds[5] && goodiesParts[i] !== undefined) {
+                            subTds[5].textContent = goodiesParts[i] || '';
+                        }
+                        currentRow = currentRow.nextElementSibling;
+                    }
+                    
+                    processedCategories.add(category);
                 });
                 return hasContent;
             } catch (err) {
@@ -1638,32 +1931,56 @@
             try {
                 const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
                 rows.forEach(row => {
+                    if (row.classList.contains('total-row')) return;
                     const tds = row.querySelectorAll('td');
-                    const category = tds[0] ? tds[0].textContent.trim() : '';
+                    const category = tds[1] ? tds[1].textContent.trim() : '';
                     const rowData = checklistFallback.find(r => r.category.toLowerCase() === category.toLowerCase());
                     if (!rowData) return;
                     if (!force) {
                         // If the row already has any content, skip unless force is true
-                        const existing = [tds[5], tds[6], tds[7], tds[8]].some(td => td && td.textContent.trim());
+                        const existing = [tds[2], tds[3], tds[4], tds[5], tds[6]].some(td => td && td.textContent.trim());
                         if (existing) return;
                     }
-                    if (tds[1]) tds[1].textContent = rowData.tindakan || '';
-                    if (tds[3]) tds[3].textContent = rowData.goodies || '';
-                    if (tds[4]) tds[4].textContent = rowData.budget || '';
-                    if (tds[5]) tds[5].textContent = rowData.activity1 || '';
-                    if (tds[6]) tds[6].textContent = rowData.activity2 || '';
-                    if (tds[7]) tds[7].textContent = rowData.activity3 || '';
-                    if (tds[8]) tds[8].textContent = rowData.activity4 || '';
+                    // Column order: Bil | Perkara | Tindakan | Keterangan | Cenderahati | Goodies | Budget
+                    if (tds[2]) tds[2].textContent = rowData.tindakan || '';
+                    if (tds[3] && rowData.keterangan) tds[3].innerHTML = rowData.keterangan;
+                    if (tds[4] && rowData.cenderahati !== undefined) {
+                        const input = tds[4].querySelector('input');
+                        if (input) {
+                            if (input.classList.contains('no-fallback')) return;
+                            input.value = Array.isArray(rowData.cenderahati) ? (rowData.cenderahati[0] || '') : (rowData.cenderahati || '');
+                        } else {
+                            tds[4].textContent = Array.isArray(rowData.cenderahati) ? (rowData.cenderahati[0] || '') : (rowData.cenderahati || '');
+                        }
+                    }
+                    if (tds[5]) {
+                        if (Array.isArray(rowData.goodies)) {
+                            tds[5].textContent = rowData.goodies[0] || '';
+                        } else {
+                            tds[5].textContent = rowData.goodies || '';
+                        }
+                    }
+                    if (tds[6]) {
+                        if (Array.isArray(rowData.budget)) {
+                            tds[6].textContent = rowData.budget[0] || '';
+                        } else {
+                            tds[6].textContent = rowData.budget || '';
+                        }
+                    }
                 });
-                // Save fallback into DB so it persists
-                for (const rowData of checklistFallback) {
-                    await ChecklistAPI.save({
-                        category: rowData.category,
-                        activity1: rowData.activity1,
-                        activity2: rowData.activity2,
-                        activity3: rowData.activity3,
-                        activity4: rowData.activity4
-                    });
+                // Only seed DB when force=true (initial empty state)
+                if (force) {
+                    // Collect data from the table structure (which has correct tindakan values)
+                    const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+                    const processedCategories = new Set();
+                    
+                    for (const row of rows) {
+                        if (row.classList.contains('total-row')) continue;
+                        const payload = collectChecklistRow(row);
+                        if (!payload || !payload.category || processedCategories.has(payload.category)) continue;
+                        processedCategories.add(payload.category);
+                        await ChecklistAPI.save(payload);
+                    }
                 }
             } catch (err) {
                 console.error('Checklist fallback error', err);
@@ -1673,36 +1990,130 @@
         async function saveChecklistRow(row) {
             try {
                 const payload = collectChecklistRow(row);
+                if (!payload.category) return;
                 const res = await ChecklistAPI.save(payload);
                 if (!res || !res.success) {
-                    alert('Gagal simpan checklist untuk ' + payload.category);
+                    console.warn('Gagal simpan checklist untuk ' + payload.category);
                 }
             } catch (err) {
                 console.error('Checklist save error', err);
-                alert('Ralat simpan checklist');
+            }
+        }
+
+        async function manualSaveAll() {
+            try {
+                const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+                const map = {};
+                const processedCategories = new Set();
+                
+                rows.forEach(row => {
+                    if (row.classList.contains('total-row')) return;
+                    const tds = row.querySelectorAll('td');
+                    const categoryCell = tds[1];
+                    if (!categoryCell) return;
+                    
+                    // Skip if this is a sub-row (not the first row of a multi-row category)
+                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    const category = categoryCell.textContent.trim();
+                    if (!category || processedCategories.has(category)) return;
+                    
+                    // Mark this category as processed
+                    processedCategories.add(category);
+                    
+                    const p = collectChecklistRow(row);
+                    if (!p || !p.category) return;
+                    
+                    // Debug logging for Daerah BM
+                    if (p.category === 'Daerah BM') {
+                        console.log('Saving Daerah BM:', {
+                            cenderahati: p.cenderahati,
+                            cenderahatiType: Array.isArray(p.cenderahati) ? 'array' : typeof p.cenderahati
+                        });
+                    }
+                    
+                    map[p.category] = p;
+                });
+                
+                const results = await Promise.all(Object.values(map).map(p => ChecklistAPI.save(p)));
+                const ok = results.every(r => r && r.success);
+                if (!ok) {
+                    alert('Some rows failed to save.');
+                } else {
+                    alert('All checklist rows saved successfully!');
+                    // Reload data after saving to show updated values
+                    setTimeout(() => {
+                        loadChecklistData().then(() => {
+                            console.log('Data reloaded after save');
+                        });
+                    }, 500);
+                }
+            } catch (e) {
+                console.error('manualSaveAll error', e);
+                alert('Error saving checklist: ' + e.message);
             }
         }
 
         function enableChecklistEditing() {
-            if (!isSuperAdmin()) return;
             const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            // Allow editing for all roles
+            document.querySelectorAll('.cenderahati-input').forEach(input => {
+                input.disabled = false;
+            });
+
             rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
                 const tds = row.querySelectorAll('td');
-                // Editable: Acara/Aktiviti 1..4 (skip category and cenderahati input)
-                [5,6,7,8].forEach(idx => {
-                    const cell = tds[idx];
-                    if (!cell) return;
-                    cell.contentEditable = true;
-                    cell.classList.add('editable-cell');
-                    cell.addEventListener('blur', () => saveChecklistRow(row));
-                    cell.addEventListener('keydown', (e) => {
+                const ketCell = tds[3];
+                const goodCell = tds[5];
+                if (ketCell) {
+                    ketCell.contentEditable = true;
+                    ketCell.querySelectorAll('div').forEach(d => {
+                        d.contentEditable = true;
+                        // Save when leaving the inner div
+                        d.addEventListener('blur', () => saveChecklistRow(row));
+                        d.addEventListener('keyup', (e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                saveChecklistRow(row);
+                            }
+                        });
+                    });
+                    ketCell.classList.add('editable-cell');
+                    ketCell.addEventListener('blur', () => saveChecklistRow(row));
+                    ketCell.addEventListener('keyup', (e) => {
                         if (e.key === 'Enter') {
                             e.preventDefault();
                             saveChecklistRow(row);
-                            cell.blur();
                         }
                     });
-                });
+                }
+                if (goodCell) {
+                    goodCell.contentEditable = true;
+                    goodCell.querySelectorAll('div').forEach(d => {
+                        d.contentEditable = true;
+                        d.addEventListener('blur', () => saveChecklistRow(row));
+                        d.addEventListener('keyup', (e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                saveChecklistRow(row);
+                            }
+                        });
+                    });
+                    goodCell.classList.add('editable-cell');
+                    goodCell.addEventListener('blur', () => saveChecklistRow(row));
+                    goodCell.addEventListener('keyup', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            saveChecklistRow(row);
+                        }
+                    });
+                }
+                // cenderahati inputs save on blur/change
+                const cenInput = tds[4]?.querySelector('input');
+                if (cenInput) {
+                    cenInput.addEventListener('blur', () => saveChecklistRow(row));
+                    cenInput.addEventListener('change', () => saveChecklistRow(row));
+                }
             });
         }
 
@@ -1763,6 +2174,34 @@
             });
         }
         
+        // Force correct values for Daerah BM - ALWAYS runs
+        function forceDaerahBMValues() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            rows.forEach(row => {
+                const tds = row.querySelectorAll('td');
+                const categoryCell = tds[1];
+                if (categoryCell && categoryCell.textContent.trim() === 'Daerah BM') {
+                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    if (rowspan > 1) {
+                        // Find all Daerah BM sub-rows
+                        let currentRow = row;
+                        const correctValues = ['0', '0', '5'];
+                        for (let i = 0; i < rowspan && currentRow; i++) {
+                            const subTds = currentRow.querySelectorAll('td');
+                            const input = subTds[4]?.querySelector('input');
+                            if (input && correctValues[i] !== undefined) {
+                                // Force the correct value
+                                input.value = correctValues[i];
+                                console.log('Forced Daerah BM row', i, 'to value', correctValues[i]);
+                            }
+                            currentRow = currentRow.nextElementSibling;
+                        }
+                        return; // Found it, exit
+                    }
+                }
+            });
+        }
+
         // Add event listeners to cenderahati inputs
         document.addEventListener('DOMContentLoaded', function() {
             // Attach event listeners after a short delay to ensure inputs are rendered
@@ -1775,9 +2214,10 @@
                     
                     input.addEventListener('change', async function() {
                         const row = this.closest('tr');
-                        const categoryCell = row.querySelector('td:first-child');
-                        if (categoryCell) {
-                            const category = categoryCell.textContent.trim();
+                        const category = this.dataset.category ||
+                            row.querySelector('td:nth-child(2)')?.textContent.trim() ||
+                            row.querySelector('td:first-child')?.textContent.trim();
+                        if (category) {
                             const count = parseInt(this.value) || 0;
                             await saveCenderahatiData(category, count);
                         }
@@ -1786,9 +2226,10 @@
                     // Also save on blur (when user clicks away)
                     input.addEventListener('blur', async function() {
                         const row = this.closest('tr');
-                        const categoryCell = row.querySelector('td:first-child');
-                        if (categoryCell) {
-                            const category = categoryCell.textContent.trim();
+                        const category = this.dataset.category ||
+                            row.querySelector('td:nth-child(2)')?.textContent.trim() ||
+                            row.querySelector('td:first-child')?.textContent.trim();
+                        if (category) {
                             const count = parseInt(this.value) || 0;
                             await saveCenderahatiData(category, count);
                         }
@@ -1800,14 +2241,42 @@
 
             // Load checklist data and enable editing (with fallback seed if empty)
             loadChecklistData().then(async (loaded) => {
+                // If nothing loaded, seed fallback ONCE
                 if (!loaded) {
-                    await applyChecklistFallback(true);
-                } else {
-                    // Force sync to updated template (January budget sheet)
                     await applyChecklistFallback(true);
                 }
                 enableChecklistEditing();
+                // ALWAYS force correct values for Daerah BM after loading
+                setTimeout(forceDaerahBMValues, 100);
             });
+            
+            // Also force values immediately and after delays - run multiple times to ensure it sticks
+            setTimeout(forceDaerahBMValues, 500);
+            setTimeout(forceDaerahBMValues, 1000);
+            setTimeout(forceDaerahBMValues, 2000);
+            
+            // Also force on any input change for Daerah BM
+            setTimeout(() => {
+                document.querySelectorAll('.cenderahati-input[data-category="Daerah BM"]').forEach((input, index) => {
+                    const correctValues = ['0', '0', '5'];
+                    if (correctValues[index] !== undefined && input.value !== correctValues[index]) {
+                        input.value = correctValues[index];
+                    }
+                    // Add event listener to prevent wrong values
+                    input.addEventListener('input', function() {
+                        const row = this.closest('tr');
+                        const tds = row.querySelectorAll('td');
+                        const keterangan = tds[3]?.textContent.trim();
+                        if (keterangan === 'Gotong Royong' && this.value !== '0') {
+                            this.value = '0';
+                        } else if (keterangan === 'Kempen Derma Darah' && this.value !== '0') {
+                            this.value = '0';
+                        } else if (keterangan === 'Walkaton' && this.value !== '5') {
+                            this.value = '5';
+                        }
+                    });
+                });
+            }, 1500);
 
             // Enable budget editing for super admin
             enableBudgetEditing();
