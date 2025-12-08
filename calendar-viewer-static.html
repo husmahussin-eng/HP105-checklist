@@ -183,14 +183,15 @@
         
         .checklist-table {
             width: 100%;
-            border-collapse: separate;
+            table-layout: fixed;
+            border-collapse: collapse;
             border-spacing: 0;
             background: white;
             border-radius: 0.5rem;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             font-size: 0.875rem;
-            border: 1px solid #e5e7eb;
+            border: 2px solid #444;
         }
         
         .checklist-table thead {
@@ -199,21 +200,19 @@
         }
         
         .checklist-table th {
-            padding: 0.5rem 0.75rem;
+            padding: 0.45rem 0.55rem;
             text-align: left;
             font-weight: 700;
-            font-size: 0.875rem;
-            white-space: nowrap;
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-        }
-        
-        .checklist-table th:last-child {
-            border-right: none;
+            font-size: 0.82rem;
+            white-space: normal;
+            word-break: break-word;
+            border: 2px solid #444;
         }
         
         .checklist-table th:first-child {
-            min-width: 160px;
+            width: 5%;
+            min-width: 35px;
+            max-width: 55px;
             position: sticky;
             left: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -247,11 +246,9 @@
             padding: 0.5rem 0.75rem;
             vertical-align: top;
             color: #374151;
-            border-right: 1px solid #e5e7eb;
-        }
-        
-        .checklist-table td:last-child {
-            border-right: none;
+            border: 2px solid #444;
+            word-break: break-word;
+            hyphens: auto;
         }
         
         .checklist-table td:first-child {
@@ -261,7 +258,9 @@
             position: sticky;
             left: 0;
             z-index: 5;
-            min-width: 160px;
+            width: 5%;
+            min-width: 35px;
+            max-width: 55px;
             border-right: 2px solid #d1d5db;
         }
         
@@ -270,12 +269,69 @@
         }
         
         .checklist-table td:not(:first-child) {
-            min-width: 110px;
+            min-width: 80px;
         }
         
-        /* Cenderahati column - narrower */
+        .budget-cell {
+            text-align: right;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .goodies-cell {
+            text-align: center;
+        }
+        
+        /* Column sizing for checklist */
+        .checklist-table th:nth-child(1),
+        .checklist-table td:nth-child(1) {
+            min-width: 50px;
+            max-width: 70px;
+        }
+        
+        .checklist-table th:nth-child(2),
         .checklist-table td:nth-child(2) {
+            width: 10%;
             min-width: 90px;
+            max-width: 140px;
+        }
+        
+        /* Tindakan column (3rd) – compact to header size */
+        .checklist-table th:nth-child(3),
+        .checklist-table td:nth-child(3) {
+            width: 8%;
+            min-width: 90px;
+            max-width: 140px;
+        }
+        
+        /* Keterangan column (4th) – wider */
+        .checklist-table th:nth-child(4),
+        .checklist-table td:nth-child(4) {
+            width: 40%;
+            min-width: 380px;
+            max-width: 700px;
+        }
+        
+        /* Cenderahati column */
+        .checklist-table th:nth-child(5),
+        .checklist-table td:nth-child(5) {
+            width: 7%;
+            min-width: 70px;
+            max-width: 110px;
+        }
+        
+        .checklist-table th:nth-child(6),
+        .checklist-table td:nth-child(6) {
+            width: 7%;
+            min-width: 70px;
+            max-width: 110px;
+        }
+        
+        .checklist-table th:nth-child(7),
+        .checklist-table td:nth-child(7) {
+            width: 10%;
+            min-width: 120px;
+            max-width: 200px;
         }
         
         .activity-item {
@@ -1053,7 +1109,7 @@
                                         <div>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</div>
                                     </td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="472" readonly /></td>
-                                    <td class="goodies-cell">2125</td>
+                                    <td class="goodies-cell">2055</td>
                                     <td class="budget-cell">belum ada</td>
                                 </tr>
                                 <tr class="total-row">
