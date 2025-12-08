@@ -1678,6 +1678,9 @@
             rows.forEach(row => {
                 const tds = row.querySelectorAll('td');
                 if (tds.length < 4) return;
+                // Skip rows without bil (to prevent save errors)
+                const bil = tds[0] ? tds[0].textContent.trim() : '';
+                if (!bil) return;
                 [1,2,3].forEach(idx => {
                     const cell = tds[idx];
                     if (!cell) return;
