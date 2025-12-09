@@ -2013,10 +2013,19 @@
                 const el = document.getElementById(`${key}-notes`);
                 if (!el) return;
                 const dayEvents = grouped[key];
-                // Sort events alphabetically by title (matching live version)
+                // Sort events: Mesyuarat first, then others alphabetically
                 dayEvents.sort((a, b) => {
                     const at = (a.title || '').toLowerCase();
                     const bt = (b.title || '').toLowerCase();
+                    
+                    // If one is Mesyuarat and the other is not, Mesyuarat comes first
+                    const aIsMesyuarat = at.includes('mesyuarat');
+                    const bIsMesyuarat = bt.includes('mesyuarat');
+                    
+                    if (aIsMesyuarat && !bIsMesyuarat) return -1;
+                    if (!aIsMesyuarat && bIsMesyuarat) return 1;
+                    
+                    // If both are Mesyuarat or both are not, sort alphabetically
                     return at.localeCompare(bt);
                 });
                 const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
@@ -2227,8 +2236,9 @@
             { month: 'dec', day: 17, title: 'Mesyuarat 06/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
             { month: 'dec', day: 24, title: 'Bergambar Ramai AJK HP105 @ MES', activity: 'Mesyuarat', event_time: 'not-started', venue: 'Bergambar Ramai untuk AJK HP105', description: '' },
             { month: 'dec', day: 24, title: 'Mesyuarat 07/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
-            { month: 'dec', day: 31, title: 'Majlis Doa Kesyukuran HP105', activity: 'Mesyuarat', event_time: '', venue: 'Surau Polis Gadong', description: '' },
             { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
+            { month: 'dec', day: 31, title: 'Bergambar Ramai AJK HP105', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
+            { month: 'dec', day: 31, title: 'Majlis Doa Kesyukuran HP105', activity: 'Mesyuarat', event_time: '', venue: 'Surau Polis Gadong', description: '' },
 
             // January 2026
             { month: 'jan', day: 3,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
