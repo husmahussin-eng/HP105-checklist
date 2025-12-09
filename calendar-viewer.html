@@ -1223,8 +1223,6 @@
                 width: 15%;
                 min-width: 60px;
             }
-                padding: 0.125rem 0;
-            }
         }
         
         @media (max-width: 480px) {
@@ -2085,10 +2083,31 @@
                 let eventsDisplayed = 0;
                 Object.keys(eventsByDay).forEach(key => {
                     const dayEvents = eventsByDay[key];
-                    // Sort events alphabetically by title so items like "Latihan..." appear before others
+                    // Sort events: Mesyuarat first, then Bergambar Ramai, then others alphabetically
                     dayEvents.sort((a, b) => {
                         const at = (a.event_title || a.title || '').toLowerCase();
                         const bt = (b.event_title || b.title || '').toLowerCase();
+                        
+                        // Priority order: 1) Mesyuarat, 2) Bergambar Ramai, 3) Others alphabetically
+                        const aIsMesyuarat = at.includes('mesyuarat');
+                        const bIsMesyuarat = bt.includes('mesyuarat');
+                        const aIsBergambar = at.includes('bergambar');
+                        const bIsBergambar = bt.includes('bergambar');
+                        
+                        // Mesyuarat always comes first
+                        if (aIsMesyuarat && !bIsMesyuarat) return -1;
+                        if (!aIsMesyuarat && bIsMesyuarat) return 1;
+                        
+                        // If both are Mesyuarat, sort by number (08 before 07, etc.)
+                        if (aIsMesyuarat && bIsMesyuarat) {
+                            return at.localeCompare(bt);
+                        }
+                        
+                        // Bergambar Ramai comes second (after Mesyuarat)
+                        if (aIsBergambar && !bIsBergambar && !bIsMesyuarat) return -1;
+                        if (!aIsBergambar && bIsBergambar && !aIsMesyuarat) return 1;
+                        
+                        // Otherwise sort alphabetically
                         return at.localeCompare(bt);
                     });
                     const [month, day] = key.split('-');
