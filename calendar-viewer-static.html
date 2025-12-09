@@ -2013,19 +2013,31 @@
                 const el = document.getElementById(`${key}-notes`);
                 if (!el) return;
                 const dayEvents = grouped[key];
-                // Sort events: Mesyuarat first, then others alphabetically
+                // Sort events: Mesyuarat first, then Bergambar Ramai, then others alphabetically
                 dayEvents.sort((a, b) => {
                     const at = (a.title || '').toLowerCase();
                     const bt = (b.title || '').toLowerCase();
                     
-                    // If one is Mesyuarat and the other is not, Mesyuarat comes first
+                    // Priority order: 1) Mesyuarat, 2) Bergambar Ramai, 3) Others alphabetically
                     const aIsMesyuarat = at.includes('mesyuarat');
                     const bIsMesyuarat = bt.includes('mesyuarat');
+                    const aIsBergambar = at.includes('bergambar');
+                    const bIsBergambar = bt.includes('bergambar');
                     
+                    // Mesyuarat always comes first
                     if (aIsMesyuarat && !bIsMesyuarat) return -1;
                     if (!aIsMesyuarat && bIsMesyuarat) return 1;
                     
-                    // If both are Mesyuarat or both are not, sort alphabetically
+                    // If both are Mesyuarat, sort by number (08 before 07, etc.)
+                    if (aIsMesyuarat && bIsMesyuarat) {
+                        return at.localeCompare(bt);
+                    }
+                    
+                    // Bergambar Ramai comes second (after Mesyuarat)
+                    if (aIsBergambar && !bIsBergambar && !bIsMesyuarat) return -1;
+                    if (!aIsBergambar && bIsBergambar && !aIsMesyuarat) return 1;
+                    
+                    // Otherwise sort alphabetically
                     return at.localeCompare(bt);
                 });
                 const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
