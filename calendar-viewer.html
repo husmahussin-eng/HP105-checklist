@@ -8,7 +8,7 @@
     <meta name="format-detection" content="telephone=no">
     <title>HP-105 Calendar - Viewer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="js/api-client.js?v=6"></script>
+    <script src="js/api-client.js?v=7"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -201,7 +201,7 @@
         }
         
         .checklist-table th:nth-child(4) {
-            text-align: left;
+            text-align: center;
         }
         
         .checklist-table th:first-child {
@@ -243,7 +243,15 @@
         }
         
         .checklist-table td:nth-child(4) {
-            text-align: left;
+            text-align: center;
+        }
+        
+        .checklist-table td div {
+            text-align: center;
+        }
+        
+        .tindakan-cell {
+            text-align: center !important;
         }
         
         .checklist-table td:first-child {
@@ -268,7 +276,7 @@
         }
         
         .budget-cell {
-            text-align: right;
+            text-align: center;
             font-weight: 600;
             white-space: nowrap;
         }
@@ -296,6 +304,252 @@
         #calendar-month-budget,
         #tab-budget {
             display: none !important;
+        }
+        
+        /* To Do List Styles */
+        .todolist-container {
+            padding: 1.5rem;
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            border: 2px solid #d8b4fe;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .todolist-title-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #6b7280;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            background: white;
+        }
+        
+        .todolist-title-label {
+            font-weight: 700;
+            color: #374151;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .todolist-title-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: #374151;
+            background: transparent;
+        }
+        
+        .todolist-save-button-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .todolist-save-button {
+            display: flex;
+            align-items: center;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 0.625rem 1.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+            width: auto;
+            min-width: 120px;
+        }
+        
+        .todolist-save-button:hover {
+            background: #1d4ed8;
+        }
+        
+        .todolist-save-button:active {
+            background: #1e40af;
+        }
+        
+        .todolist-save-status {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .todolist-save-status.success {
+            color: #10b981;
+        }
+        
+        .todolist-save-status.error {
+            color: #ef4444;
+        }
+        
+        .todolist-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .todolist-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #6b7280;
+        }
+        
+        .todolist-table th {
+            background: #f9fafb;
+            border: 1px solid #6b7280;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            color: #374151;
+            font-size: 0.875rem;
+        }
+        
+        .todolist-table th:nth-child(1) {
+            width: 6%;
+            min-width: 50px;
+        }
+        
+        .todolist-table th:nth-child(2) {
+            width: 12%;
+            min-width: 120px;
+        }
+        
+        .todolist-table th:nth-child(3) {
+            width: 72%;
+            min-width: 400px;
+        }
+        
+        .todolist-table th:nth-child(4) {
+            width: 10%;
+            min-width: 80px;
+        }
+        
+        .todolist-table td {
+            border: 1px solid #6b7280;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        .todolist-table td:nth-child(1) {
+            font-weight: 600;
+            color: #374151;
+            background: #f9fafb;
+        }
+        
+        .todolist-date-input,
+        .todolist-task-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #374151;
+            background: transparent;
+            text-align: left;
+        }
+        
+        .todolist-task-input {
+            text-align: left;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            resize: vertical;
+            min-height: 2.5rem;
+            line-height: 1.5;
+            font-family: inherit;
+            overflow-y: auto;
+        }
+        
+        .todolist-table td:nth-child(3) {
+            vertical-align: top;
+            padding: 0.5rem;
+        }
+        
+        .todolist-table td:nth-child(3) textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .todolist-checkbox-cell {
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .todolist-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #8b5cf6;
+            opacity: 1;
+        }
+        
+        .todolist-checkbox:disabled {
+            accent-color: #10b981 !important;
+            opacity: 1 !important;
+            cursor: not-allowed;
+            filter: none !important;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .todolist-checkbox:disabled:checked {
+            accent-color: #10b981 !important;
+            background-color: #10b981 !important;
+        }
+        
+        .disabled-green-checkbox {
+            accent-color: #10b981 !important;
+            -webkit-appearance: checkbox;
+            appearance: checkbox;
+        }
+        
+        .disabled-green-checkbox:checked {
+            accent-color: #10b981 !important;
+            background-color: #10b981 !important;
+        }
+        
+        /* Green checkmark overlay for disabled checked boxes */
+        .todolist-checkbox-cell.green-checked::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background-color: #10b981;
+            border-radius: 3px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .todolist-checkbox-cell.green-checked::after {
+            content: '✓';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            z-index: 2;
+            pointer-events: none;
+            line-height: 1;
+        }
+        
+        .todolist-checkbox-cell.green-checked .todolist-checkbox {
+            opacity: 0;
+        }
+        
+        .todolist-table tbody tr:hover {
+            background: #f9fafb;
         }
         
         /* Column sizing for checklist */
@@ -358,7 +612,7 @@
         }
         
         .total-label {
-            text-align: right;
+            text-align: center;
         }
         
         .activity-item {
@@ -827,6 +1081,136 @@
             
             .calendar-day-name {
                 font-size: 0.6rem;
+            }
+            
+            /* Acara Checklist Mobile Styles */
+            .checklist-container {
+                padding: 0.5rem;
+            }
+            
+            .checklist-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -0.5rem;
+                padding: 0 0.5rem;
+            }
+            
+            .checklist-table {
+                font-size: 0.75rem;
+                min-width: 800px;
+            }
+            
+            .checklist-table th {
+                padding: 0.35rem 0.4rem;
+                font-size: 0.7rem;
+            }
+            
+            .checklist-table td {
+                padding: 0.35rem 0.4rem;
+                font-size: 0.7rem;
+            }
+            
+            .checklist-table td:first-child {
+                min-width: 30px;
+                max-width: 40px;
+            }
+            
+            .checklist-table .cenderahati-input,
+            .checklist-table .goodies-cell {
+                font-size: 0.7rem;
+                padding: 0.25rem;
+            }
+            
+            .checklist-table .budget-cell {
+                font-size: 0.7rem;
+            }
+            
+            .checklist-footer {
+                font-size: 0.3rem;
+                padding: 0.25rem 0.5rem;
+            }
+            
+            /* To Do List Mobile Styles */
+            .todolist-container {
+                padding: 0.75rem;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+            }
+            
+            .todolist-save-button-wrapper {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .todolist-save-button {
+                width: auto;
+                min-width: 100px;
+                justify-content: center;
+                padding: 0.625rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .todolist-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -0.75rem;
+                padding: 0 0.75rem;
+            }
+            
+            .todolist-table {
+                font-size: 0.75rem;
+                min-width: 600px;
+            }
+            
+            .todolist-table th {
+                padding: 0.5rem 0.4rem;
+                font-size: 0.7rem;
+            }
+            
+            .todolist-table td {
+                padding: 0.4rem 0.3rem;
+                font-size: 0.7rem;
+            }
+            
+            .todolist-date-input,
+            .todolist-task-input {
+                font-size: 0.75rem;
+                padding: 0.4rem;
+                min-height: 2rem;
+            }
+            
+            .todolist-task-input {
+                min-height: 2rem;
+                font-size: 0.7rem;
+            }
+            
+            .todolist-checkbox {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .todolist-table th:nth-child(1) {
+                width: 8%;
+                min-width: 40px;
+            }
+            
+            .todolist-table th:nth-child(2) {
+                width: 15%;
+                min-width: 100px;
+            }
+            
+            .todolist-table th:nth-child(3) {
+                width: 62%;
+                min-width: 250px;
+            }
+            
+            .todolist-table th:nth-child(4) {
+                width: 15%;
+                min-width: 60px;
+            }
                 padding: 0.125rem 0;
             }
         }
@@ -847,6 +1231,61 @@
             
             .calendar-day {
                 min-height: 50px;
+            }
+            
+            /* Acara Checklist - Extra Small Mobile */
+            .checklist-table {
+                font-size: 0.65rem;
+                min-width: 700px;
+            }
+            
+            .checklist-table th {
+                padding: 0.3rem 0.3rem;
+                font-size: 0.65rem;
+            }
+            
+            .checklist-table td {
+                padding: 0.3rem 0.3rem;
+                font-size: 0.65rem;
+            }
+            
+            .checklist-table .cenderahati-input {
+                font-size: 0.65rem;
+                padding: 0.2rem;
+                min-width: 50px;
+            }
+            
+            /* To Do List - Extra Small Mobile */
+            .todolist-container {
+                padding: 0.5rem;
+            }
+            
+            .todolist-table {
+                font-size: 0.65rem;
+                min-width: 500px;
+            }
+            
+            .todolist-table th {
+                padding: 0.4rem 0.3rem;
+                font-size: 0.65rem;
+            }
+            
+            .todolist-table td {
+                padding: 0.3rem 0.25rem;
+                font-size: 0.65rem;
+            }
+            
+            .todolist-date-input,
+            .todolist-task-input {
+                font-size: 0.65rem;
+                padding: 0.3rem;
+                min-height: 1.75rem;
+            }
+            
+            .todolist-save-button {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+                min-width: 90px;
             }
         }
         
@@ -942,6 +1381,12 @@
                     </svg>
                     <span>Acara Checklist</span>
                 </button>
+                <button class="calendar-tab" onclick="switchCalendarTab('todolist')" id="tab-todolist">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                    </svg>
+                    <span>To Do List</span>
+                </button>
             </div>
             
             <!-- December 2025 Calendar -->
@@ -991,8 +1436,8 @@
                                     <th>Perkara</th>
                                     <th>Tindakan</th>
                                     <th>Keterangan</th>
-                                    <th id="cenderahati-header">Cenderahati</th>
-                                    <th>Goodies bag</th>
+                                    <th id="cenderahati-header">Cenderahati hp105</th>
+                                    <th>Goodies bag hp105</th>
                                     <th>Budget</th>
                                 </tr>
                             </thead>
@@ -1002,11 +1447,11 @@
                                     <td>Perbarisan</td>
                                     <td class="tindakan-cell">P. Perbarisan</td>
                                     <td>
-                                        <div>Anggaran Perbelanjaan merangkumi hari latihan dan raptai perbarisan</div>
+                                        <div>Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan</div>
                                     </td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="376" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$ 34,073.75</td>
+                                    <td class="budget-cell">$34,073.75</td>
                                 </tr>
                                 <tr>
                                     <td rowspan="2">2</td>
@@ -1017,7 +1462,7 @@
                                     </td>
                                     <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">belum ada</td>
+                                    <td class="budget-cell"></td>
                                 </tr>
                                 <tr>
                                     <td class="tindakan-cell">Setiausaha Mes</td>
@@ -1026,27 +1471,27 @@
                                     </td>
                                     <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$ 20,438.00</td>
+                                    <td class="budget-cell">$20,438.00</td>
                                 </tr>
                                 <tr>
                                     <td rowspan="2">3</td>
                                     <td rowspan="2">Keagamaan</td>
                                     <td class="tindakan-cell">BUI</td>
                                     <td>
-                                        <div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)</div>
+                                        <div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)</div>
                                     </td>
                                     <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$ 1,275.00</td>
+                                    <td class="budget-cell">$1,275.00</td>
                                 </tr>
                                 <tr>
-                                    <td class="tindakan-cell">BUI</td>
+                                    <td class="tindakan-cell"></td>
                                     <td>
                                         <div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>
                                     </td>
                                     <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$ 1,950.00</td>
+                                    <td class="budget-cell">$1,950.00</td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
@@ -1068,7 +1513,7 @@
                                     </td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="41" /></td>
                                     <td class="goodies-cell">210</td>
-                                    <td class="budget-cell">$ 2,328.50</td>
+                                    <td class="budget-cell">$2,328.50</td>
                                 </tr>
                                 <!-- Daerah BM (rowspan with detailed activities) -->
                                 <tr>
@@ -1076,18 +1521,18 @@
                                     <td rowspan="3">Daerah BM</td>
                                     <td class="tindakan-cell">P. Derma Darah</td>
                                     <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="0" /></td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">100</td>
-                                    <td class="budget-cell" rowspan="3">&nbsp;</td>
+                                    <td class="budget-cell" rowspan="3"></td>
                                 </tr>
                                 <tr>
                                     <td class="tindakan-cell">OCPD BM</td>
                                     <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="0" /></td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">300</td>
                                 </tr>
                                 <tr>
-                                    <td class="tindakan-cell">OCPD BM</td>
+                                    <td class="tindakan-cell"></td>
                                     <td>Walkaton</td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="5" /></td>
                                     <td class="goodies-cell">145</td>
@@ -1095,17 +1540,22 @@
 
                                 <!-- Daerah Belait -->
                                 <tr>
-                                    <td rowspan="2">7</td>
-                                    <td rowspan="2">Daerah Belait</td>
-                                    <td rowspan="2" class="tindakan-cell">OCPD Belait</td>
+                                    <td rowspan="3">7</td>
+                                    <td rowspan="3">Daerah Belait</td>
+                                    <td rowspan="3" class="tindakan-cell">OCPD Belait</td>
                                     <td>Open day</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="?" min="0" /></td>
-                                    <td class="goodies-cell">500</td>
-                                    <td class="budget-cell" rowspan="2">&nbsp;</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">550</td>
+                                    <td class="budget-cell" rowspan="3">$2,621.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Gotong Royong</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="?" min="0" /></td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">100</td>
                                 </tr>
 
@@ -1115,19 +1565,19 @@
                                     <td rowspan="3">Daerah Temb</td>
                                     <td rowspan="3" class="tindakan-cell">OCPD Temb</td>
                                     <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" /></td>
-                                    <td class="goodies-cell">?</td>
-                                    <td class="budget-cell" rowspan="3">?</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">100</td>
+                                    <td class="budget-cell" rowspan="3">$1,083.70</td>
                                 </tr>
                                 <tr>
                                     <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" /></td>
-                                    <td class="goodies-cell">?</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">-</td>
                                 </tr>
                                 <tr>
                                     <td>Community Engagement @ POLSARA</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="?" min="0" /></td>
-                                    <td class="goodies-cell">?</td>
+                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" /></td>
+                                    <td class="goodies-cell">80</td>
                                 </tr>
                                 <tr>
                                     <td>9</td>
@@ -1136,35 +1586,161 @@
                                     <td>
                                         <div>Perbelanjaan penyewaan kem, backdrop, fabric ceiling</div>
                                     </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="?" min="0" /></td>
-                                    <td class="goodies-cell">?</td>
-                                    <td class="budget-cell">belum ada</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>PRO</td>
-                                    <td class="tindakan-cell">-</td>
-                                    <td>
-                                        <div>Pencetakan poster Sambutan HP ke -105</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="?" min="0" /></td>
-                                    <td class="goodies-cell">?</td>
-                                    <td class="budget-cell">belum ada</td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="0" /></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell"></td>
                                 </tr>
                                 <tr>
                                     <td>11</td>
+                                    <td>PRO</td>
+                                    <td class="tindakan-cell"></td>
+                                    <td>
+                                        <div>Pencetakan poster Sambutan HP ke -105</div>
+                                    </td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="0" /></td>
+                                    <td class="goodies-cell">-</td>
+                                    <td class="budget-cell"></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
                                     <td>Cenderahati</td>
-                                    <td class="tindakan-cell">-</td>
+                                    <td class="tindakan-cell"></td>
                                     <td>
                                         <div>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</div>
                                     </td>
                                     <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="472" /></td>
-                                    <td class="goodies-cell">2055</td>
-                                    <td class="budget-cell">belum ada</td>
+                                    <td class="goodies-cell">2185</td>
+                                    <td class="budget-cell"></td>
                                 </tr>
                                 <tr class="total-row">
                                     <td colspan="6" class="total-label">Jumlah Keseluruhan</td>
-                                    <td class="budget-cell"><strong>$72,865.25</strong></td>
+                                    <td class="budget-cell"><strong>$76,569.95</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="checklist-footer">DKH@2025</div>
+                </div>
+            </div>
+            
+            <!-- To Do List Tab -->
+            <div class="calendar-month" id="calendar-month-todolist">
+                <div class="todolist-container">
+                    <div class="todolist-save-button-wrapper">
+                        <button class="todolist-save-button" onclick="saveAllToDoListData()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; margin-right: 0.5rem;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Save
+                        </button>
+                        <span class="todolist-save-status" id="todolist-save-status"></span>
+                    </div>
+                    <div class="todolist-table-wrapper">
+                        <table class="todolist-table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>DATE</th>
+                                    <th>TASKS</th>
+                                    <th>DONE?</th>
+                                </tr>
+                            </thead>
+                            <tbody id="todolist-tbody">
+                                <tr data-row-id="1">
+                                    <td>1</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="1" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="1" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="1" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="2">
+                                    <td>2</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="2" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="2" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="2" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="3">
+                                    <td>3</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="3" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="3" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="3" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="4">
+                                    <td>4</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="4" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="4" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="4" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="5">
+                                    <td>5</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="5" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="5" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="5" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="6">
+                                    <td>6</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="6" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="6" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="6" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="7">
+                                    <td>7</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="7" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="7" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="7" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="8">
+                                    <td>8</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="8" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="8" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="8" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="9">
+                                    <td>9</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="9" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="9" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="9" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="10">
+                                    <td>10</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="10" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="10" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="10" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="11">
+                                    <td>11</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="11" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="11" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="11" />
+                                    </td>
+                                </tr>
+                                <tr data-row-id="12">
+                                    <td>12</td>
+                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="12" /></td>
+                                    <td><textarea class="todolist-task-input" placeholder="" data-row="12" rows="2"></textarea></td>
+                                    <td class="todolist-checkbox-cell">
+                                        <input type="checkbox" class="todolist-checkbox" data-row="12" />
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1319,6 +1895,13 @@
             
             if (tab) tab.classList.add('active');
             if (monthEl) monthEl.classList.add('active');
+            
+            // Apply To Do List restrictions when switching to todolist tab
+            if (month === 'todolist') {
+                setTimeout(() => {
+                    restrictToDoListAccess();
+                }, 100);
+            }
         }
         
         // Update countdown - using same logic as index.html
@@ -1647,7 +2230,7 @@
             
             const header = document.getElementById('cenderahati-header');
             if (header) {
-            header.textContent = `Cenderahati`;
+            header.textContent = `Cenderahati hp105`;
             }
             
             console.log('Cenderahati total updated:', total);
@@ -1710,17 +2293,17 @@
         // Checklist editing (existing rows only)
         // -----------------------------
         const checklistFallback = [
-            { category: 'Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi hari latihan dan raptai perbarisan', tindakan: 'P. Perbarisan', cenderahati: '376', goodies: '-', budget: '$ 34,073.75' },
-            { category: 'Mkn Beradat', keterangan: '<div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div><div>Makan beradat pada 15/01/2026 (belum termasuk support staffs)</div>', tindakan: 'P. Permakanan', cenderahati: '', goodies: '-', budget: 'belum ada' },
-            { category: 'Keagamaan', keterangan: '<div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardcover (Ezy Printing)</div><div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>', tindakan: 'BUI', cenderahati: '', goodies: '-', budget: '$ 1,275.00' },
+            { category: 'Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan', tindakan: 'P. Perbarisan', cenderahati: '376', goodies: '-', budget: '$34,073.75' },
+            { category: 'Mkn Beradat', keterangan: '<div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div><div>Makan beradat pada 15/01/2026 (belum termasuk support staffs)</div>', tindakan: ['P. Permakanan','Setiausaha Mes'], cenderahati: ['',''], goodies: ['-','-'], budget: ['','$20,438.00'] },
+            { category: 'Keagamaan', keterangan: '<div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)</div><div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>', tindakan: ['BUI',''], cenderahati: ['',''], goodies: ['-','-'], budget: ['$1,275.00','$1,950.00'] },
             { category: 'Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', tindakan: 'P. Pameran', cenderahati: '50', goodies: '600', budget: '$12,800.00' },
-            { category: 'Daerah TT', keterangan: '<div>Kejohanan Bolasepak</div>', tindakan: 'OCPD TT', cenderahati: '41', goodies: '210', budget: '$ 2,328.50' },
-            { category: 'Daerah BM', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Walkaton</div>', tindakan: 'OCPD BM', cenderahati: ['','','5'], goodies: ['100','300','145'], budget: ['','',''] },
-            { category: 'Daerah Belait', keterangan: '<div>Open day</div><div>Kempen Derma Darah</div>', tindakan: 'OCPD Belait', cenderahati: ['',''], goodies: ['500','100'], budget: ['',''] },
-            { category: 'Daerah Temb', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Community Engagement @ POLSARA</div>', tindakan: 'OCPD Temb', cenderahati: ['?','?','?'], goodies: ['?','?','?'], budget: ['?','?','?'] },
-            { category: 'Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling', tindakan: 'P. Kelengkapan', cenderahati: '', goodies: '?', budget: 'belum ada' },
-            { category: 'PRO', keterangan: 'Pencetakan poster Sambutan HP ke -105', tindakan: '-', cenderahati: '', goodies: '?', budget: 'belum ada' },
-            { category: 'Cenderahati', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', tindakan: '-', cenderahati: '472', goodies: '2055', budget: 'belum ada' }
+            { category: 'Daerah TT', keterangan: '<div>Kejohanan Bolasepak</div>', tindakan: 'OCPD TT', cenderahati: '41', goodies: '210', budget: '$2,328.50' },
+            { category: 'Daerah BM', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Walkaton</div>', tindakan: ['P. Derma Darah','OCPD BM',''], cenderahati: ['','','5'], goodies: ['100','300','145'], budget: ['','',''] },
+            { category: 'Daerah Belait', keterangan: '<div>Open day</div><div>Gotong Royong</div><div>Kempen Derma Darah</div>', tindakan: 'OCPD Belait', cenderahati: ['','',''], goodies: ['550','-','100'], budget: ['$2,621.00','$2,621.00','$2,621.00'] },
+            { category: 'Daerah Temb', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Community Engagement @ POLSARA</div>', tindakan: 'OCPD Temb', cenderahati: ['','',''], goodies: ['100','-','80'], budget: ['$1,083.70','$1,083.70','$1,083.70'] },
+            { category: 'Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling', tindakan: 'P. Kelengkapan', cenderahati: '0', goodies: '-', budget: '' },
+            { category: 'PRO', keterangan: 'Pencetakan poster Sambutan HP ke -105', tindakan: '', cenderahati: '0', goodies: '-', budget: '' },
+            { category: 'Cenderahati', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', tindakan: '', cenderahati: '472', goodies: '2185', budget: '' }
         ];
         function getCategoryFromRow(row) {
             let cur = row;
@@ -2261,6 +2844,24 @@
                 setTimeout(forceDaerahBMValues, 100);
             });
             
+            // Load and enable To Do List (wait for API to be available)
+            if (typeof ToDoListAPI !== 'undefined') {
+                loadToDoListData();
+                enableToDoListEditing();
+                restrictToDoListAccess();
+            } else {
+                // Wait a bit for script to load
+                setTimeout(() => {
+                    if (typeof ToDoListAPI !== 'undefined') {
+                        loadToDoListData();
+                        enableToDoListEditing();
+                        restrictToDoListAccess();
+                    } else {
+                        console.error('ToDoListAPI not available after timeout');
+                    }
+                }, 500);
+            }
+            
             // Also force values immediately and after delays - run multiple times to ensure it sticks
             setTimeout(forceDaerahBMValues, 500);
             setTimeout(forceDaerahBMValues, 1000);
@@ -2292,6 +2893,252 @@
             // Enable budget editing for super admin
             enableBudgetEditing();
         });
+        
+        // To Do List Functions
+        async function loadToDoListData() {
+            try {
+                // Use window.ToDoListAPI as fallback
+                const API = window.ToDoListAPI || ToDoListAPI;
+                if (typeof API === 'undefined') {
+                    console.error('ToDoListAPI is not defined. Make sure api-client.js is loaded.');
+                    return;
+                }
+                const res = await API.getAll();
+                if (!res || !res.success) return;
+                
+                // Load row data (no title box anymore)
+                if (res.data && Array.isArray(res.data)) {
+                    res.data.forEach(item => {
+                        const rowNum = item.row_number || item.row_num;
+                        const row = document.querySelector(`tr[data-row-id="${rowNum}"]`);
+                        if (row) {
+                            const dateInput = row.querySelector('.todolist-date-input');
+                            const taskInput = row.querySelector('.todolist-task-input');
+                            const checkbox = row.querySelector('.todolist-checkbox');
+                            const cell = checkbox ? checkbox.closest('.todolist-checkbox-cell') : null;
+                            
+                            if (dateInput) dateInput.value = item.date_value || '';
+                            if (taskInput) taskInput.value = item.task || '';
+                            if (checkbox) {
+                                checkbox.checked = item.done == 1;
+                                // Apply green-checked class for non-super-admin users
+                                if (!isSuperAdmin() && checkbox.checked && cell) {
+                                    cell.classList.add('green-checked');
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error('Error loading To Do List data:', e);
+            }
+        }
+        
+        async function saveToDoListItem(rowNumber, checklistFor, dateValue, task, done) {
+            try {
+                // Use window.ToDoListAPI as fallback
+                const API = window.ToDoListAPI || ToDoListAPI;
+                if (typeof API === 'undefined') {
+                    console.error('ToDoListAPI is not defined. Make sure api-client.js is loaded.');
+                    throw new Error('ToDoListAPI is not available');
+                }
+                const currentUser = AuthAPI.getCurrentUser();
+                const res = await API.save({
+                    row_number: rowNumber,
+                    checklist_for: checklistFor,
+                    date_value: dateValue,
+                    task: task,
+                    done: done,
+                    username: currentUser ? currentUser.username : 'System'
+                });
+                
+                return res && res.success;
+            } catch (e) {
+                console.error('Error saving To Do List item:', e);
+                throw e;
+            }
+        }
+        
+        function enableToDoListEditing() {
+            // No auto-save - user will click Save button manually
+        }
+        
+        function restrictToDoListAccess() {
+            // Only super_admin can edit To Do List (strict check)
+            let isSuperAdminUser = false;
+            try {
+                if (AuthAPI && AuthAPI.isLoggedIn()) {
+                    const user = AuthAPI.getCurrentUser();
+                    if (user && user.role === 'super_admin') {
+                        isSuperAdminUser = true;
+                    }
+                }
+            } catch (e) {
+                console.warn('ToDoList access check failed', e);
+            }
+            
+            // Hide save button for non-super-admin users
+            const saveButton = document.querySelector('.todolist-save-button');
+            if (saveButton) {
+                if (!isSuperAdminUser) {
+                    saveButton.style.display = 'none';
+                } else {
+                    saveButton.style.display = 'flex';
+                }
+            }
+            
+            // Disable all input fields for non-super-admin users
+            const dateInputs = document.querySelectorAll('.todolist-date-input');
+            const taskInputs = document.querySelectorAll('.todolist-task-input');
+            const checkboxes = document.querySelectorAll('.todolist-checkbox');
+            
+            dateInputs.forEach(input => {
+                input.disabled = !isSuperAdminUser;
+                if (!isSuperAdminUser) {
+                    input.style.cursor = 'not-allowed';
+                    input.style.opacity = '1';
+                    input.style.backgroundColor = '#f3f4f6';
+                    input.style.color = '#000000';
+                } else {
+                    input.style.cursor = 'text';
+                    input.style.opacity = '1';
+                    input.style.backgroundColor = 'transparent';
+                    input.style.color = '#374151';
+                }
+            });
+            
+            taskInputs.forEach(input => {
+                input.disabled = !isSuperAdminUser;
+                if (!isSuperAdminUser) {
+                    input.style.cursor = 'not-allowed';
+                    input.style.opacity = '1';
+                    input.style.backgroundColor = '#f3f4f6';
+                    input.style.color = '#000000';
+                } else {
+                    input.style.cursor = 'text';
+                    input.style.opacity = '1';
+                    input.style.backgroundColor = 'transparent';
+                    input.style.color = '#374151';
+                }
+            });
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.disabled = !isSuperAdminUser;
+                const cell = checkbox.closest('.todolist-checkbox-cell');
+                
+                if (!isSuperAdminUser) {
+                    checkbox.style.cursor = 'not-allowed';
+                    checkbox.style.width = '18px';
+                    checkbox.style.height = '18px';
+                    
+                    // If checkbox is checked, add green-checked class to cell
+                    if (checkbox.checked && cell) {
+                        cell.classList.add('green-checked');
+                    } else if (cell) {
+                        cell.classList.remove('green-checked');
+                    }
+                    
+                    // Listen for changes (though disabled, this helps with initial state)
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked && cell) {
+                            cell.classList.add('green-checked');
+                        } else if (cell) {
+                            cell.classList.remove('green-checked');
+                        }
+                    });
+                } else {
+                    checkbox.style.cursor = 'pointer';
+                    checkbox.style.opacity = '1';
+                    checkbox.style.accentColor = '#8b5cf6';
+                    if (cell) {
+                        cell.classList.remove('green-checked');
+                    }
+                }
+            });
+        }
+        
+        async function saveAllToDoListData() {
+            const statusEl = document.getElementById('todolist-save-status');
+            const saveButton = document.querySelector('.todolist-save-button');
+            
+            // Check if API is available
+            if (typeof ToDoListAPI === 'undefined' || typeof window.ToDoListAPI === 'undefined') {
+                if (statusEl) {
+                    statusEl.textContent = '✗ API not loaded. Please refresh the page.';
+                    statusEl.className = 'todolist-save-status error';
+                }
+                console.error('ToDoListAPI is not defined');
+                return;
+            }
+            
+            // Use window.ToDoListAPI as fallback
+            const API = window.ToDoListAPI || ToDoListAPI;
+            
+            // Show saving status
+            if (statusEl) {
+                statusEl.textContent = 'Saving...';
+                statusEl.className = 'todolist-save-status';
+            }
+            if (saveButton) {
+                saveButton.disabled = true;
+                saveButton.style.opacity = '0.6';
+                saveButton.style.cursor = 'not-allowed';
+            }
+            
+            try {
+                // No checklist_for title anymore, use empty string
+                const checklistFor = '';
+                
+                // Get all rows
+                const rows = document.querySelectorAll('#todolist-tbody tr');
+                const savePromises = [];
+                
+                rows.forEach(row => {
+                    const rowId = row.getAttribute('data-row-id');
+                    if (!rowId) return;
+                    
+                    const rowNumber = parseInt(rowId);
+                    const dateInput = row.querySelector('.todolist-date-input');
+                    const taskInput = row.querySelector('.todolist-task-input');
+                    const checkbox = row.querySelector('.todolist-checkbox');
+                    
+                    const dateValue = dateInput ? dateInput.value.trim() : '';
+                    const task = taskInput ? taskInput.value.trim() : '';
+                    const done = checkbox && checkbox.checked ? 1 : 0;
+                    
+                    savePromises.push(saveToDoListItem(rowNumber, checklistFor, dateValue, task, done));
+                });
+                
+                // Wait for all saves to complete
+                await Promise.all(savePromises);
+                
+                // Show success status
+                if (statusEl) {
+                    statusEl.textContent = '✓ Saved successfully!';
+                    statusEl.className = 'todolist-save-status success';
+                    setTimeout(() => {
+                        statusEl.textContent = '';
+                        statusEl.className = 'todolist-save-status';
+                    }, 3000);
+                }
+            } catch (e) {
+                console.error('Error saving To Do List:', e);
+                if (statusEl) {
+                    statusEl.textContent = '✗ Error saving: ' + (e.message || 'Unknown error');
+                    statusEl.className = 'todolist-save-status error';
+                    setTimeout(() => {
+                        statusEl.textContent = '';
+                        statusEl.className = 'todolist-save-status';
+                    }, 5000);
+                }
+            } finally {
+                if (saveButton) {
+                    saveButton.disabled = false;
+                    saveButton.style.opacity = '1';
+                    saveButton.style.cursor = 'pointer';
+                }
+            }
+        }
     </script>
 </body>
 </html>
