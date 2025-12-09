@@ -616,13 +616,15 @@
             border: none;
             background: transparent;
             padding: 0;
-            width: auto;
+            width: 100%;
             font-size: inherit;
-            text-align: center;
+            text-align: center !important;
             color: inherit;
             font-weight: inherit;
             box-shadow: none;
             outline: none;
+            display: block;
+            margin: 0 auto;
         }
         
         .cenderahati-input:focus,
@@ -642,7 +644,17 @@
         
         /* Cenderahati cell styling to match Goodies */
         .checklist-table td:nth-child(5) {
-            text-align: center;
+            text-align: center !important;
+            vertical-align: middle;
+        }
+        
+        .checklist-table td:nth-child(6) {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+        
+        .goodies-cell {
+            text-align: center !important;
         }
         
         /* Hide budget tab/page entirely */
