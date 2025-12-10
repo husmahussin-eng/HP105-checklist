@@ -3004,6 +3004,41 @@
             });
         }
 
+        // Force correct values for Daerah Temb (Row 8) - ALWAYS runs
+        function forceDaerahTembValues() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            rows.forEach(row => {
+                const tds = row.querySelectorAll('td');
+                const categoryCell = tds[1];
+                if (categoryCell && categoryCell.textContent.trim() === 'Daerah Temb') {
+                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    if (rowspan > 1) {
+                        let currentRow = row;
+                        const correctCenderahati = ['', '', '20'];
+                        for (let i = 0; i < rowspan && currentRow; i++) {
+                            const subTds = currentRow.querySelectorAll('td');
+                            const input = subTds[4]?.querySelector('input');
+                            const keterangan = subTds[3]?.textContent.trim();
+                            
+                            // Force Cenderahati values
+                            if (input) {
+                                if (keterangan === 'Community Engagement @ POLSARA ') {
+                                    input.value = '20';
+                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Gotong Royong ') {
+                                    input.value = '';
+                                } else if (correctCenderahati[i] !== undefined) {
+                                    input.value = correctCenderahati[i];
+                                }
+                            }
+                            
+                            currentRow = currentRow.nextElementSibling;
+                        }
+                        return;
+                    }
+                }
+            });
+        }
+
         // Force correct budget values for all rows - ALWAYS runs
         function forceBudgetValues() {
             const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
@@ -3113,9 +3148,10 @@
                     await applyChecklistFallback(true);
                 }
                 enableChecklistEditing();
-                // ALWAYS force correct values for Daerah BM, Daerah Belait, Cenderahati, and Budgets after loading
+                // ALWAYS force correct values for Daerah BM, Daerah Belait, Daerah Temb, Cenderahati, and Budgets after loading
                 setTimeout(forceDaerahBMValues, 100);
                 setTimeout(forceDaerahBelaitValues, 100);
+                setTimeout(forceDaerahTembValues, 100);
                 setTimeout(forceCenderahatiValues, 100);
                 setTimeout(forceBudgetValues, 100);
             });
@@ -3145,6 +3181,9 @@
             setTimeout(forceDaerahBelaitValues, 500);
             setTimeout(forceDaerahBelaitValues, 1000);
             setTimeout(forceDaerahBelaitValues, 2000);
+            setTimeout(forceDaerahTembValues, 500);
+            setTimeout(forceDaerahTembValues, 1000);
+            setTimeout(forceDaerahTembValues, 2000);
             setTimeout(forceCenderahatiValues, 500);
             setTimeout(forceCenderahatiValues, 1000);
             setTimeout(forceCenderahatiValues, 2000);
