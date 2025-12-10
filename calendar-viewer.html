@@ -2591,14 +2591,20 @@
                             } else if (category === 'Daerah Temb' && input) {
                                 // For Daerah Temb, ALWAYS force correct values: empty, empty, 20 - NEVER use DB data
                                 const keterangan = subTds[3]?.textContent.trim();
+                                const currentValue = input.value.trim();
+                                let targetValue = '';
                                 if (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA') {
-                                    input.value = '20';
-                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Gotong Royong ') {
-                                    input.value = '';
+                                    targetValue = '20';
+                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Kempen Derma Darah' || keterangan === 'Gotong Royong ' || keterangan === 'Gotong Royong') {
+                                    targetValue = '';
                                 } else {
                                     // Fallback to array index
                                     const correctValues = ['', '', '20'];
-                                    input.value = correctValues[i] || '';
+                                    targetValue = correctValues[i] || '';
+                                }
+                                if (currentValue !== targetValue) {
+                                    input.value = targetValue;
+                                    console.log(`loadChecklistData: Fixed Daerah Temb ${keterangan} cenderahati from "${currentValue}" to "${targetValue}"`);
                                 }
                             } else if (cenderahatiParts.length > 0 && cenderahatiParts[i] !== undefined) {
                                 // For other categories, use DB data
@@ -2635,16 +2641,22 @@
                             } else if (category === 'Daerah BM') {
                                 // For Daerah BM, ALWAYS force correct goodies values: 100, -, 145 - NEVER use DB data
                                 const keterangan = subTds[3]?.textContent.trim();
+                                const currentGoodies = subTds[5].textContent.trim();
+                                let targetGoodies = '';
                                 if (keterangan === 'Kempen Derma Darah') {
-                                    subTds[5].textContent = '100';
+                                    targetGoodies = '100';
                                 } else if (keterangan === 'Gotong Royong') {
-                                    subTds[5].textContent = '-';
+                                    targetGoodies = '-';
                                 } else if (keterangan === 'Walkaton') {
-                                    subTds[5].textContent = '145';
+                                    targetGoodies = '145';
                                 } else {
                                     // Fallback to array index
                                     const correctValues = ['100', '-', '145'];
-                                    subTds[5].textContent = correctValues[i] || '';
+                                    targetGoodies = correctValues[i] || '';
+                                }
+                                if (currentGoodies !== targetGoodies) {
+                                    subTds[5].textContent = targetGoodies;
+                                    console.log(`loadChecklistData: Fixed Daerah BM ${keterangan} goodies from "${currentGoodies}" to "${targetGoodies}"`);
                                 }
                             } else if (goodiesParts[i] !== undefined) {
                                 subTds[5].textContent = goodiesParts[i] || '';
@@ -2953,14 +2965,20 @@
                             
                             // Force Goodies values
                             if (goodiesCell && correctGoodies[i] !== undefined) {
+                                const currentGoodies = goodiesCell.textContent.trim();
+                                let targetGoodies = '';
                                 if (keterangan === 'Kempen Derma Darah') {
-                                    goodiesCell.textContent = '100';
+                                    targetGoodies = '100';
                                 } else if (keterangan === 'Gotong Royong') {
-                                    goodiesCell.textContent = '-';
+                                    targetGoodies = '-';
                                 } else if (keterangan === 'Walkaton') {
-                                    goodiesCell.textContent = '145';
+                                    targetGoodies = '145';
                                 } else {
-                                    goodiesCell.textContent = correctGoodies[i];
+                                    targetGoodies = correctGoodies[i];
+                                }
+                                if (currentGoodies !== targetGoodies) {
+                                    goodiesCell.textContent = targetGoodies;
+                                    console.log(`forceDaerahBMValues: Fixed Row 6 ${keterangan} goodies from "${currentGoodies}" to "${targetGoodies}"`);
                                 }
                             }
                             
@@ -3065,12 +3083,18 @@
                             
                             // Force Cenderahati values
                             if (input) {
-                                if (keterangan === 'Community Engagement @ POLSARA ') {
-                                    input.value = '20';
-                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Gotong Royong ') {
-                                    input.value = '';
+                                const currentValue = input.value.trim();
+                                let targetValue = '';
+                                if (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA') {
+                                    targetValue = '20';
+                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Kempen Derma Darah' || keterangan === 'Gotong Royong ' || keterangan === 'Gotong Royong') {
+                                    targetValue = '';
                                 } else if (correctCenderahati[i] !== undefined) {
-                                    input.value = correctCenderahati[i];
+                                    targetValue = correctCenderahati[i];
+                                }
+                                if (currentValue !== targetValue) {
+                                    input.value = targetValue;
+                                    console.log(`forceDaerahTembValues: Fixed Row 8 ${keterangan} cenderahati from "${currentValue}" to "${targetValue}"`);
                                 }
                             }
                             
@@ -3496,6 +3520,84 @@
                 document.querySelectorAll('.budget-cell').forEach(cell => {
                     budgetObserver.observe(cell, { childList: true, characterData: true, subtree: true });
                 });
+                
+                // Set up MutationObserver for goodies cells (Row 6 Gotong Royong)
+                const goodiesObserver = new MutationObserver((mutations) => {
+                    let shouldSync = false;
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                            const target = mutation.target;
+                            if (target.classList && target.classList.contains('goodies-cell')) {
+                                const row = target.closest('tr');
+                                if (row) {
+                                    const tds = row.querySelectorAll('td');
+                                    const categoryCell = tds[1];
+                                    const keteranganCell = tds[3];
+                                    if (categoryCell && keteranganCell) {
+                                        const category = categoryCell.textContent.trim();
+                                        const keterangan = keteranganCell.textContent.trim();
+                                        // Check if this is Row 6 Gotong Royong
+                                        if (category === 'Daerah BM' && keterangan === 'Gotong Royong') {
+                                            const currentGoodies = target.textContent.trim();
+                                            if (currentGoodies !== '-') {
+                                                shouldSync = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    if (shouldSync) {
+                        console.log('Goodies cell changed - forcing sync');
+                        forceDaerahBMValues();
+                    }
+                });
+                
+                // Set up MutationObserver for cenderahati inputs (Row 8 Community Engagement)
+                const cenderahatiObserver = new MutationObserver((mutations) => {
+                    let shouldSync = false;
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                            const target = mutation.target;
+                            if (target.classList && target.classList.contains('cenderahati-input')) {
+                                const row = target.closest('tr');
+                                if (row) {
+                                    const tds = row.querySelectorAll('td');
+                                    const categoryCell = tds[1];
+                                    const keteranganCell = tds[3];
+                                    if (categoryCell && keteranganCell) {
+                                        const category = categoryCell.textContent.trim();
+                                        const keterangan = keteranganCell.textContent.trim();
+                                        // Check if this is Row 8 Community Engagement
+                                        if (category === 'Daerah Temb' && (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA')) {
+                                            const currentValue = target.value.trim();
+                                            if (currentValue !== '20') {
+                                                shouldSync = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    if (shouldSync) {
+                        console.log('Cenderahati input changed - forcing sync');
+                        forceDaerahTembValues();
+                    }
+                });
+                
+                // Observe all goodies cells
+                setTimeout(() => {
+                    document.querySelectorAll('.goodies-cell').forEach(cell => {
+                        goodiesObserver.observe(cell, { childList: true, characterData: true, subtree: true });
+                    });
+                    // Observe all cenderahati inputs
+                    document.querySelectorAll('.cenderahati-input').forEach(input => {
+                        cenderahatiObserver.observe(input, { attributes: true, attributeFilter: ['value'] });
+                    });
+                }, 500);
+                
                 forceDaerahBMValues();
                 forceDaerahBelaitValues();
                 forceDaerahTembValues();
@@ -3551,15 +3653,21 @@
             setTimeout(forceBudgetValues, 1500);
             setTimeout(forceBudgetValues, 2000);
             setTimeout(forceBudgetValues, 3000);
+            setTimeout(forceDaerahBMValues, 200);
             setTimeout(forceDaerahBMValues, 500);
             setTimeout(forceDaerahBMValues, 1000);
+            setTimeout(forceDaerahBMValues, 1500);
             setTimeout(forceDaerahBMValues, 2000);
+            setTimeout(forceDaerahBMValues, 3000);
             setTimeout(forceDaerahBelaitValues, 500);
             setTimeout(forceDaerahBelaitValues, 1000);
             setTimeout(forceDaerahBelaitValues, 2000);
+            setTimeout(forceDaerahTembValues, 200);
             setTimeout(forceDaerahTembValues, 500);
             setTimeout(forceDaerahTembValues, 1000);
+            setTimeout(forceDaerahTembValues, 1500);
             setTimeout(forceDaerahTembValues, 2000);
+            setTimeout(forceDaerahTembValues, 3000);
             setTimeout(forceCenderahatiValues, 500);
             setTimeout(forceCenderahatiValues, 1000);
             setTimeout(forceCenderahatiValues, 2000);
