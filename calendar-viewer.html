@@ -2552,18 +2552,28 @@
                     let currentRow = row;
                     for (let i = 0; i < rowspan && currentRow; i++) {
                         const subTds = currentRow.querySelectorAll('td');
+                        // For sub-rows, cell indices are different due to rowspan:
+                        // Sub-row 0: tds[0]=Bil, tds[1]=Perkara, tds[2]=Tindakan, tds[3]=Keterangan, tds[4]=Cenderahati, tds[5]=Goodies
+                        // Sub-row 1+: tds[0]=Tindakan, tds[1]=Keterangan, tds[2]=Cenderahati, tds[3]=Goodies (for Daerah BM)
+                        // Sub-row 1+: tds[0]=Keterangan, tds[1]=Cenderahati (for Daerah Temb)
+                        const isFirstRow = i === 0;
+                        const tindakanCell = isFirstRow ? subTds[2] : subTds[0];
+                        const keteranganCell = isFirstRow ? subTds[3] : subTds[1];
+                        const cenderahatiCell = isFirstRow ? subTds[4] : subTds[2];
+                        const goodiesCell = isFirstRow ? subTds[5] : subTds[3];
+                        
                         // Only update tindakan if we have data from DB, otherwise keep HTML default
-                        if (subTds[2] && tindakanParts.length > 0 && tindakanParts[i] !== undefined && tindakanParts[i]) {
-                            subTds[2].textContent = tindakanParts[i];
+                        if (tindakanCell && tindakanParts.length > 0 && tindakanParts[i] !== undefined && tindakanParts[i]) {
+                            tindakanCell.textContent = tindakanParts[i];
                         }
-                        if (subTds[3] && keteranganParts[i] !== undefined) {
-                            subTds[3].textContent = keteranganParts[i] || '';
+                        if (keteranganCell && keteranganParts[i] !== undefined) {
+                            keteranganCell.textContent = keteranganParts[i] || '';
                         }
-                        if (subTds[4]) {
-                            const input = subTds[4].querySelector('input');
+                        if (cenderahatiCell) {
+                            const input = cenderahatiCell.querySelector('input');
                             // For Daerah BM, ALWAYS force correct values: 0, 0, 5 - NEVER use DB data
                             if (category === 'Daerah BM' && input) {
-                                const keterangan = subTds[3]?.textContent.trim();
+                                const keterangan = keteranganCell?.textContent.trim();
                                 // Set value based on keterangan text to ensure accuracy
                                 if (keterangan === 'Kempen Derma Darah') {
                                     input.value = '0';
@@ -2578,7 +2588,7 @@
                                 }
                             } else if (category === 'Daerah Belait' && input) {
                                 // For Daerah Belait, ALWAYS force correct values: 1, empty, empty - NEVER use DB data
-                                const keterangan = subTds[3]?.textContent.trim();
+                                const keterangan = keteranganCell?.textContent.trim();
                                 if (keterangan === 'Open day') {
                                     input.value = '1';
                                 } else if (keterangan === 'Gotong Royong' || keterangan === 'Kempen Derma Darah') {
@@ -2590,7 +2600,7 @@
                                 }
                             } else if (category === 'Daerah Temb' && input) {
                                 // For Daerah Temb, ALWAYS force correct values: empty, empty, 20 - NEVER use DB data
-                                const keterangan = subTds[3]?.textContent.trim();
+                                const keterangan = keteranganCell?.textContent.trim();
                                 const currentValue = input.value.trim();
                                 let targetValue = '';
                                 
@@ -2622,31 +2632,31 @@
                                 if (input) {
                                     input.value = cenValue;
                                 } else {
-                                    subTds[4].textContent = cenValue;
+                                    cenderahatiCell.textContent = cenValue;
                                 }
                             }
                         }
-                        if (subTds[5]) {
+                        if (goodiesCell) {
                             // For Daerah Belait, ALWAYS force correct goodies values: 500, -, 100 - NEVER use DB data
                             if (category === 'Daerah Belait') {
-                                const keterangan = subTds[3]?.textContent.trim();
+                                const keterangan = keteranganCell?.textContent.trim();
                                 if (keterangan === 'Open day') {
-                                    subTds[5].textContent = '500';
+                                    goodiesCell.textContent = '500';
                                 } else if (keterangan === 'Gotong Royong') {
-                                    subTds[5].textContent = '-';
+                                    goodiesCell.textContent = '-';
                                 } else if (keterangan === 'Kempen Derma Darah') {
-                                    subTds[5].textContent = '100';
+                                    goodiesCell.textContent = '100';
                                 } else {
                                     // Fallback to array index
                                     const correctValues = ['500', '-', '100'];
-                                    subTds[5].textContent = correctValues[i] || '';
+                                    goodiesCell.textContent = correctValues[i] || '';
                                 }
                             } else if (category === 'Daerah BM') {
                                 // For Daerah BM, ALWAYS force correct goodies values: 100, -, 145 - NEVER use DB data
                                 // Match by tindakan first (more reliable than keterangan which is corrupted)
-                                const tindakan = subTds[2]?.textContent.trim();
-                                const keterangan = subTds[3]?.textContent.trim();
-                                const currentGoodies = subTds[5].textContent.trim();
+                                const tindakan = tindakanCell?.textContent.trim();
+                                const keterangan = keteranganCell?.textContent.trim();
+                                const currentGoodies = goodiesCell.textContent.trim();
                                 let targetGoodies = '';
                                 
                                 // Match by tindakan first, then by index
@@ -2663,11 +2673,11 @@
                                 }
                                 
                                 if (currentGoodies !== targetGoodies) {
-                                    subTds[5].textContent = targetGoodies;
+                                    goodiesCell.textContent = targetGoodies;
                                     console.log(`loadChecklistData: Fixed Daerah BM sub-row ${i} (${tindakan || keterangan}) goodies from "${currentGoodies}" to "${targetGoodies}"`);
                                 }
                             } else if (goodiesParts[i] !== undefined) {
-                                subTds[5].textContent = goodiesParts[i] || '';
+                                goodiesCell.textContent = goodiesParts[i] || '';
                             }
                         }
                         currentRow = currentRow.nextElementSibling;
@@ -2973,42 +2983,75 @@
             rows.forEach((row, index) => {
                 if (row.classList.contains('total-row')) return;
                 const tds = row.querySelectorAll('td');
-                if (tds.length < 7) return;
+                if (tds.length < 3) return;
                 
                 const bilCell = tds[0];
                 const categoryCell = tds[1];
-                const tindakanCell = tds[2];
-                const keteranganCell = tds[3];
-                const goodiesCell = tds[5];
-                const cenderahatiInput = tds[4]?.querySelector('input');
                 
-                if (!bilCell || !categoryCell) return;
+                // Check if this is a main row (has bil and category) or sub-row
+                const hasBil = bilCell && bilCell.textContent.trim() !== '';
+                const hasCategory = categoryCell && categoryCell.textContent.trim() !== '';
                 
-                const bil = bilCell.textContent.trim();
-                const category = categoryCell.textContent.trim();
-                const tindakan = tindakanCell ? tindakanCell.textContent.trim() : '';
-                const keterangan = keteranganCell ? keteranganCell.textContent.trim() : '';
-                
-                // Row 6 sub-row 2: Gotong Royong - force goodies to '-'
-                if (bil === '6' && category === 'Daerah BM' && tindakan === 'OCPD BM') {
-                    row6Found = true;
-                    if (goodiesCell) {
-                        const currentGoodies = goodiesCell.textContent.trim();
-                        if (currentGoodies !== '-') {
-                            goodiesCell.textContent = '-';
-                            console.log(`forceSpecificCellsDirectly: FIXED Row 6 Gotong Royong goodies from "${currentGoodies}" to "-"`);
+                if (hasBil && hasCategory) {
+                    // Main row - check bil and category
+                    const bil = bilCell.textContent.trim();
+                    const category = categoryCell.textContent.trim();
+                    
+                    // Row 6: Find Daerah BM and check sub-rows
+                    if (bil === '6' && category === 'Daerah BM') {
+                        const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                        let currentSubRow = row.nextElementSibling; // Start from first sub-row
+                        for (let i = 0; i < rowspan - 1 && currentSubRow; i++) {
+                            const subTds = currentSubRow.querySelectorAll('td');
+                            // Sub-row structure: tds[0]=Tindakan, tds[1]=Keterangan, tds[2]=Cenderahati, tds[3]=Goodies
+                            const tindakan = subTds[0]?.textContent.trim() || '';
+                            const keterangan = subTds[1]?.textContent.trim() || '';
+                            const goodiesCell = subTds[3];
+                            
+                            // Check if this is Gotong Royong (sub-row 1)
+                            const isGotongRoyong = tindakan === 'OCPD BM' || 
+                                                 (tindakan === '' && /^300$/.test(keterangan)) || // Corrupted: keterangan="300"
+                                                 keterangan.includes('Gotong Royong');
+                            
+                            if (isGotongRoyong && goodiesCell) {
+                                row6Found = true;
+                                const currentGoodies = goodiesCell.textContent.trim();
+                                if (currentGoodies !== '-') {
+                                    goodiesCell.textContent = '-';
+                                    console.log(`forceSpecificCellsDirectly: FIXED Row 6 Gotong Royong goodies from "${currentGoodies}" to "-"`);
+                                }
+                                break; // Found it, exit loop
+                            }
+                            currentSubRow = currentSubRow.nextElementSibling;
                         }
                     }
-                }
-                
-                // Row 8 sub-row 3: Community Engagement - force cenderahati to '20'
-                if (bil === '8' && category === 'Daerah Temb' && keterangan.includes('Community Engagement')) {
-                    row8Found = true;
-                    if (cenderahatiInput) {
-                        const currentValue = cenderahatiInput.value.trim();
-                        if (currentValue !== '20') {
-                            cenderahatiInput.value = '20';
-                            console.log(`forceSpecificCellsDirectly: FIXED Row 8 Community Engagement cenderahati from "${currentValue}" to "20"`);
+                    
+                    // Row 8: Find Daerah Temb and check sub-rows
+                    if (bil === '8' && category === 'Daerah Temb') {
+                        const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                        let currentSubRow = row.nextElementSibling; // Start from first sub-row
+                        for (let i = 0; i < rowspan - 1 && currentSubRow; i++) {
+                            const subTds = currentSubRow.querySelectorAll('td');
+                            // Sub-row structure: tds[0]=Keterangan, tds[1]=Cenderahati
+                            const keterangan = subTds[0]?.textContent.trim() || '';
+                            const cenderahatiInput = subTds[1]?.querySelector('input');
+                            
+                            // Check if this is Community Engagement (sub-row 2)
+                            const isCommunityEngagement = keterangan && (
+                                keterangan.includes('Community Engagement') || 
+                                keterangan.includes('POLSARA')
+                            );
+                            
+                            if (isCommunityEngagement && cenderahatiInput) {
+                                row8Found = true;
+                                const currentValue = cenderahatiInput.value.trim();
+                                if (currentValue !== '20') {
+                                    cenderahatiInput.value = '20';
+                                    console.log(`forceSpecificCellsDirectly: FIXED Row 8 Community Engagement cenderahati from "${currentValue}" to "20"`);
+                                }
+                                break; // Found it, exit loop
+                            }
+                            currentSubRow = currentSubRow.nextElementSibling;
                         }
                     }
                 }
@@ -3038,21 +3081,33 @@
                         const correctGoodies = ['100', '-', '145'];
                         for (let i = 0; i < rowspan && currentRow; i++) {
                             const subTds = currentRow.querySelectorAll('td');
-                            const input = subTds[4]?.querySelector('input');
-                            const goodiesCell = subTds[5];
-                            const keterangan = subTds[3]?.textContent.trim();
-                            const tindakan = subTds[2]?.textContent.trim();
+                            // For sub-rows, cell indices are different due to rowspan:
+                            // Sub-row 0: tds[0]=Bil, tds[1]=Perkara, tds[2]=Tindakan, tds[3]=Keterangan, tds[4]=Cenderahati, tds[5]=Goodies
+                            // Sub-row 1+: tds[0]=Tindakan, tds[1]=Keterangan, tds[2]=Cenderahati, tds[3]=Goodies
+                            const isFirstRow = i === 0;
+                            const tindakan = isFirstRow ? (subTds[2]?.textContent.trim() || '') : (subTds[0]?.textContent.trim() || '');
+                            const keterangan = isFirstRow ? (subTds[3]?.textContent.trim() || '') : (subTds[1]?.textContent.trim() || '');
+                            const input = isFirstRow ? (subTds[4]?.querySelector('input')) : (subTds[2]?.querySelector('input'));
+                            const goodiesCell = isFirstRow ? subTds[5] : subTds[3];
                             
                             console.log(`forceDaerahBMValues: Processing sub-row ${i}, tindakan="${tindakan}", keterangan="${keterangan}", currentGoodies="${goodiesCell?.textContent.trim()}", currentCenderahati="${input?.value}"`);
                             
-                            // Match by tindakan first (more reliable), then by keterangan, then by index
+                            // Match by tindakan first (more reliable), then by keterangan (handle corrupted data), then by index
                             let rowIndex = i;
                             if (tindakan === 'P. Derma Darah') {
                                 rowIndex = 0; // First sub-row
                             } else if (tindakan === 'OCPD BM') {
                                 rowIndex = 1; // Second sub-row (Gotong Royong)
                             } else if (tindakan === '' || !tindakan) {
-                                rowIndex = 2; // Third sub-row (Walkaton)
+                                // Handle corrupted data: keterangan might be "300" (Gotong Royong) or "145" (Walkaton)
+                                if (keterangan === '300' || /^300$/.test(keterangan)) {
+                                    rowIndex = 1; // Second sub-row (Gotong Royong) - corrupted data
+                                } else if (keterangan === '145' || /^145$/.test(keterangan)) {
+                                    rowIndex = 2; // Third sub-row (Walkaton) - corrupted data
+                                } else {
+                                    // Fallback: use index
+                                    rowIndex = i;
+                                }
                             }
                             
                             console.log(`forceDaerahBMValues: Sub-row ${i} mapped to rowIndex ${rowIndex}, targetGoodies="${correctGoodies[rowIndex]}", targetCenderahati="${correctCenderahati[rowIndex]}"`);
@@ -3185,8 +3240,12 @@
                         const correctCenderahati = ['', '', '20'];
                         for (let i = 0; i < rowspan && currentRow; i++) {
                             const subTds = currentRow.querySelectorAll('td');
-                            const input = subTds[4]?.querySelector('input');
-                            const keterangan = subTds[3]?.textContent.trim();
+                            // For sub-rows, cell indices are different due to rowspan:
+                            // Sub-row 0: tds[0]=Bil, tds[1]=Perkara, tds[2]=Tindakan, tds[3]=Keterangan, tds[4]=Cenderahati
+                            // Sub-row 1+: tds[0]=Keterangan, tds[1]=Cenderahati
+                            const isFirstRow = i === 0;
+                            const keterangan = isFirstRow ? (subTds[3]?.textContent.trim() || '') : (subTds[0]?.textContent.trim() || '');
+                            const input = isFirstRow ? (subTds[4]?.querySelector('input')) : (subTds[1]?.querySelector('input'));
                             
                             console.log(`forceDaerahTembValues: Processing sub-row ${i}, keterangan="${keterangan}", currentCenderahati="${input?.value}"`);
                             
