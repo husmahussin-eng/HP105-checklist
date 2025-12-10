@@ -2046,7 +2046,7 @@
             return;
         }
 
-        // Render static events (Dec/Jan) into the calendar grid
+        // Render static events (Dec/Jan/Feb) into the calendar grid
         function renderStaticEvents() {
             // Clear placeholders
             document.querySelectorAll('.calendar-day-events').forEach(el => {
@@ -2298,21 +2298,18 @@
             'Cenderahati': 493
         };
 
-        // Static snapshot for calendar events (Dec 2025 & Jan 2026) - Updated from live database
+        // Static snapshot for calendar events (Dec 2025, Jan 2026 & Feb 2026) - Updated from live database
         const staticEvents = [
             // December 2025
             { month: 'dec', day: 3,  title: 'Mesyuarat 04/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
-            { month: 'dec', day: 10, title: 'Mesyuarat 05/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
-            { month: 'dec', day: 17, title: 'Mesyuarat 06/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
-            { month: 'dec', day: 24, title: 'Mesyuarat 07/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
-            { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat', event_time: 'not-started', venue: '', description: '' },
+            { month: 'dec', day: 10, title: 'Mesyuarat 05/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
+            { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
             { month: 'dec', day: 31, title: 'Bergambar Ramai AJK HP105', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
             { month: 'dec', day: 31, title: 'Majlis Doa Kesyukuran HP105', activity: 'Mesyuarat', event_time: '', venue: 'Surau Polis Gadong', description: '' },
 
             // January 2026
-            { month: 'jan', day: 3,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
             { month: 'jan', day: 5,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 5,  title: 'Aktiviti Daerah BM : Kempen Derma Darah @BP BKS', activity: 'BM', event_time: 'not-started', venue: '', description: 'Budget for support staff food' },
+            { month: 'jan', day: 5,  title: 'Aktiviti Daerah BM : Kempen Derma Darah @BP BKS', activity: 'BM', event_time: '', venue: '', description: 'Budget for support staff food' },
             { month: 'jan', day: 6,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
             { month: 'jan', day: 6,  title: 'Tahlil & Bacaan Surah Yassin @ Kubah Makam Diraja', activity: 'Mesyuarat', event_time: '', venue: 'TBC', description: '' },
             { month: 'jan', day: 7,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
@@ -2331,10 +2328,15 @@
             { month: 'jan', day: 21, title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan', activity: 'Acara Daerah Belait', event_time: '', venue: 'KB', description: '' },
             { month: 'jan', day: 22, title: 'Aktiviti Daerah Temburong : Gotong Royong Membersihkan Tanah Perkuburan Islam', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Belais & Semamang', description: '' },
             { month: 'jan', day: 23, title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan', event_time: '', venue: 'Majlis Keugamaan', description: '' },
-            { month: 'jan', day: 24, title: 'Aktiviti Daerah Temburong : Kempen Derma Darah @Dewan Serbaguna, Kompleks Bumi Putera', activity: 'Acara Daerah Temburong', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 26, title: 'Aktiviti Daerah Temburong : Kempen Derma Darah @Dewan Serbaguna, Kompleks Bumi Putera', activity: 'Acara Daerah Temburong', event_time: '', venue: '', description: '' },
             { month: 'jan', day: 27, title: 'Aktiviti Daerah Tutong : Kejohanan Bola Sepak @Komplek Sukan Tutong', activity: 'Acara Daerah Tutong', event_time: '', venue: '', description: '1) Mini Pameran' },
-            { month: 'jan', day: 28, title: 'Aktiviti Daerah Temburong : Community engagement', activity: 'Acara Daerah Temburong', event_time: '', venue: 'bangunan POLSARA', description: '' },
-            { month: 'jan', day: 31, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran', event_time: '', venue: '', description: '31/01/2026 - 01/02/2026' }
+            { month: 'jan', day: 28, title: 'Aktiviti Daerah Temburong : Community engagement', activity: 'Acara Daerah Temburong', event_time: '', venue: 'bangunan BOLSADA', description: '' },
+            { month: 'jan', day: 31, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran', event_time: '', venue: '', description: '31/01/2026 - 01/02/2026' },
+
+            // February 2026
+            { month: 'feb', day: 1,  title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran', event_time: '', venue: '', description: '31/01/2026 - 01/02/2026' },
+            { month: 'feb', day: 5,  title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan', activity: 'Acara Daerah Belait', event_time: '', venue: '', description: '' },
+            { month: 'feb', day: 7,  title: 'Aktiviti Daerah Belait : Openday @ICC KB', activity: 'Acara Daerah Belait', event_time: '', venue: '', description: '' }
         ];
 
         document.addEventListener('DOMContentLoaded', function() {
