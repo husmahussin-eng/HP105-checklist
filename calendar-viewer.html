@@ -2591,6 +2591,13 @@
                             } else if (cenderahatiParts.length > 0 && cenderahatiParts[i] !== undefined) {
                                 // For other categories, use DB data
                                 const cenValue = String(cenderahatiParts[i] || '');
+                                // CRITICAL: Skip if database incorrectly stored budget value in cenderahati field
+                                // Budget values start with $, so ignore them
+                                if (cenValue.trim().startsWith('$')) {
+                                    console.warn(`Skipping incorrect budget value in cenderahati for ${category} row ${i}: ${cenValue}`);
+                                    // Keep HTML default value instead
+                                    continue;
+                                }
                                 if (input) {
                                     input.value = cenValue;
                                 } else {
@@ -2622,6 +2629,16 @@
                     
                     processedCategories.add(category);
                 });
+                
+                // CRITICAL: After loading data, immediately sync all values from CSV
+                // This ensures CSV values override any incorrect database values
+                setTimeout(() => {
+                    syncAllValuesFromCSV();
+                    forceRow2SubRow2Budget();
+                    forceBudgetValues();
+                    console.log('Post-load sync completed - CSV values enforced');
+                }, 50);
+                
                 return hasContent;
             } catch (err) {
                 console.error('Checklist load error', err);
@@ -3404,12 +3421,55 @@
                     await applyChecklistFallback(true);
                 }
                 enableChecklistEditing();
-                // MASTER SYNC: Force ALL values from CSV exactly - runs first
+                
+                // Wait a bit for DOM to settle after data load
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                // MASTER SYNC: Force ALL values from CSV exactly - runs AFTER data loads
                 syncAllValuesFromCSV();
                 forceRow2SubRow2Budget(); // Specifically target Row 2 sub-row 2
                 // ALWAYS force correct values for Daerah BM, Daerah Belait, Daerah Temb, Cenderahati, and Budgets after loading
                 // Run immediately and with delays to ensure values stick
                 forceBudgetValues();
+                
+                // Set up MutationObserver to watch for budget cell changes
+                const budgetObserver = new MutationObserver((mutations) => {
+                    let shouldSync = false;
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                            const target = mutation.target;
+                            if (target.classList && target.classList.contains('budget-cell')) {
+                                // Check if Row 2 sub-row 2 budget changed
+                                const row = target.closest('tr');
+                                if (row) {
+                                    const tds = row.querySelectorAll('td');
+                                    const bilCell = tds[0];
+                                    const tindakanCell = tds[2];
+                                    if (bilCell && tindakanCell) {
+                                        const bil = bilCell.textContent.trim();
+                                        const tindakan = tindakanCell.textContent.trim();
+                                        if (bil === '2' && tindakan === 'Setiausaha Mes') {
+                                            const currentBudget = target.textContent.trim();
+                                            if (currentBudget !== '$19,438.00') {
+                                                shouldSync = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    if (shouldSync) {
+                        console.log('Budget cell changed - forcing sync');
+                        forceRow2SubRow2Budget();
+                        syncAllValuesFromCSV();
+                    }
+                });
+                
+                // Observe all budget cells
+                document.querySelectorAll('.budget-cell').forEach(cell => {
+                    budgetObserver.observe(cell, { childList: true, characterData: true, subtree: true });
+                });
                 forceDaerahBMValues();
                 forceDaerahBelaitValues();
                 forceDaerahTembValues();
