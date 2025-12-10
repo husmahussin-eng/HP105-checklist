@@ -2593,18 +2593,21 @@
                                 const keterangan = subTds[3]?.textContent.trim();
                                 const currentValue = input.value.trim();
                                 let targetValue = '';
-                                if (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA') {
-                                    targetValue = '20';
-                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Kempen Derma Darah' || keterangan === 'Gotong Royong ' || keterangan === 'Gotong Royong') {
-                                    targetValue = '';
+                                
+                                // Match by keterangan contains check (more flexible), then fallback to index
+                                if (keterangan && keterangan.includes('Community Engagement')) {
+                                    targetValue = '20'; // Third sub-row
+                                } else if (keterangan && (keterangan.includes('Kempen Derma Darah') || keterangan.includes('Gotong Royong'))) {
+                                    targetValue = ''; // First or second sub-row
                                 } else {
-                                    // Fallback to array index
+                                    // Fallback to array index: ['', '', '20']
                                     const correctValues = ['', '', '20'];
                                     targetValue = correctValues[i] || '';
                                 }
+                                
                                 if (currentValue !== targetValue) {
                                     input.value = targetValue;
-                                    console.log(`loadChecklistData: Fixed Daerah Temb ${keterangan} cenderahati from "${currentValue}" to "${targetValue}"`);
+                                    console.log(`loadChecklistData: Fixed Daerah Temb sub-row ${i} (${keterangan}) cenderahati from "${currentValue}" to "${targetValue}"`);
                                 }
                             } else if (cenderahatiParts.length > 0 && cenderahatiParts[i] !== undefined) {
                                 // For other categories, use DB data
@@ -2640,23 +2643,28 @@
                                 }
                             } else if (category === 'Daerah BM') {
                                 // For Daerah BM, ALWAYS force correct goodies values: 100, -, 145 - NEVER use DB data
+                                // Match by tindakan first (more reliable than keterangan which is corrupted)
+                                const tindakan = subTds[2]?.textContent.trim();
                                 const keterangan = subTds[3]?.textContent.trim();
                                 const currentGoodies = subTds[5].textContent.trim();
                                 let targetGoodies = '';
-                                if (keterangan === 'Kempen Derma Darah') {
-                                    targetGoodies = '100';
-                                } else if (keterangan === 'Gotong Royong') {
-                                    targetGoodies = '-';
-                                } else if (keterangan === 'Walkaton') {
-                                    targetGoodies = '145';
+                                
+                                // Match by tindakan first, then by index
+                                if (tindakan === 'P. Derma Darah') {
+                                    targetGoodies = '100'; // First sub-row
+                                } else if (tindakan === 'OCPD BM') {
+                                    targetGoodies = '-'; // Second sub-row (Gotong Royong)
+                                } else if (!tindakan || tindakan === '') {
+                                    targetGoodies = '145'; // Third sub-row (Walkaton)
                                 } else {
                                     // Fallback to array index
                                     const correctValues = ['100', '-', '145'];
                                     targetGoodies = correctValues[i] || '';
                                 }
+                                
                                 if (currentGoodies !== targetGoodies) {
                                     subTds[5].textContent = targetGoodies;
-                                    console.log(`loadChecklistData: Fixed Daerah BM ${keterangan} goodies from "${currentGoodies}" to "${targetGoodies}"`);
+                                    console.log(`loadChecklistData: Fixed Daerah BM sub-row ${i} (${tindakan || keterangan}) goodies from "${currentGoodies}" to "${targetGoodies}"`);
                                 }
                             } else if (goodiesParts[i] !== undefined) {
                                 subTds[5].textContent = goodiesParts[i] || '';
@@ -2670,6 +2678,7 @@
                 
                 // CRITICAL: After loading data, immediately sync all values from CSV
                 // This ensures CSV values override any incorrect database values
+                // Run multiple times with increasing delays to ensure values stick
                 setTimeout(() => {
                     syncAllValuesFromCSV();
                     forceRow2SubRow2Budget();
@@ -2677,7 +2686,17 @@
                     forceDaerahBMValues(); // Force Row 6 Gotong Royong goodies to '-'
                     forceDaerahTembValues(); // Force Row 8 Community Engagement cenderahati to '20'
                     console.log('Post-load sync completed - CSV values enforced');
-                }, 50);
+                }, 100);
+                setTimeout(() => {
+                    forceDaerahBMValues();
+                    forceDaerahTembValues();
+                    console.log('Post-load sync #2 completed');
+                }, 300);
+                setTimeout(() => {
+                    forceDaerahBMValues();
+                    forceDaerahTembValues();
+                    console.log('Post-load sync #3 completed');
+                }, 500);
                 
                 return hasContent;
             } catch (err) {
