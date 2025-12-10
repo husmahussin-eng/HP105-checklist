@@ -2588,6 +2588,18 @@
                                     const correctValues = ['1', '', ''];
                                     input.value = correctValues[i] || '';
                                 }
+                            } else if (category === 'Daerah Temb' && input) {
+                                // For Daerah Temb, ALWAYS force correct values: empty, empty, 20 - NEVER use DB data
+                                const keterangan = subTds[3]?.textContent.trim();
+                                if (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA') {
+                                    input.value = '20';
+                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Gotong Royong ') {
+                                    input.value = '';
+                                } else {
+                                    // Fallback to array index
+                                    const correctValues = ['', '', '20'];
+                                    input.value = correctValues[i] || '';
+                                }
                             } else if (cenderahatiParts.length > 0 && cenderahatiParts[i] !== undefined) {
                                 // For other categories, use DB data
                                 const cenValue = String(cenderahatiParts[i] || '');
@@ -2618,6 +2630,20 @@
                                 } else {
                                     // Fallback to array index
                                     const correctValues = ['500', '-', '100'];
+                                    subTds[5].textContent = correctValues[i] || '';
+                                }
+                            } else if (category === 'Daerah BM') {
+                                // For Daerah BM, ALWAYS force correct goodies values: 100, -, 145 - NEVER use DB data
+                                const keterangan = subTds[3]?.textContent.trim();
+                                if (keterangan === 'Kempen Derma Darah') {
+                                    subTds[5].textContent = '100';
+                                } else if (keterangan === 'Gotong Royong') {
+                                    subTds[5].textContent = '-';
+                                } else if (keterangan === 'Walkaton') {
+                                    subTds[5].textContent = '145';
+                                } else {
+                                    // Fallback to array index
+                                    const correctValues = ['100', '-', '145'];
                                     subTds[5].textContent = correctValues[i] || '';
                                 }
                             } else if (goodiesParts[i] !== undefined) {
