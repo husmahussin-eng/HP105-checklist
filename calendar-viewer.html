@@ -2958,6 +2958,8 @@
                             const keterangan = subTds[3]?.textContent.trim();
                             const tindakan = subTds[2]?.textContent.trim();
                             
+                            console.log(`forceDaerahBMValues: Processing sub-row ${i}, tindakan="${tindakan}", keterangan="${keterangan}", currentGoodies="${goodiesCell?.textContent.trim()}", currentCenderahati="${input?.value}"`);
+                            
                             // Match by tindakan first (more reliable), then by keterangan, then by index
                             let rowIndex = i;
                             if (tindakan === 'P. Derma Darah') {
@@ -2968,13 +2970,19 @@
                                 rowIndex = 2; // Third sub-row (Walkaton)
                             }
                             
+                            console.log(`forceDaerahBMValues: Sub-row ${i} mapped to rowIndex ${rowIndex}, targetGoodies="${correctGoodies[rowIndex]}", targetCenderahati="${correctCenderahati[rowIndex]}"`);
+                            
                             // Force Cenderahati values
                             if (input && correctCenderahati[rowIndex] !== undefined) {
                                 const targetValue = correctCenderahati[rowIndex];
                                 if (input.value !== targetValue) {
                                     input.value = targetValue;
                                     console.log(`forceDaerahBMValues: Fixed Row 6 sub-row ${i} (${tindakan || keterangan}) cenderahati to "${targetValue}"`);
+                                } else {
+                                    console.log(`forceDaerahBMValues: Sub-row ${i} cenderahati already correct: "${input.value}"`);
                                 }
+                            } else {
+                                console.log(`forceDaerahBMValues: Sub-row ${i} - no input found or rowIndex out of range`);
                             }
                             
                             // Force Goodies values
@@ -2984,7 +2992,11 @@
                                 if (currentGoodies !== targetGoodies) {
                                     goodiesCell.textContent = targetGoodies;
                                     console.log(`forceDaerahBMValues: Fixed Row 6 sub-row ${i} (${tindakan || keterangan}) goodies from "${currentGoodies}" to "${targetGoodies}"`);
+                                } else {
+                                    console.log(`forceDaerahBMValues: Sub-row ${i} goodies already correct: "${currentGoodies}"`);
                                 }
+                            } else {
+                                console.log(`forceDaerahBMValues: Sub-row ${i} - no goodiesCell found or rowIndex out of range`);
                             }
                             
                             currentRow = currentRow.nextElementSibling;
@@ -3091,6 +3103,8 @@
                             const input = subTds[4]?.querySelector('input');
                             const keterangan = subTds[3]?.textContent.trim();
                             
+                            console.log(`forceDaerahTembValues: Processing sub-row ${i}, keterangan="${keterangan}", currentCenderahati="${input?.value}"`);
+                            
                             // Match by keterangan first, then fallback to index
                             // Row order: Kempen Derma Darah (index 0), Gotong Royong (index 1), Community Engagement (index 2)
                             let rowIndex = i;
@@ -3102,6 +3116,8 @@
                                 rowIndex = 0; // First sub-row
                             }
                             
+                            console.log(`forceDaerahTembValues: Sub-row ${i} mapped to rowIndex ${rowIndex}, targetCenderahati="${correctCenderahati[rowIndex]}"`);
+                            
                             // Force Cenderahati values
                             if (input && correctCenderahati[rowIndex] !== undefined) {
                                 const currentValue = input.value.trim();
@@ -3109,7 +3125,11 @@
                                 if (currentValue !== targetValue) {
                                     input.value = targetValue;
                                     console.log(`forceDaerahTembValues: Fixed Row 8 sub-row ${i} (${keterangan}) cenderahati from "${currentValue}" to "${targetValue}"`);
+                                } else {
+                                    console.log(`forceDaerahTembValues: Sub-row ${i} cenderahati already correct: "${currentValue}"`);
                                 }
+                            } else {
+                                console.log(`forceDaerahTembValues: Sub-row ${i} - no input found or rowIndex out of range`);
                             }
                             
                             currentRow = currentRow.nextElementSibling;
