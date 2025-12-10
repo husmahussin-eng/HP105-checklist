@@ -3126,6 +3126,114 @@
             });
         }
 
+        // Master sync function - forces ALL values from CSV exactly
+        function syncAllValuesFromCSV() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            // CSV data structure matching exact values
+            const csvData = [
+                // Row 1
+                { bil: '1', category: 'Perbarisan', tindakan: 'P. Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan', cenderahati: '376', goodies: '-', budget: '$35,065.50' },
+                // Row 2 sub-row 1
+                { bil: '2', category: 'Mkn Beradat ', tindakan: 'P. Permakanan', keterangan: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026', cenderahati: '-', goodies: '-', budget: '$1,011.50' },
+                // Row 2 sub-row 2
+                { bil: '2', category: 'Mkn Beradat ', tindakan: 'Setiausaha Mes', keterangan: 'Makan beradat pada 15/01/2026 (belum termasuk support staffs)', cenderahati: '-', goodies: '-', budget: '$19,438.00' },
+                // Row 3 sub-row 1
+                { bil: '3', category: 'Keagamaan', tindakan: 'BUI', keterangan: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)', cenderahati: '-', goodies: '-', budget: '$1,275.00' },
+                // Row 3 sub-row 2
+                { bil: '3', category: 'Keagamaan', tindakan: '', keterangan: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', cenderahati: '-', goodies: '-', budget: '$1,325.00' },
+                // Row 4
+                { bil: '4', category: 'Pameran', tindakan: 'P. Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', cenderahati: '50', goodies: '600', budget: '$9,750.00' },
+                // Row 5
+                { bil: '5', category: 'Daerah TT ', tindakan: 'OCPD TT', keterangan: 'Kejohanan Bolasepak', cenderahati: '41', goodies: '210', budget: '$2,328.50' },
+                // Row 6 sub-row 1
+                { bil: '6', category: 'Daerah BM', tindakan: 'P. Derma Darah', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,680.00' },
+                // Row 6 sub-row 2
+                { bil: '6', category: 'Daerah BM', tindakan: 'OCPD BM', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,680.00' },
+                // Row 6 sub-row 3
+                { bil: '6', category: 'Daerah BM', tindakan: '', keterangan: 'Walkaton', cenderahati: '5', goodies: '145', budget: '$1,680.00' },
+                // Row 7 sub-row 1
+                { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Open day', cenderahati: '1', goodies: '500', budget: '$1,791.00' },
+                // Row 7 sub-row 2
+                { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,791.00' },
+                // Row 7 sub-row 3
+                { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,791.00' },
+                // Row 8 sub-row 1
+                { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Kempen Derma Darah ', cenderahati: '-', goodies: '100', budget: '$838.70' },
+                // Row 8 sub-row 2
+                { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Gotong Royong ', cenderahati: '-', goodies: '-', budget: '$838.70' },
+                // Row 8 sub-row 3
+                { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Community Engagement @ POLSARA ', cenderahati: '20', goodies: '60', budget: '$838.70' },
+                // Row 9
+                { bil: '9', category: 'Kelengkapan', tindakan: 'P. Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)', cenderahati: '-', goodies: '-', budget: '$18,367.30' },
+                // Row 10
+                { bil: '10', category: 'PRO', tindakan: '', keterangan: 'Digital poster HP ke -105 (tiada pencetakan)', cenderahati: '-', goodies: '-', budget: '-' },
+                // Row 11
+                { bil: '11', category: 'Cenderahati', tindakan: '', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', cenderahati: '493', goodies: '1815', budget: '-' }
+            ];
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                
+                const tds = row.querySelectorAll('td');
+                if (tds.length < 7) return;
+                
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                const tindakanCell = tds[2];
+                const keteranganCell = tds[3];
+                const cenderahatiCell = tds[4];
+                const goodiesCell = tds[5];
+                const budgetCell = tds[6];
+                
+                if (!bilCell || !categoryCell || !keteranganCell) return;
+                
+                const bil = bilCell.textContent.trim();
+                const category = categoryCell.textContent.trim();
+                const tindakan = tindakanCell ? tindakanCell.textContent.trim() : '';
+                const keterangan = keteranganCell.textContent.trim();
+                
+                // Find matching CSV data
+                const match = csvData.find(d => {
+                    const bilMatch = d.bil === bil;
+                    const categoryMatch = d.category === category || d.category.trim() === category;
+                    const keteranganMatch = d.keterangan === keterangan || keterangan.includes(d.keterangan) || d.keterangan.includes(keterangan);
+                    return bilMatch && categoryMatch && keteranganMatch;
+                });
+                
+                if (!match) return;
+                
+                // Force Cenderahati
+                const cenderahatiInput = cenderahatiCell.querySelector('input');
+                if (cenderahatiInput) {
+                    if (match.cenderahati === '-') {
+                        cenderahatiInput.value = '';
+                        cenderahatiInput.placeholder = '-';
+                    } else {
+                        cenderahatiInput.value = match.cenderahati;
+                    }
+                }
+                
+                // Force Goodies
+                if (goodiesCell) {
+                    if (match.goodies !== goodiesCell.textContent.trim()) {
+                        goodiesCell.textContent = match.goodies;
+                    }
+                }
+                
+                // Force Budget - remove rowspan if exists for multi-row categories
+                if (budgetCell) {
+                    // Remove rowspan for Row 2 and Row 3 (they should have separate budgets)
+                    if ((bil === '2' || bil === '3') && budgetCell.hasAttribute('rowspan')) {
+                        budgetCell.removeAttribute('rowspan');
+                    }
+                    if (match.budget !== budgetCell.textContent.trim()) {
+                        budgetCell.textContent = match.budget;
+                    }
+                }
+            });
+        }
+
         // Force correct values for empty cenderahati fields (should be empty, not 0)
         function forceEmptyCenderahatiValues() {
             const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
@@ -3239,6 +3347,8 @@
                     await applyChecklistFallback(true);
                 }
                 enableChecklistEditing();
+                // MASTER SYNC: Force ALL values from CSV exactly - runs first
+                syncAllValuesFromCSV();
                 // ALWAYS force correct values for Daerah BM, Daerah Belait, Daerah Temb, Cenderahati, and Budgets after loading
                 // Run immediately and with delays to ensure values stick
                 forceBudgetValues();
@@ -3247,6 +3357,8 @@
                 forceDaerahTembValues();
                 forceCenderahatiValues();
                 forceEmptyCenderahatiValues();
+                setTimeout(syncAllValuesFromCSV, 50);
+                setTimeout(syncAllValuesFromCSV, 100);
                 setTimeout(forceBudgetValues, 100);
                 setTimeout(forceDaerahBMValues, 100);
                 setTimeout(forceDaerahBelaitValues, 100);
@@ -3274,6 +3386,13 @@
             }
             
             // Also force values immediately and after delays - run multiple times to ensure it sticks
+            // MASTER SYNC runs first to ensure CSV values override everything
+            setTimeout(syncAllValuesFromCSV, 200);
+            setTimeout(syncAllValuesFromCSV, 500);
+            setTimeout(syncAllValuesFromCSV, 1000);
+            setTimeout(syncAllValuesFromCSV, 1500);
+            setTimeout(syncAllValuesFromCSV, 2000);
+            setTimeout(syncAllValuesFromCSV, 3000);
             setTimeout(forceBudgetValues, 200);
             setTimeout(forceBudgetValues, 500);
             setTimeout(forceBudgetValues, 1000);
