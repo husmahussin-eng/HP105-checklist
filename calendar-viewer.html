@@ -2685,18 +2685,29 @@
                     forceBudgetValues();
                     forceDaerahBMValues(); // Force Row 6 Gotong Royong goodies to '-'
                     forceDaerahTembValues(); // Force Row 8 Community Engagement cenderahati to '20'
+                    forceSpecificCellsDirectly(); // DIRECT FIX for specific cells
                     console.log('Post-load sync completed - CSV values enforced');
                 }, 100);
                 setTimeout(() => {
                     forceDaerahBMValues();
                     forceDaerahTembValues();
+                    forceSpecificCellsDirectly();
                     console.log('Post-load sync #2 completed');
                 }, 300);
                 setTimeout(() => {
                     forceDaerahBMValues();
                     forceDaerahTembValues();
+                    forceSpecificCellsDirectly();
                     console.log('Post-load sync #3 completed');
                 }, 500);
+                setTimeout(() => {
+                    forceSpecificCellsDirectly();
+                    console.log('Post-load sync #4 - direct fix');
+                }, 1000);
+                setTimeout(() => {
+                    forceSpecificCellsDirectly();
+                    console.log('Post-load sync #5 - direct fix');
+                }, 2000);
                 
                 return hasContent;
             } catch (err) {
@@ -2952,6 +2963,61 @@
             });
         }
         
+        // DIRECT FIX: Force Row 6 Gotong Royong goodies and Row 8 Community Engagement cenderahati
+        // This function directly targets the specific cells by their position
+        function forceSpecificCellsDirectly() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            let row6Found = false;
+            let row8Found = false;
+            
+            rows.forEach((row, index) => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                if (tds.length < 7) return;
+                
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                const tindakanCell = tds[2];
+                const keteranganCell = tds[3];
+                const goodiesCell = tds[5];
+                const cenderahatiInput = tds[4]?.querySelector('input');
+                
+                if (!bilCell || !categoryCell) return;
+                
+                const bil = bilCell.textContent.trim();
+                const category = categoryCell.textContent.trim();
+                const tindakan = tindakanCell ? tindakanCell.textContent.trim() : '';
+                const keterangan = keteranganCell ? keteranganCell.textContent.trim() : '';
+                
+                // Row 6 sub-row 2: Gotong Royong - force goodies to '-'
+                if (bil === '6' && category === 'Daerah BM' && tindakan === 'OCPD BM') {
+                    row6Found = true;
+                    if (goodiesCell) {
+                        const currentGoodies = goodiesCell.textContent.trim();
+                        if (currentGoodies !== '-') {
+                            goodiesCell.textContent = '-';
+                            console.log(`forceSpecificCellsDirectly: FIXED Row 6 Gotong Royong goodies from "${currentGoodies}" to "-"`);
+                        }
+                    }
+                }
+                
+                // Row 8 sub-row 3: Community Engagement - force cenderahati to '20'
+                if (bil === '8' && category === 'Daerah Temb' && keterangan.includes('Community Engagement')) {
+                    row8Found = true;
+                    if (cenderahatiInput) {
+                        const currentValue = cenderahatiInput.value.trim();
+                        if (currentValue !== '20') {
+                            cenderahatiInput.value = '20';
+                            console.log(`forceSpecificCellsDirectly: FIXED Row 8 Community Engagement cenderahati from "${currentValue}" to "20"`);
+                        }
+                    }
+                }
+            });
+            
+            if (!row6Found) console.warn('forceSpecificCellsDirectly: Row 6 Gotong Royong not found!');
+            if (!row8Found) console.warn('forceSpecificCellsDirectly: Row 8 Community Engagement not found!');
+        }
+
         // Force correct values for Daerah BM - ALWAYS runs
         function forceDaerahBMValues() {
             console.log('forceDaerahBMValues: Starting...');
@@ -3604,6 +3670,7 @@
                     if (shouldSync) {
                         console.log('Goodies cell changed - forcing sync');
                         forceDaerahBMValues();
+                        forceSpecificCellsDirectly();
                     }
                 });
                 
@@ -3637,6 +3704,7 @@
                     if (shouldSync) {
                         console.log('Cenderahati input changed - forcing sync');
                         forceDaerahTembValues();
+                        forceSpecificCellsDirectly();
                     }
                 });
                 
@@ -3656,8 +3724,10 @@
                 forceDaerahTembValues();
                 forceCenderahatiValues();
                 forceEmptyCenderahatiValues();
+                forceSpecificCellsDirectly(); // DIRECT FIX
                 setTimeout(syncAllValuesFromCSV, 50);
                 setTimeout(forceRow2SubRow2Budget, 50);
+                setTimeout(forceSpecificCellsDirectly, 50);
                 setTimeout(syncAllValuesFromCSV, 100);
                 setTimeout(forceRow2SubRow2Budget, 100);
                 setTimeout(forceBudgetValues, 100);
@@ -3666,6 +3736,7 @@
                 setTimeout(forceDaerahTembValues, 100);
                 setTimeout(forceCenderahatiValues, 100);
                 setTimeout(forceEmptyCenderahatiValues, 100);
+                setTimeout(forceSpecificCellsDirectly, 100);
             });
             
             // Load and enable To Do List (wait for API to be available)
@@ -3706,6 +3777,12 @@
             setTimeout(forceBudgetValues, 1500);
             setTimeout(forceBudgetValues, 2000);
             setTimeout(forceBudgetValues, 3000);
+            setTimeout(forceSpecificCellsDirectly, 200);
+            setTimeout(forceSpecificCellsDirectly, 500);
+            setTimeout(forceSpecificCellsDirectly, 1000);
+            setTimeout(forceSpecificCellsDirectly, 1500);
+            setTimeout(forceSpecificCellsDirectly, 2000);
+            setTimeout(forceSpecificCellsDirectly, 3000);
             setTimeout(forceDaerahBMValues, 200);
             setTimeout(forceDaerahBMValues, 500);
             setTimeout(forceDaerahBMValues, 1000);
