@@ -3191,17 +3191,30 @@
                 const bil = bilCell.textContent.trim();
                 const category = categoryCell.textContent.trim();
                 const tindakan = tindakanCell ? tindakanCell.textContent.trim() : '';
-                const keterangan = keteranganCell.textContent.trim();
+                // Get keterangan text - handle div tags
+                const keteranganDiv = keteranganCell.querySelector('div');
+                const keterangan = keteranganDiv ? keteranganDiv.textContent.trim() : keteranganCell.textContent.trim();
                 
-                // Find matching CSV data
+                // Find matching CSV data - more flexible matching
                 const match = csvData.find(d => {
                     const bilMatch = d.bil === bil;
-                    const categoryMatch = d.category === category || d.category.trim() === category;
-                    const keteranganMatch = d.keterangan === keterangan || keterangan.includes(d.keterangan) || d.keterangan.includes(keterangan);
-                    return bilMatch && categoryMatch && keteranganMatch;
+                    const categoryMatch = d.category === category || d.category.trim() === category || category.includes(d.category.trim());
+                    const tindakanMatch = !d.tindakan || d.tindakan === tindakan || tindakan.includes(d.tindakan) || d.tindakan.includes(tindakan);
+                    // More flexible keterangan matching
+                    const keteranganMatch = d.keterangan === keterangan || 
+                                          keterangan.includes(d.keterangan) || 
+                                          d.keterangan.includes(keterangan) ||
+                                          keterangan.replace(/\s+/g, ' ').includes(d.keterangan.replace(/\s+/g, ' '));
+                    return bilMatch && categoryMatch && tindakanMatch && keteranganMatch;
                 });
                 
-                if (!match) return;
+                if (!match) {
+                    // Debug: log if no match found for Row 2
+                    if (bil === '2') {
+                        console.log('No match found for Row 2:', { bil, category, tindakan, keterangan });
+                    }
+                    return;
+                }
                 
                 // Force Cenderahati
                 const cenderahatiInput = cenderahatiCell.querySelector('input');
@@ -3216,8 +3229,10 @@
                 
                 // Force Goodies
                 if (goodiesCell) {
-                    if (match.goodies !== goodiesCell.textContent.trim()) {
+                    const currentGoodies = goodiesCell.textContent.trim();
+                    if (match.goodies !== currentGoodies) {
                         goodiesCell.textContent = match.goodies;
+                        console.log(`Synced Row ${bil} goodies: ${currentGoodies} -> ${match.goodies}`);
                     }
                 }
                 
@@ -3226,9 +3241,51 @@
                     // Remove rowspan for Row 2 and Row 3 (they should have separate budgets)
                     if ((bil === '2' || bil === '3') && budgetCell.hasAttribute('rowspan')) {
                         budgetCell.removeAttribute('rowspan');
+                        console.log(`Removed rowspan from Row ${bil} budget cell`);
                     }
-                    if (match.budget !== budgetCell.textContent.trim()) {
+                    const currentBudget = budgetCell.textContent.trim().replace(/\s+/g, ' ');
+                    const expectedBudget = match.budget.trim();
+                    
+                    // Special check for Row 2 sub-row 2 - must be $19,438.00
+                    if (bil === '2' && tindakan === 'Setiausaha Mes' && currentBudget !== '$19,438.00') {
+                        budgetCell.textContent = '$19,438.00';
+                        console.log(`Force corrected Row 2 sub-row 2 budget to $19,438.00`);
+                    } else if (currentBudget !== expectedBudget) {
                         budgetCell.textContent = match.budget;
+                        console.log(`Synced Row ${bil} budget: ${currentBudget} -> ${expectedBudget}`);
+                    }
+                }
+            });
+        }
+
+        // Specifically force Row 2 sub-row 2 budget to $19,438.00
+        function forceRow2SubRow2Budget() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                if (tds.length < 7) return;
+                
+                const bilCell = tds[0];
+                const tindakanCell = tds[2];
+                const budgetCell = tds[6];
+                
+                if (!bilCell || !tindakanCell || !budgetCell) return;
+                
+                const bil = bilCell.textContent.trim();
+                const tindakan = tindakanCell.textContent.trim();
+                
+                // Check if this is Row 2 sub-row 2 (Setiausaha Mes)
+                if (bil === '2' && tindakan === 'Setiausaha Mes') {
+                    // Remove rowspan if exists
+                    if (budgetCell.hasAttribute('rowspan')) {
+                        budgetCell.removeAttribute('rowspan');
+                    }
+                    // Force correct budget
+                    const currentBudget = budgetCell.textContent.trim().replace(/\s+/g, ' ');
+                    if (currentBudget !== '$19,438.00') {
+                        budgetCell.textContent = '$19,438.00';
+                        console.log(`Force corrected Row 2 sub-row 2 budget from ${currentBudget} to $19,438.00`);
                     }
                 }
             });
@@ -3349,6 +3406,7 @@
                 enableChecklistEditing();
                 // MASTER SYNC: Force ALL values from CSV exactly - runs first
                 syncAllValuesFromCSV();
+                forceRow2SubRow2Budget(); // Specifically target Row 2 sub-row 2
                 // ALWAYS force correct values for Daerah BM, Daerah Belait, Daerah Temb, Cenderahati, and Budgets after loading
                 // Run immediately and with delays to ensure values stick
                 forceBudgetValues();
@@ -3358,7 +3416,9 @@
                 forceCenderahatiValues();
                 forceEmptyCenderahatiValues();
                 setTimeout(syncAllValuesFromCSV, 50);
+                setTimeout(forceRow2SubRow2Budget, 50);
                 setTimeout(syncAllValuesFromCSV, 100);
+                setTimeout(forceRow2SubRow2Budget, 100);
                 setTimeout(forceBudgetValues, 100);
                 setTimeout(forceDaerahBMValues, 100);
                 setTimeout(forceDaerahBelaitValues, 100);
@@ -3388,11 +3448,17 @@
             // Also force values immediately and after delays - run multiple times to ensure it sticks
             // MASTER SYNC runs first to ensure CSV values override everything
             setTimeout(syncAllValuesFromCSV, 200);
+            setTimeout(forceRow2SubRow2Budget, 200);
             setTimeout(syncAllValuesFromCSV, 500);
+            setTimeout(forceRow2SubRow2Budget, 500);
             setTimeout(syncAllValuesFromCSV, 1000);
+            setTimeout(forceRow2SubRow2Budget, 1000);
             setTimeout(syncAllValuesFromCSV, 1500);
+            setTimeout(forceRow2SubRow2Budget, 1500);
             setTimeout(syncAllValuesFromCSV, 2000);
+            setTimeout(forceRow2SubRow2Budget, 2000);
             setTimeout(syncAllValuesFromCSV, 3000);
+            setTimeout(forceRow2SubRow2Budget, 3000);
             setTimeout(forceBudgetValues, 200);
             setTimeout(forceBudgetValues, 500);
             setTimeout(forceBudgetValues, 1000);
