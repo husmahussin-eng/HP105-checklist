@@ -2374,16 +2374,16 @@
         // -----------------------------
         const checklistFallback = [
             { category: 'Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan', tindakan: 'P. Perbarisan', cenderahati: '376', goodies: '-', budget: '$35,065.50' },
-            { category: 'Mkn Beradat', keterangan: '<div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div><div>Makan beradat pada 15/01/2026 (belum termasuk support staffs)</div>', tindakan: ['P. Permakanan','Setiausaha Mes'], cenderahati: ['',''], goodies: ['-','-'], budget: ['$1,011.50','$20,438.00'] },
+            { category: 'Mkn Beradat', keterangan: '<div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div><div>Makan beradat pada 15/01/2026 (belum termasuk support staffs)</div>', tindakan: ['P. Permakanan','Setiausaha Mes'], cenderahati: ['',''], goodies: ['-','-'], budget: ['$1,011.50','$19,438.00'] },
             { category: 'Keagamaan', keterangan: '<div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)</div><div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>', tindakan: ['BUI',''], cenderahati: ['',''], goodies: ['-','-'], budget: ['$1,275.00','$1,325.00'] },
-            { category: 'Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', tindakan: 'P. Pameran', cenderahati: '50', goodies: '600', budget: '$15,800.00' },
+            { category: 'Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', tindakan: 'P. Pameran', cenderahati: '50', goodies: '600', budget: '$9,750.00' },
             { category: 'Daerah TT', keterangan: '<div>Kejohanan Bolasepak</div>', tindakan: 'OCPD TT', cenderahati: '41', goodies: '210', budget: '$2,328.50' },
-            { category: 'Daerah BM', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Walkaton</div>', tindakan: ['P. Derma Darah','OCPD BM',''], cenderahati: ['','','5'], goodies: ['100','300','145'], budget: ['$105.00','$1,050.00','$525.00'] },
-            { category: 'Daerah Belait', keterangan: '<div>Open day</div><div>Gotong Royong</div><div>Kempen Derma Darah</div>', tindakan: 'OCPD Belait', cenderahati: ['1','',''], goodies: ['500','-','100'], budget: ['$1,511.00','$175.00','$105.00'] },
-            { category: 'Daerah Temb', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Community Engagement @ POLSARA</div>', tindakan: 'OCPD Temb', cenderahati: ['','',''], goodies: ['100','-','80'], budget: ['$350.00','$263.70','$410.00'] },
-            { category: 'Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling, pull-up banners (4 sets)', tindakan: 'P. Kelengkapan', cenderahati: '0', goodies: '-', budget: '' },
-            { category: 'PRO', keterangan: 'Digital Poster HP105 (tiada pencetakan)', tindakan: '', cenderahati: '0', goodies: '-', budget: '' },
-            { category: 'Cenderahati', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', tindakan: '', cenderahati: '493', goodies: '2115', budget: '' }
+            { category: 'Daerah BM', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Walkaton</div>', tindakan: ['P. Derma Darah','OCPD BM',''], cenderahati: ['','','5'], goodies: ['100','-','145'], budget: '$1,680.00' },
+            { category: 'Daerah Belait', keterangan: '<div>Open day</div><div>Gotong Royong</div><div>Kempen Derma Darah</div>', tindakan: 'OCPD Belait', cenderahati: ['1','',''], goodies: ['500','-','100'], budget: '$1,791.00' },
+            { category: 'Daerah Temb', keterangan: '<div>Kempen Derma Darah </div><div>Gotong Royong </div><div>Community Engagement @ POLSARA </div>', tindakan: 'OCPD Temb', cenderahati: ['','','20'], goodies: ['100','-','60'], budget: '$838.70' },
+            { category: 'Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)', tindakan: 'P. Kelengkapan', cenderahati: '-', goodies: '-', budget: '$18,367.30' },
+            { category: 'PRO', keterangan: 'Digital poster HP ke -105 (tiada pencetakan)', tindakan: '', cenderahati: '-', goodies: '-', budget: '-' },
+            { category: 'Cenderahati', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', tindakan: '', cenderahati: '493', goodies: '1815', budget: '-' }
         ];
         function getCategoryFromRow(row) {
             let cur = row;
@@ -2887,15 +2887,40 @@
                     if (rowspan > 1) {
                         // Find all Daerah BM sub-rows
                         let currentRow = row;
-                        const correctValues = ['0', '0', '5'];
+                        const correctCenderahati = ['', '', '5'];
+                        const correctGoodies = ['100', '-', '145'];
                         for (let i = 0; i < rowspan && currentRow; i++) {
                             const subTds = currentRow.querySelectorAll('td');
                             const input = subTds[4]?.querySelector('input');
-                            if (input && correctValues[i] !== undefined) {
-                                // Force the correct value
-                                input.value = correctValues[i];
-                                console.log('Forced Daerah BM row', i, 'to value', correctValues[i]);
+                            const goodiesCell = subTds[5];
+                            const keterangan = subTds[3]?.textContent.trim();
+                            
+                            // Force Cenderahati values
+                            if (input && correctCenderahati[i] !== undefined) {
+                                if (keterangan === 'Kempen Derma Darah') {
+                                    input.value = '';
+                                } else if (keterangan === 'Gotong Royong') {
+                                    input.value = '';
+                                } else if (keterangan === 'Walkaton') {
+                                    input.value = '5';
+                                } else {
+                                    input.value = correctCenderahati[i];
+                                }
                             }
+                            
+                            // Force Goodies values
+                            if (goodiesCell && correctGoodies[i] !== undefined) {
+                                if (keterangan === 'Kempen Derma Darah') {
+                                    goodiesCell.textContent = '100';
+                                } else if (keterangan === 'Gotong Royong') {
+                                    goodiesCell.textContent = '-';
+                                } else if (keterangan === 'Walkaton') {
+                                    goodiesCell.textContent = '145';
+                                } else {
+                                    goodiesCell.textContent = correctGoodies[i];
+                                }
+                            }
+                            
                             currentRow = currentRow.nextElementSibling;
                         }
                         return; // Found it, exit
@@ -2954,7 +2979,7 @@
             });
         }
 
-        // Force correct values for Cenderahati (Row 10) - ALWAYS runs
+        // Force correct values for Cenderahati (Row 11) - ALWAYS runs
         function forceCenderahatiValues() {
             const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
             rows.forEach(row => {
@@ -2964,16 +2989,81 @@
                     const input = tds[4]?.querySelector('input');
                     const goodiesCell = tds[5];
                     
-                    // Force Cenderahati value to 473
-                    if (input && input.value !== '473') {
-                        input.value = '473';
-                        console.log('Forced Cenderahati to 473');
+                    // Force Cenderahati value to 493
+                    if (input && input.value !== '493') {
+                        input.value = '493';
+                        console.log('Forced Cenderahati to 493');
                     }
                     
-                    // Force Goodies value to 2135
-                    if (goodiesCell && goodiesCell.textContent.trim() !== '2135') {
-                        goodiesCell.textContent = '2135';
-                        console.log('Forced Goodies to 2135');
+                    // Force Goodies value to 1815
+                    if (goodiesCell && goodiesCell.textContent.trim() !== '1815') {
+                        goodiesCell.textContent = '1815';
+                        console.log('Forced Goodies to 1815');
+                    }
+                }
+            });
+        }
+
+        // Force correct budget values for all rows - ALWAYS runs
+        function forceBudgetValues() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            const budgetMap = {
+                'Perbarisan': '$35,065.50',
+                'Mkn Beradat': ['$1,011.50', '$19,438.00'],
+                'Keagamaan': ['$1,275.00', '$1,325.00'],
+                'Pameran': '$9,750.00',
+                'Daerah TT': '$2,328.50',
+                'Daerah BM': '$1,680.00',
+                'Daerah Belait': '$1,791.00',
+                'Daerah Temb': '$838.70',
+                'Kelengkapan': '$18,367.30',
+                'PRO': '-',
+                'Cenderahati': '-'
+            };
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const categoryCell = tds[1];
+                if (!categoryCell) return;
+                
+                const category = categoryCell.textContent.trim();
+                const budgetCell = tds[6];
+                if (!budgetCell) return;
+                
+                const expectedBudget = budgetMap[category];
+                if (!expectedBudget) return;
+                
+                const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                
+                if (rowspan > 1 && Array.isArray(expectedBudget)) {
+                    // Multi-row category with array budgets
+                    let currentRow = row;
+                    for (let i = 0; i < rowspan && currentRow; i++) {
+                        const subTds = currentRow.querySelectorAll('td');
+                        const subBudgetCell = subTds[6];
+                        if (subBudgetCell && expectedBudget[i] !== undefined) {
+                            const currentBudget = subBudgetCell.textContent.trim();
+                            if (currentBudget !== expectedBudget[i]) {
+                                subBudgetCell.textContent = expectedBudget[i];
+                                console.log(`Forced ${category} row ${i} budget to ${expectedBudget[i]}`);
+                            }
+                        }
+                        currentRow = currentRow.nextElementSibling;
+                    }
+                } else if (rowspan > 1 && typeof expectedBudget === 'string') {
+                    // Multi-row category with single budget (rowspan)
+                    const currentBudget = budgetCell.textContent.trim();
+                    if (currentBudget !== expectedBudget) {
+                        budgetCell.textContent = expectedBudget;
+                        console.log(`Forced ${category} budget to ${expectedBudget}`);
+                    }
+                } else if (typeof expectedBudget === 'string') {
+                    // Single row category
+                    const currentBudget = budgetCell.textContent.trim();
+                    if (currentBudget !== expectedBudget) {
+                        budgetCell.textContent = expectedBudget;
+                        console.log(`Forced ${category} budget to ${expectedBudget}`);
                     }
                 }
             });
@@ -3023,10 +3113,11 @@
                     await applyChecklistFallback(true);
                 }
                 enableChecklistEditing();
-                // ALWAYS force correct values for Daerah BM, Daerah Belait, and Cenderahati after loading
+                // ALWAYS force correct values for Daerah BM, Daerah Belait, Cenderahati, and Budgets after loading
                 setTimeout(forceDaerahBMValues, 100);
                 setTimeout(forceDaerahBelaitValues, 100);
                 setTimeout(forceCenderahatiValues, 100);
+                setTimeout(forceBudgetValues, 100);
             });
             
             // Load and enable To Do List (wait for API to be available)
@@ -3057,6 +3148,9 @@
             setTimeout(forceCenderahatiValues, 500);
             setTimeout(forceCenderahatiValues, 1000);
             setTimeout(forceCenderahatiValues, 2000);
+            setTimeout(forceBudgetValues, 500);
+            setTimeout(forceBudgetValues, 1000);
+            setTimeout(forceBudgetValues, 2000);
             
             // Also force on any input change for Daerah BM
             setTimeout(() => {
