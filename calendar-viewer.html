@@ -1377,13 +1377,19 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    <span>Disember 2025</span>
+                    <span>Dec</span>
                 </button>
                 <button class="calendar-tab" onclick="switchCalendarTab('jan')" id="tab-jan">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    <span>Januari 2026</span>
+                    <span>Jan</span>
+                </button>
+                <button class="calendar-tab" onclick="switchCalendarTab('feb')" id="tab-feb">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Feb</span>
                 </button>
                 <button class="calendar-tab" onclick="switchCalendarTab('checklist')" id="tab-checklist">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1431,6 +1437,24 @@
                         <div class="calendar-day-name">Sab</div>
                     </div>
                     <div class="calendar-days" id="calendar-jan-2026"></div>
+                </div>
+                <div class="calendar-footer">DKH@2025</div>
+            </div>
+            
+            <!-- February 2026 Calendar -->
+            <div class="calendar-month" id="calendar-month-feb">
+                <h3 class="calendar-month-title">Februari 2026</h3>
+                <div class="calendar-scroll-wrapper">
+                    <div class="calendar-days-header" style="min-width: 840px;">
+                        <div class="calendar-day-name">Ahd</div>
+                        <div class="calendar-day-name">Isn</div>
+                        <div class="calendar-day-name">Sel</div>
+                        <div class="calendar-day-name">Rab</div>
+                        <div class="calendar-day-name">Kha</div>
+                        <div class="calendar-day-name">Jum</div>
+                        <div class="calendar-day-name">Sab</div>
+                    </div>
+                    <div class="calendar-days" id="calendar-feb-2026"></div>
                 </div>
                 <div class="calendar-footer">DKH@2025</div>
             </div>
@@ -1992,6 +2016,28 @@
                 `;
             }
             janContainer.innerHTML = janHTML;
+            
+            // February 2026
+            const febContainer = document.getElementById('calendar-feb-2026');
+            const feb2026 = new Date(2026, 1, 1);
+            const febDaysInMonth = new Date(2026, 2, 0).getDate();
+            const febFirstDay = feb2026.getDay();
+            
+            let febHTML = '';
+            for (let i = 0; i < febFirstDay; i++) {
+                febHTML += '<div class="calendar-day empty"></div>';
+            }
+            for (let day = 1; day <= febDaysInMonth; day++) {
+                const dayOfWeek = (febFirstDay + day - 1) % 7;
+                const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                febHTML += `
+                    <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} feb">
+                        <div class="calendar-day-number">${day}</div>
+                        <div id="feb-${day}-notes" class="calendar-day-events"></div>
+                    </div>
+                `;
+            }
+            febContainer.innerHTML = febHTML;
         }
         
         // Format time AM/PM
@@ -2064,6 +2110,7 @@
                     // Normalize month names
                     if (month === 'december' || month === '12') month = 'dec';
                     if (month === 'january' || month === '1') month = 'jan';
+                    if (month === 'february' || month === 'februari' || month === '2') month = 'feb';
                     
                     const day = event.day;
                     const key = `${month}-${day}`;
