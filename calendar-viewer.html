@@ -2674,6 +2674,8 @@
                     syncAllValuesFromCSV();
                     forceRow2SubRow2Budget();
                     forceBudgetValues();
+                    forceDaerahBMValues(); // Force Row 6 Gotong Royong goodies to '-'
+                    forceDaerahTembValues(); // Force Row 8 Community Engagement cenderahati to '20'
                     console.log('Post-load sync completed - CSV values enforced');
                 }, 50);
                 
@@ -2933,12 +2935,17 @@
         
         // Force correct values for Daerah BM - ALWAYS runs
         function forceDaerahBMValues() {
+            console.log('forceDaerahBMValues: Starting...');
             const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            console.log(`forceDaerahBMValues: Found ${rows.length} rows`);
             rows.forEach(row => {
                 const tds = row.querySelectorAll('td');
                 const categoryCell = tds[1];
-                if (categoryCell && categoryCell.textContent.trim() === 'Daerah BM') {
+                const category = categoryCell ? categoryCell.textContent.trim() : '';
+                if (category === 'Daerah BM') {
+                    console.log('forceDaerahBMValues: Found Daerah BM row');
                     const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    console.log(`forceDaerahBMValues: Rowspan = ${rowspan}`);
                     if (rowspan > 1) {
                         // Find all Daerah BM sub-rows
                         let currentRow = row;
@@ -2949,36 +2956,34 @@
                             const input = subTds[4]?.querySelector('input');
                             const goodiesCell = subTds[5];
                             const keterangan = subTds[3]?.textContent.trim();
+                            const tindakan = subTds[2]?.textContent.trim();
+                            
+                            // Match by tindakan first (more reliable), then by keterangan, then by index
+                            let rowIndex = i;
+                            if (tindakan === 'P. Derma Darah') {
+                                rowIndex = 0; // First sub-row
+                            } else if (tindakan === 'OCPD BM') {
+                                rowIndex = 1; // Second sub-row (Gotong Royong)
+                            } else if (tindakan === '' || !tindakan) {
+                                rowIndex = 2; // Third sub-row (Walkaton)
+                            }
                             
                             // Force Cenderahati values
-                            if (input && correctCenderahati[i] !== undefined) {
-                                if (keterangan === 'Kempen Derma Darah') {
-                                    input.value = '';
-                                } else if (keterangan === 'Gotong Royong') {
-                                    input.value = '';
-                                } else if (keterangan === 'Walkaton') {
-                                    input.value = '5';
-                                } else {
-                                    input.value = correctCenderahati[i];
+                            if (input && correctCenderahati[rowIndex] !== undefined) {
+                                const targetValue = correctCenderahati[rowIndex];
+                                if (input.value !== targetValue) {
+                                    input.value = targetValue;
+                                    console.log(`forceDaerahBMValues: Fixed Row 6 sub-row ${i} (${tindakan || keterangan}) cenderahati to "${targetValue}"`);
                                 }
                             }
                             
                             // Force Goodies values
-                            if (goodiesCell && correctGoodies[i] !== undefined) {
+                            if (goodiesCell && correctGoodies[rowIndex] !== undefined) {
                                 const currentGoodies = goodiesCell.textContent.trim();
-                                let targetGoodies = '';
-                                if (keterangan === 'Kempen Derma Darah') {
-                                    targetGoodies = '100';
-                                } else if (keterangan === 'Gotong Royong') {
-                                    targetGoodies = '-';
-                                } else if (keterangan === 'Walkaton') {
-                                    targetGoodies = '145';
-                                } else {
-                                    targetGoodies = correctGoodies[i];
-                                }
+                                const targetGoodies = correctGoodies[rowIndex];
                                 if (currentGoodies !== targetGoodies) {
                                     goodiesCell.textContent = targetGoodies;
-                                    console.log(`forceDaerahBMValues: Fixed Row 6 ${keterangan} goodies from "${currentGoodies}" to "${targetGoodies}"`);
+                                    console.log(`forceDaerahBMValues: Fixed Row 6 sub-row ${i} (${tindakan || keterangan}) goodies from "${currentGoodies}" to "${targetGoodies}"`);
                                 }
                             }
                             
@@ -3067,12 +3072,17 @@
 
         // Force correct values for Daerah Temb (Row 8) - ALWAYS runs
         function forceDaerahTembValues() {
+            console.log('forceDaerahTembValues: Starting...');
             const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            console.log(`forceDaerahTembValues: Found ${rows.length} rows`);
             rows.forEach(row => {
                 const tds = row.querySelectorAll('td');
                 const categoryCell = tds[1];
-                if (categoryCell && categoryCell.textContent.trim() === 'Daerah Temb') {
+                const category = categoryCell ? categoryCell.textContent.trim() : '';
+                if (category === 'Daerah Temb') {
+                    console.log('forceDaerahTembValues: Found Daerah Temb row');
                     const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    console.log(`forceDaerahTembValues: Rowspan = ${rowspan}`);
                     if (rowspan > 1) {
                         let currentRow = row;
                         const correctCenderahati = ['', '', '20'];
@@ -3081,20 +3091,24 @@
                             const input = subTds[4]?.querySelector('input');
                             const keterangan = subTds[3]?.textContent.trim();
                             
+                            // Match by keterangan first, then fallback to index
+                            // Row order: Kempen Derma Darah (index 0), Gotong Royong (index 1), Community Engagement (index 2)
+                            let rowIndex = i;
+                            if (keterangan && keterangan.includes('Community Engagement')) {
+                                rowIndex = 2; // Third sub-row
+                            } else if (keterangan && keterangan.includes('Gotong Royong')) {
+                                rowIndex = 1; // Second sub-row
+                            } else if (keterangan && keterangan.includes('Kempen Derma Darah')) {
+                                rowIndex = 0; // First sub-row
+                            }
+                            
                             // Force Cenderahati values
-                            if (input) {
+                            if (input && correctCenderahati[rowIndex] !== undefined) {
                                 const currentValue = input.value.trim();
-                                let targetValue = '';
-                                if (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA') {
-                                    targetValue = '20';
-                                } else if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Kempen Derma Darah' || keterangan === 'Gotong Royong ' || keterangan === 'Gotong Royong') {
-                                    targetValue = '';
-                                } else if (correctCenderahati[i] !== undefined) {
-                                    targetValue = correctCenderahati[i];
-                                }
+                                const targetValue = correctCenderahati[rowIndex];
                                 if (currentValue !== targetValue) {
                                     input.value = targetValue;
-                                    console.log(`forceDaerahTembValues: Fixed Row 8 ${keterangan} cenderahati from "${currentValue}" to "${targetValue}"`);
+                                    console.log(`forceDaerahTembValues: Fixed Row 8 sub-row ${i} (${keterangan}) cenderahati from "${currentValue}" to "${targetValue}"`);
                                 }
                             }
                             
