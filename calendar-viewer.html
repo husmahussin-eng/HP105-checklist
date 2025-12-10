@@ -3086,6 +3086,11 @@
                         // For sub-rows, budget cell is at index 6 (0-indexed)
                         const subBudgetCell = subTds[6];
                         if (subBudgetCell && expectedBudget[i] !== undefined) {
+                            // Remove rowspan if it exists (database might have added it)
+                            if (subBudgetCell.hasAttribute('rowspan')) {
+                                subBudgetCell.removeAttribute('rowspan');
+                                console.log(`Removed rowspan from ${category} sub-row ${i} budget`);
+                            }
                             const currentBudget = subBudgetCell.textContent.trim();
                             if (currentBudget !== expectedBudget[i]) {
                                 subBudgetCell.textContent = expectedBudget[i];
@@ -3117,6 +3122,75 @@
                         }
                     }
                     processedCategories.add(category);
+                }
+            });
+        }
+
+        // Force correct values for empty cenderahati fields (should be empty, not 0)
+        function forceEmptyCenderahatiValues() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const categoryCell = tds[1];
+                if (!categoryCell) return;
+                
+                const category = categoryCell.textContent.trim();
+                const keterangan = tds[3]?.textContent.trim();
+                const input = tds[4]?.querySelector('input');
+                
+                if (!input) return;
+                
+                // Fix Row 9 (Kelengkapan) - should be empty, not 0
+                if (category === 'Kelengkapan') {
+                    if (input.value === '0' || input.value === '') {
+                        input.value = '';
+                        input.placeholder = '-';
+                    }
+                }
+                
+                // Fix Row 10 (PRO) - should be empty, not 0, and fix keterangan
+                if (category === 'PRO') {
+                    if (input.value === '0' || input.value === '') {
+                        input.value = '';
+                        input.placeholder = '-';
+                    }
+                    // Fix keterangan text
+                    const keteranganDiv = tds[3]?.querySelector('div');
+                    if (keteranganDiv && !keteranganDiv.textContent.includes('Digital poster')) {
+                        keteranganDiv.textContent = 'Digital poster HP ke -105 (tiada pencetakan)';
+                    }
+                }
+                
+                // Fix Daerah Belait - Gotong Royong and Kempen Derma Darah should be empty
+                if (category === 'Daerah Belait' || category === 'Daerah Belait ') {
+                    if (keterangan === 'Gotong Royong' || keterangan === 'Kempen Derma Darah') {
+                        if (input.value === '0') {
+                            input.value = '';
+                        }
+                    }
+                }
+                
+                // Fix Daerah Temb - Kempen Derma Darah and Gotong Royong should be empty, Community Engagement should be 20
+                if (category === 'Daerah Temb') {
+                    if (keterangan === 'Kempen Derma Darah ' || keterangan === 'Gotong Royong ') {
+                        if (input.value === '0') {
+                            input.value = '';
+                        }
+                    } else if (keterangan === 'Community Engagement @ POLSARA ' || keterangan === 'Community Engagement @ POLSARA') {
+                        if (input.value !== '20') {
+                            input.value = '20';
+                        }
+                    }
+                }
+                
+                // Fix Daerah BM - Gotong Royong should be empty
+                if (category === 'Daerah BM') {
+                    if (keterangan === 'Gotong Royong') {
+                        if (input.value === '0') {
+                            input.value = '';
+                        }
+                    }
                 }
             });
         }
@@ -3172,11 +3246,13 @@
                 forceDaerahBelaitValues();
                 forceDaerahTembValues();
                 forceCenderahatiValues();
+                forceEmptyCenderahatiValues();
                 setTimeout(forceBudgetValues, 100);
                 setTimeout(forceDaerahBMValues, 100);
                 setTimeout(forceDaerahBelaitValues, 100);
                 setTimeout(forceDaerahTembValues, 100);
                 setTimeout(forceCenderahatiValues, 100);
+                setTimeout(forceEmptyCenderahatiValues, 100);
             });
             
             // Load and enable To Do List (wait for API to be available)
@@ -3216,6 +3292,11 @@
             setTimeout(forceCenderahatiValues, 500);
             setTimeout(forceCenderahatiValues, 1000);
             setTimeout(forceCenderahatiValues, 2000);
+            setTimeout(forceEmptyCenderahatiValues, 200);
+            setTimeout(forceEmptyCenderahatiValues, 500);
+            setTimeout(forceEmptyCenderahatiValues, 1000);
+            setTimeout(forceEmptyCenderahatiValues, 2000);
+            setTimeout(forceEmptyCenderahatiValues, 3000);
             
             // Also force on any input change for Daerah BM
             setTimeout(() => {
