@@ -2214,8 +2214,8 @@
                 const dayEvents = grouped[key];
                 // Sort events: Mesyuarat first, then Bergambar Ramai, then others alphabetically
                 dayEvents.sort((a, b) => {
-                    const at = (a.title || '').toLowerCase();
-                    const bt = (b.title || '').toLowerCase();
+                    const at = (a.event_title || a.title || '').toLowerCase();
+                    const bt = (b.event_title || b.title || '').toLowerCase();
                     
                     // Priority order: 1) Mesyuarat, 2) Bergambar Ramai, 3) Others alphabetically
                     const aIsMesyuarat = at.includes('mesyuarat');
@@ -2245,18 +2245,21 @@
                     const formattedTime = formatTimeAMPM(event.event_time);
                     const displayTime = formattedTime ? formattedTime + ' ' : '';
                     const color = colors[idx % colors.length];
-                    const eventTitle = event.title || '';
+                    const eventTitle = event.event_title || event.title || '';
                     const venue = event.venue ? ` @${event.venue}` : '';
-                    // Replace \n with spaces to match live calendar display
-                    let description = event.description ? ` ${event.description}` : '';
-                    description = description.replace(/\n/g, ' ');
-                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}${description}</div>`;
+                    html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}</div>`;
                 });
                 el.innerHTML = html;
-                // Highlight the day box
+                
+                // Update day number color if multiple events (matching live calendar)
                 const dayEl = el.closest('.calendar-day');
-                if (dayEl) {
-                    dayEl.classList.add('has-event');
+                if (dayEl && dayEvents.length > 1) {
+                    const dayNumberEl = dayEl.querySelector('.calendar-day-number');
+                    if (dayNumberEl) {
+                        const colors = ['#1f2937', '#991b1b', '#166534'];
+                        dayNumberEl.style.color = colors[(dayEvents.length - 1) % colors.length];
+                        dayNumberEl.style.fontWeight = '700';
+                    }
                 }
             });
         }
@@ -2442,41 +2445,41 @@
         // Static snapshot for calendar events (Dec 2025, Jan 2026 & Feb 2026) - Updated from live database
         const staticEvents = [
             // December 2025
-            { month: 'dec', day: 3,  title: 'Mesyuarat 04/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
-            { month: 'dec', day: 10, title: 'Mesyuarat 05/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
-            { month: 'dec', day: 31, title: 'Mesyuarat 08/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
-            { month: 'dec', day: 31, title: 'Bergambar Ramai AJK HP105', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
-            { month: 'dec', day: 31, title: 'Majlis Doa Kesyukuran HP105', activity: 'Mesyuarat', event_time: '', venue: 'Surau Polis Gadong', description: '' },
+            { month: 'dec', day: 3,  event_title: 'Mesyuarat 04/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
+            { month: 'dec', day: 10, event_title: 'Mesyuarat 05/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
+            { month: 'dec', day: 31, event_title: 'Mesyuarat 08/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
+            { month: 'dec', day: 31, event_title: 'Bergambar Ramai AJK HP105', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
+            { month: 'dec', day: 31, event_title: 'Majlis Doa Kesyukuran HP105', activity: 'Mesyuarat', event_time: '', venue: 'Surau Polis Gadong', description: '' },
 
             // January 2026
-            { month: 'jan', day: 5,  title: 'Aktiviti Daerah BM : Kempen Derma Darah @BP BKS', activity: 'BM', event_time: '', venue: '', description: 'Budget for support staff food' },
-            { month: 'jan', day: 5,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 6,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 6,  title: 'Tahlil & Bacaan Surah Yassin @ Kubah Makam Diraja', activity: 'Mesyuarat', event_time: '', venue: 'TBC', description: '' },
-            { month: 'jan', day: 7,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 8,  title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 8,  title: 'Tahlil & Bacaan Surah Yassin @ Kubah Makam Diraja', activity: 'Mesyuarat', event_time: '', venue: 'TBC', description: '' },
-            { month: 'jan', day: 9,  title: 'Aktiviti Daerah BM : Gotong Royong', activity: 'BM', event_time: '', venue: 'TBC', description: '' },
-            { month: 'jan', day: 10, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 10, title: 'Raptai Mkn Beradat dgn Pengerusi', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
-            { month: 'jan', day: 12, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 13, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 13, title: 'Raptai Mkn Beradat dgn Dato CP', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
-            { month: 'jan', day: 14, title: 'Latihan Perbarisan @PTC', activity: 'Perbarisan', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 15, title: 'Majlis Makan Beradat', activity: 'Makan beradat', event_time: '20:00', venue: 'Mes', description: '' },
-            { month: 'jan', day: 15, title: 'Majlis Perbarisan HP105 @PTC', activity: 'Perbarisan', event_time: '08:30', venue: '', description: '' },
-            { month: 'jan', day: 17, title: 'Aktiviti Daerah BM : Walkaton', activity: 'BM', event_time: '', venue: 'TBC', description: '' },
-            { month: 'jan', day: 22, title: 'Aktiviti Daerah Temburong : Gotong Royong Membersihkan Tanah Perkuburan Islam', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Belais & Semamang', description: '' },
-            { month: 'jan', day: 23, title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan', event_time: '', venue: 'Majlis Keugamaan', description: '' },
-            { month: 'jan', day: 26, title: 'Aktiviti Daerah Temburong : Kempen Derma Darah @Dewan Serbaguna, Kompleks Bumi Putera', activity: 'Acara Daerah Temburong', event_time: '', venue: '', description: '' },
-            { month: 'jan', day: 27, title: 'Aktiviti Daerah Tutong : Kejohanan Bola Sepak @Komplek Sukan Tutong', activity: 'Acara Daerah Tutong', event_time: '', venue: '', description: '1) Mini Pameran' },
-            { month: 'jan', day: 28, title: 'Aktiviti Daerah Temburong : Community engagement', activity: 'Acara Daerah Temburong', event_time: '', venue: 'bangunan POLSARA', description: '' },
-            { month: 'jan', day: 31, title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran', event_time: '', venue: '', description: '31/01/2026 - 01/02/2026' },
+            { month: 'jan', day: 5,  event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 6,  event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 6,  event_title: 'Tahlil & Bacaan Surah Yassin', activity: 'Mesyuarat', event_time: '', venue: 'Kubah Makam Diraja TBC', description: '' },
+            { month: 'jan', day: 7,  event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 8,  event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 8,  event_title: 'Tahlil & Bacaan Surah Yassin', activity: 'Mesyuarat', event_time: '', venue: 'Kubah Makam Diraja TBC', description: '' },
+            { month: 'jan', day: 9,  event_title: 'Aktiviti Daerah BM : Gotong Royong', activity: 'BM', event_time: '', venue: 'Membersihkan Tanah perkuburan Islam & Membersihkan Masjid', description: '' },
+            { month: 'jan', day: 10, event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 10, event_title: 'Raptai Mkn Beradat dgn Pengerusi', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 12, event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 13, event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 13, event_title: 'Raptai Mkn Beradat dgn Dato CP', activity: 'Makan beradat', event_time: '14:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 14, event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
+            { month: 'jan', day: 15, event_title: 'Majlis Makan Beradat', activity: 'Makan beradat', event_time: '20:00', venue: 'Mes', description: '' },
+            { month: 'jan', day: 15, event_title: 'Majlis Perbarisan HP105', activity: 'Perbarisan', event_time: '08:30', venue: 'PTC', description: '' },
+            { month: 'jan', day: 17, event_title: 'Aktiviti Daerah BM : Walkaton', activity: 'BM', event_time: '', venue: 'Taman Rekreasi Jalan Menteri Besar (Health Promotion Center)', description: '' },
+            { month: 'jan', day: 21, event_title: 'Aktiviti Daerah BM : Kempen Derma Darah', activity: 'BM', event_time: '', venue: 'BP BKS', description: '' },
+            { month: 'jan', day: 22, event_title: 'Aktiviti Daerah Temburong : Gotong Royong Membersihkan Tanah Perkuburan Islam', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Belais & Semamang', description: '' },
+            { month: 'jan', day: 23, event_title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan', event_time: '', venue: '', description: '' },
+            { month: 'jan', day: 26, event_title: 'Aktiviti Daerah Temburong : Kempen Derma Darah', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Dewan Serbaguna, Kompleks Bumi Putera', description: '' },
+            { month: 'jan', day: 27, event_title: 'Aktiviti Daerah Tutong : Kejohanan Bola Sepak & Mini Pameran', activity: 'Acara Daerah Tutong', event_time: '', venue: 'Komplek Sukan Tutong', description: '' },
+            { month: 'jan', day: 28, event_title: 'Aktiviti Daerah Temburong : Community engagement', activity: 'Acara Daerah Temburong', event_time: '', venue: 'bangunan POLSARA', description: '' },
+            { month: 'jan', day: 31, event_title: 'Pameran', activity: 'Pameran', event_time: '', venue: 'Stadium Polis Gadong', description: '' },
 
             // February 2026
-            { month: 'feb', day: 1,  title: 'Pameran @Stadium Polis Gadong', activity: 'Pameran', event_time: '', venue: '', description: '31/01/2026 - 01/02/2026' },
-            { month: 'feb', day: 5,  title: 'Aktiviti Daerah Belait : Kempen Derma Darah @Dewan Persidangan', activity: 'Acara Daerah Belait', event_time: '', venue: '', description: '' },
-            { month: 'feb', day: 7,  title: 'Aktiviti Daerah Belait : Openday @ICC KB', activity: 'Acara Daerah Belait', event_time: '', venue: '', description: '' }
+            { month: 'feb', day: 1,  event_title: 'Pameran', activity: 'Pameran', event_time: '', venue: 'Stadium Polis Gadong', description: '' },
+            { month: 'feb', day: 5,  event_title: 'Aktiviti Daerah Belait : Kempen Derma Darah', activity: 'Acara Daerah Belait', event_time: '', venue: 'ICC KB', description: '' },
+            { month: 'feb', day: 7,  event_title: 'Aktiviti Daerah Belait : Openday', activity: 'Acara Daerah Belait', event_time: '', venue: 'ICC KB', description: '' }
         ];
 
         document.addEventListener('DOMContentLoaded', function() {
