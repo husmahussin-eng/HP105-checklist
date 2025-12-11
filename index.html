@@ -546,6 +546,57 @@
             box-shadow: none;
         }
         
+        /* Blood donation icon */
+        .blood-donation-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .blood-donation-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
+        /* Football icon */
+        .football-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .football-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
+        /* Walking icon */
+        .walking-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .walking-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
         /* Mobile Menu Toggle Button */
         .mobile-menu-toggle {
             display: none;
@@ -731,6 +782,16 @@
                 padding: 0.25rem 0;
             }
             
+            /* Icon adjustments for mobile */
+            .blood-donation-icon,
+            .football-icon,
+            .walking-icon {
+                width: 16px;
+                height: 16px;
+                top: 0.2rem;
+                right: 0.2rem;
+            }
+            
             .nav-item {
                 padding: 1rem 1.5rem;
                 min-height: 44px;
@@ -783,6 +844,16 @@
             
             .calendar-day {
                 min-height: 65px;
+            }
+            
+            /* Icon adjustments for extra small mobile */
+            .blood-donation-icon,
+            .football-icon,
+            .walking-icon {
+                width: 14px;
+                height: 14px;
+                top: 0.15rem;
+                right: 0.15rem;
             }
             
             .top-bar {
@@ -1353,9 +1424,70 @@
                 // Only Friday (5) and Sunday (0) are public holidays, Saturday (6) is working day
                 const dayOfWeek = (janFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                const isBloodDonation = day === 21 || day === 26;
+                const isFootball = day === 27;
+                const isWalking = day === 17;
+                const bloodIcon = isBloodDonation ? `
+                    <div class="blood-donation-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C10.5 2 9 3.5 9 5C9 6.5 9.5 8 10.5 9.5C11.5 11 12 12.5 12 14C12 12.5 12.5 11 13.5 9.5C14.5 8 15 6.5 15 5C15 3.5 13.5 2 12 2ZM12 14L10.5 17.5L12 21L13.5 17.5L12 14Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                ` : '';
+                const footballIcon = isFootball ? `
+                    <div class="football-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+                            <!-- Center pentagon (black) -->
+                            <path d="M12 9L10.5 11.5L12.5 12.5L13.5 11.5L12 9Z" fill="#000000"/>
+                            <!-- Top pentagon -->
+                            <path d="M12 6L9.5 7.5L10.5 11.5L13.5 11.5L14.5 7.5L12 6Z" fill="#000000" opacity="0.5"/>
+                            <!-- Top-left hexagon -->
+                            <path d="M6.5 9.5L8 11.5L10.5 11.5L9.5 7.5L6.5 9.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Top-right hexagon -->
+                            <path d="M17.5 9.5L15.5 7.5L13.5 11.5L15.5 11.5L17.5 9.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Left hexagon -->
+                            <path d="M5.5 12L7.5 10.5L10.5 11.5L8.5 13.5L5.5 12Z" fill="#000000" opacity="0.5"/>
+                            <!-- Right hexagon -->
+                            <path d="M18.5 12L16.5 13.5L13.5 11.5L15.5 10.5L18.5 12Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom-left hexagon -->
+                            <path d="M6.5 14.5L8 12.5L10.5 12.5L8.5 16.5L6.5 14.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom-right hexagon -->
+                            <path d="M17.5 14.5L15.5 16.5L13.5 12.5L15.5 12.5L17.5 14.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom pentagon -->
+                            <path d="M12 18L9.5 16.5L10.5 12.5L13.5 12.5L14.5 16.5L12 18Z" fill="#000000" opacity="0.5"/>
+                            <!-- Connecting lines for ball structure -->
+                            <line x1="10.5" y1="11.5" x2="8" y2="11.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="13.5" y1="11.5" x2="16" y2="11.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="10.5" y1="12.5" x2="8" y2="12.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="13.5" y1="12.5" x2="16" y2="12.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                        </svg>
+                    </div>
+                ` : '';
+                const walkingIcon = isWalking ? `
+                    <div class="walking-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Person walking - head -->
+                            <circle cx="10" cy="5" r="2" fill="#2563eb"/>
+                            <!-- Body/torso -->
+                            <path d="M10 7L9 10.5L11 12.5L11.5 9.5L10 7Z" fill="#2563eb"/>
+                            <!-- Left leg (back, bent) -->
+                            <path d="M9 10.5L7.5 15L9 16.5L10.5 13L9 10.5Z" fill="#2563eb"/>
+                            <!-- Right leg (front, stepping forward) -->
+                            <path d="M11 12.5L11.5 9.5L13.5 13.5L12.5 15L11 12.5Z" fill="#2563eb"/>
+                            <!-- Left arm (swinging back) -->
+                            <path d="M9 8.5L7 7.5L6 9.5L8 10.5L9 8.5Z" fill="#2563eb"/>
+                            <!-- Right arm (swinging forward) -->
+                            <path d="M11 7.5L12 6.5L13.5 8.5L12.5 10L11 7.5Z" fill="#2563eb"/>
+                        </svg>
+                    </div>
+                ` : '';
                 janHTML += `
                     <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''}" onclick="editCalendarDate('jan', ${day})">
                         <div class="calendar-day-number">${day}</div>
+                        ${bloodIcon}
+                        ${footballIcon}
+                        ${walkingIcon}
                         <div id="jan-${day}-notes" class="calendar-day-events"></div>
                     </div>
                 `;
@@ -1376,9 +1508,18 @@
                 // Only Friday (5) and Sunday (0) are public holidays, Saturday (6) is working day
                 const dayOfWeek = (febFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                const isBloodDonation = day === 5;
+                const bloodIcon = isBloodDonation ? `
+                    <div class="blood-donation-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C10.5 2 9 3.5 9 5C9 6.5 9.5 8 10.5 9.5C11.5 11 12 12.5 12 14C12 12.5 12.5 11 13.5 9.5C14.5 8 15 6.5 15 5C15 3.5 13.5 2 12 2ZM12 14L10.5 17.5L12 21L13.5 17.5L12 14Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                ` : '';
                 febHTML += `
                     <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''}" onclick="editCalendarDate('feb', ${day})">
                         <div class="calendar-day-number">${day}</div>
+                        ${bloodIcon}
                         <div id="feb-${day}-notes" class="calendar-day-events"></div>
                     </div>
                 `;
@@ -1553,47 +1694,81 @@
         }
         
         async function loadAllCalendarEvents() {
-            const result = await CalendarEventsAPI.getAll();
-            if (result.success && result.data) {
-                const eventsByDay = {};
-                result.data.forEach(event => {
-                    let month = (event.month || '').toString().toLowerCase();
-                    if (month === 'december' || month === '12') month = 'dec';
-                    else if (month === 'january' || month === '1') month = 'jan';
-                    else if (month === 'february' || month === 'feb' || month === '2') month = 'feb';
+            try {
+                const result = await CalendarEventsAPI.getAll();
+                if (result.success && result.data) {
+                    const eventsByDay = {};
+                    result.data.forEach(event => {
+                        let month = (event.month || '').toString().toLowerCase();
+                        if (month === 'december' || month === '12') month = 'dec';
+                        else if (month === 'january' || month === '1') month = 'jan';
+                        else if (month === 'february' || month === 'feb' || month === '2') month = 'feb';
+                        
+                        const key = `${month}-${event.day}`;
+                        if (!eventsByDay[key]) eventsByDay[key] = [];
+                        eventsByDay[key].push(event);
+                    });
                     
-                    const key = `${month}-${event.day}`;
-                    if (!eventsByDay[key]) eventsByDay[key] = [];
-                    eventsByDay[key].push(event);
-                });
-                
-                Object.keys(eventsByDay).forEach(key => {
-                    const events = eventsByDay[key];
-                const el = document.getElementById(`${key}-notes`);
-                const dayEl = document.querySelector(`[onclick*="'${key.split('-')[0]}', ${key.split('-')[1]}"]`);
-                    
-                    if (el) {
-                        let html = '';
-                        const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
-                        events.forEach((event, index) => {
-                            const formattedTime = formatTimeAMPM(event.event_time);
-                            const displayTime = formattedTime ? formattedTime + ' ' : '';
-                            const color = colors[index % colors.length];
-                            html += `<div style="margin-bottom: 3px; line-height: 1.3; color: ${color}; font-weight: ${events.length > 1 ? '600' : '400'};">• ${displayTime}${event.event_title}</div>`;
+                    Object.keys(eventsByDay).forEach(key => {
+                        const dayEvents = eventsByDay[key];
+                        // Sort events: Mesyuarat first, then Bergambar Ramai, then others alphabetically
+                        dayEvents.sort((a, b) => {
+                            const at = (a.event_title || a.title || '').toLowerCase();
+                            const bt = (b.event_title || b.title || '').toLowerCase();
+                            
+                            // Priority order: 1) Mesyuarat, 2) Bergambar Ramai, 3) Others alphabetically
+                            const aIsMesyuarat = at.includes('mesyuarat');
+                            const bIsMesyuarat = bt.includes('mesyuarat');
+                            const aIsBergambar = at.includes('bergambar');
+                            const bIsBergambar = bt.includes('bergambar');
+                            
+                            // Mesyuarat always comes first
+                            if (aIsMesyuarat && !bIsMesyuarat) return -1;
+                            if (!aIsMesyuarat && bIsMesyuarat) return 1;
+                            
+                            // If both are Mesyuarat, sort by number (08 before 07, etc.)
+                            if (aIsMesyuarat && bIsMesyuarat) {
+                                return at.localeCompare(bt);
+                            }
+                            
+                            // Bergambar Ramai comes second (after Mesyuarat)
+                            if (aIsBergambar && !bIsBergambar && !bIsMesyuarat) return -1;
+                            if (!aIsBergambar && bIsBergambar && !aIsMesyuarat) return 1;
+                            
+                            // Otherwise sort alphabetically
+                            return at.localeCompare(bt);
                         });
-                        el.innerHTML = html;
-                    }
-                    
-                    // Update day number color if multiple events
-                    if (dayEl && events.length > 1) {
-                        const dayNumberEl = dayEl.querySelector('.calendar-day-number');
-                        if (dayNumberEl) {
-                            const colors = ['#1f2937', '#991b1b', '#166534'];
-                            dayNumberEl.style.color = colors[(events.length - 1) % colors.length];
-                            dayNumberEl.style.fontWeight = '700';
+                        
+                        const el = document.getElementById(`${key}-notes`);
+                        const dayEl = el ? el.closest('.calendar-day') : null;
+                        
+                        if (el) {
+                            let html = '';
+                            const colors = ['#1f2937', '#991b1b', '#166534']; // black, dark red, dark green
+                            dayEvents.forEach((event, index) => {
+                                const formattedTime = formatTimeAMPM(event.event_time);
+                                const displayTime = formattedTime ? formattedTime + ' ' : '';
+                                const color = colors[index % colors.length];
+                                const eventTitle = event.event_title || '';
+                                const venue = event.venue ? ` @${event.venue}` : '';
+                                html += `<div style="margin-bottom: 2px; line-height: 1.2; color: ${color}; font-weight: ${dayEvents.length > 1 ? '600' : '400'}; font-size: 0.6rem;">• ${displayTime}${eventTitle}${venue}</div>`;
+                            });
+                            el.innerHTML = html;
                         }
-                    }
-                });
+                        
+                        // Update day number color if multiple events
+                        if (dayEl && dayEvents.length > 1) {
+                            const dayNumberEl = dayEl.querySelector('.calendar-day-number');
+                            if (dayNumberEl) {
+                                const colors = ['#1f2937', '#991b1b', '#166534'];
+                                dayNumberEl.style.color = colors[(dayEvents.length - 1) % colors.length];
+                                dayNumberEl.style.fontWeight = '700';
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading calendar events:', error);
             }
         }
     </script>

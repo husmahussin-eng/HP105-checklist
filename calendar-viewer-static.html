@@ -1176,6 +1176,57 @@
             box-shadow: none;
         }
         
+        /* Blood donation icon */
+        .blood-donation-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .blood-donation-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
+        /* Football icon */
+        .football-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .football-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
+        /* Walking icon */
+        .walking-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .walking-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
         /* Multiple events styling - different colors */
         .calendar-day.has-multiple-events .calendar-day-number {
             font-weight: 700;
@@ -1294,6 +1345,16 @@
                 font-size: 0.6rem;
                 padding: 0.125rem 0;
             }
+            
+            /* Icon adjustments for mobile */
+            .blood-donation-icon,
+            .football-icon,
+            .walking-icon {
+                width: 16px;
+                height: 16px;
+                top: 0.2rem;
+                right: 0.2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1331,6 +1392,16 @@
             
             .calendar-day {
                 min-height: 50px;
+            }
+            
+            /* Icon adjustments for extra small mobile */
+            .blood-donation-icon,
+            .football-icon,
+            .walking-icon {
+                width: 14px;
+                height: 14px;
+                top: 0.15rem;
+                right: 0.15rem;
             }
         }
         
@@ -1984,9 +2055,70 @@
             for (let day = 1; day <= janDaysInMonth; day++) {
                 const dayOfWeek = (janFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                const isBloodDonation = day === 21 || day === 26;
+                const isFootball = day === 27;
+                const isWalking = day === 17;
+                const bloodIcon = isBloodDonation ? `
+                    <div class="blood-donation-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C10.5 2 9 3.5 9 5C9 6.5 9.5 8 10.5 9.5C11.5 11 12 12.5 12 14C12 12.5 12.5 11 13.5 9.5C14.5 8 15 6.5 15 5C15 3.5 13.5 2 12 2ZM12 14L10.5 17.5L12 21L13.5 17.5L12 14Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                ` : '';
+                const footballIcon = isFootball ? `
+                    <div class="football-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+                            <!-- Center pentagon (black) -->
+                            <path d="M12 9L10.5 11.5L12.5 12.5L13.5 11.5L12 9Z" fill="#000000"/>
+                            <!-- Top pentagon -->
+                            <path d="M12 6L9.5 7.5L10.5 11.5L13.5 11.5L14.5 7.5L12 6Z" fill="#000000" opacity="0.5"/>
+                            <!-- Top-left hexagon -->
+                            <path d="M6.5 9.5L8 11.5L10.5 11.5L9.5 7.5L6.5 9.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Top-right hexagon -->
+                            <path d="M17.5 9.5L15.5 7.5L13.5 11.5L15.5 11.5L17.5 9.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Left hexagon -->
+                            <path d="M5.5 12L7.5 10.5L10.5 11.5L8.5 13.5L5.5 12Z" fill="#000000" opacity="0.5"/>
+                            <!-- Right hexagon -->
+                            <path d="M18.5 12L16.5 13.5L13.5 11.5L15.5 10.5L18.5 12Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom-left hexagon -->
+                            <path d="M6.5 14.5L8 12.5L10.5 12.5L8.5 16.5L6.5 14.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom-right hexagon -->
+                            <path d="M17.5 14.5L15.5 16.5L13.5 12.5L15.5 12.5L17.5 14.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom pentagon -->
+                            <path d="M12 18L9.5 16.5L10.5 12.5L13.5 12.5L14.5 16.5L12 18Z" fill="#000000" opacity="0.5"/>
+                            <!-- Connecting lines for ball structure -->
+                            <line x1="10.5" y1="11.5" x2="8" y2="11.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="13.5" y1="11.5" x2="16" y2="11.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="10.5" y1="12.5" x2="8" y2="12.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="13.5" y1="12.5" x2="16" y2="12.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                        </svg>
+                    </div>
+                ` : '';
+                const walkingIcon = isWalking ? `
+                    <div class="walking-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Person walking - head -->
+                            <circle cx="10" cy="5" r="2" fill="#2563eb"/>
+                            <!-- Body/torso -->
+                            <path d="M10 7L9 10.5L11 12.5L11.5 9.5L10 7Z" fill="#2563eb"/>
+                            <!-- Left leg (back, bent) -->
+                            <path d="M9 10.5L7.5 15L9 16.5L10.5 13L9 10.5Z" fill="#2563eb"/>
+                            <!-- Right leg (front, stepping forward) -->
+                            <path d="M11 12.5L11.5 9.5L13.5 13.5L12.5 15L11 12.5Z" fill="#2563eb"/>
+                            <!-- Left arm (swinging back) -->
+                            <path d="M9 8.5L7 7.5L6 9.5L8 10.5L9 8.5Z" fill="#2563eb"/>
+                            <!-- Right arm (swinging forward) -->
+                            <path d="M11 7.5L12 6.5L13.5 8.5L12.5 10L11 7.5Z" fill="#2563eb"/>
+                        </svg>
+                    </div>
+                ` : '';
                 janHTML += `
                     <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} jan">
                         <div class="calendar-day-number">${day}</div>
+                        ${bloodIcon}
+                        ${footballIcon}
+                        ${walkingIcon}
                         <div id="jan-${day}-notes" class="calendar-day-events"></div>
                     </div>
                 `;
@@ -2006,9 +2138,18 @@
             for (let day = 1; day <= febDaysInMonth; day++) {
                 const dayOfWeek = (febFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                const isBloodDonation = day === 5;
+                const bloodIcon = isBloodDonation ? `
+                    <div class="blood-donation-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C10.5 2 9 3.5 9 5C9 6.5 9.5 8 10.5 9.5C11.5 11 12 12.5 12 14C12 12.5 12.5 11 13.5 9.5C14.5 8 15 6.5 15 5C15 3.5 13.5 2 12 2ZM12 14L10.5 17.5L12 21L13.5 17.5L12 14Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                ` : '';
                 febHTML += `
                     <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} feb">
                         <div class="calendar-day-number">${day}</div>
+                        ${bloodIcon}
                         <div id="feb-${day}-notes" class="calendar-day-events"></div>
                     </div>
                 `;

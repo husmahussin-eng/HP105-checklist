@@ -3632,7 +3632,7 @@
                                 // Remove ANY text that's not a number or dash
                                 if (text && text !== '-' && !/^\d+$/.test(text)) {
                                     nodesToRemove.push(node);
-                                }
+                            }
                             } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'INPUT') {
                                 // Remove any non-input elements (divs, spans, etc.) that might contain text
                                 const elemText = node.textContent.trim();
@@ -3671,13 +3671,13 @@
                                     td.removeChild(node);
                                     cleanedCount++;
                                     console.log(`removeAllRepeatingTextAndCleanColumns: Removed remaining text "${node.textContent.trim()}" from cenderahati column`);
-                                });
-                            }
-                            
-                            // Ensure input type is number
+                            });
+                        }
+                        
+                        // Ensure input type is number
                             if (inputCheck.type !== 'number') {
                                 inputCheck.type = 'number';
-                                console.log(`removeAllRepeatingTextAndCleanColumns: Changed input type to "number"`);
+                            console.log(`removeAllRepeatingTextAndCleanColumns: Changed input type to "number"`);
                             }
                         } else {
                             // No input but has text - clear it completely
@@ -4302,22 +4302,22 @@
                             console.warn(`aggressivelyCleanRow7: Found unwanted text "${cellTextBefore}" in Row 7 sub-row ${subRowIndex + 1} cenderahati - FORCING REPLACEMENT`);
                             
                             // Remove ALL child nodes
-                            while (cenderahatiCell.firstChild) {
-                                cenderahatiCell.removeChild(cenderahatiCell.firstChild);
-                            }
-                            
+                        while (cenderahatiCell.firstChild) {
+                            cenderahatiCell.removeChild(cenderahatiCell.firstChild);
+                        }
+                        
                             // Create fresh input element
                             const input = document.createElement('input');
-                            input.type = 'number';
-                            input.className = 'cenderahati-input no-fallback';
-                            input.setAttribute('data-category', 'Daerah Belait');
-                            input.min = '0';
-                            
-                            // Set correct value - sub-rows 2 and 3 MUST be empty with placeholder="-"
-                            const expectedValue = correctCenderahati[subRowIndex] === '-' ? '' : correctCenderahati[subRowIndex];
-                            input.value = expectedValue;
-                            input.placeholder = expectedValue === '' ? '-' : '0';
-                            
+                        input.type = 'number';
+                        input.className = 'cenderahati-input no-fallback';
+                        input.setAttribute('data-category', 'Daerah Belait');
+                        input.min = '0';
+                        
+                        // Set correct value - sub-rows 2 and 3 MUST be empty with placeholder="-"
+                        const expectedValue = correctCenderahati[subRowIndex] === '-' ? '' : correctCenderahati[subRowIndex];
+                        input.value = expectedValue;
+                        input.placeholder = expectedValue === '' ? '-' : '0';
+                        
                             // Append ONLY the input to the cell
                             cenderahatiCell.appendChild(input);
                             
@@ -4331,20 +4331,20 @@
                                 input.className = 'cenderahati-input no-fallback';
                                 input.setAttribute('data-category', 'Daerah Belait');
                                 input.min = '0';
-                                cenderahatiCell.appendChild(input);
-                            }
-                            
+                            cenderahatiCell.appendChild(input);
+                        }
+                        
                             const expectedValue = correctCenderahati[subRowIndex] === '-' ? '' : correctCenderahati[subRowIndex];
                             input.value = expectedValue;
                             input.placeholder = expectedValue === '' ? '-' : '0';
                             
                             // Remove any remaining text nodes
                             const textNodes = [];
-                            for (let node of cenderahatiCell.childNodes) {
+                        for (let node of cenderahatiCell.childNodes) {
                                 if (node.nodeType === Node.TEXT_NODE && node !== input) {
                                     textNodes.push(node);
-                                }
                             }
+                        }
                             textNodes.forEach(node => cenderahatiCell.removeChild(node));
                         }
                         
@@ -4509,7 +4509,7 @@
                                     const text = node.textContent.trim();
                                     // Remove any text that's not a number or dash
                                     if (text && text !== '-' && !/^\d+$/.test(text)) {
-                                        textNodes.push(node);
+                                    textNodes.push(node);
                                     }
                                 }
                             }
