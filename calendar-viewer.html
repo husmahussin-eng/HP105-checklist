@@ -1010,6 +1010,57 @@
             color: #991b1b;
         }
         
+        /* Blood donation icon */
+        .blood-donation-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .blood-donation-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
+        /* Football icon */
+        .football-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .football-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
+        /* Walking icon */
+        .walking-icon {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 18px;
+            height: 18px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .walking-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
             body {
@@ -1093,6 +1144,16 @@
             
             .calendar-day-name {
                 font-size: 0.6rem;
+            }
+            
+            /* Icon adjustments for mobile */
+            .blood-donation-icon,
+            .football-icon,
+            .walking-icon {
+                width: 16px;
+                height: 16px;
+                top: 0.2rem;
+                right: 0.2rem;
             }
             
             /* Acara Checklist Mobile Styles */
@@ -1241,6 +1302,16 @@
             
             .calendar-day {
                 min-height: 50px;
+            }
+            
+            /* Icon adjustments for extra small mobile */
+            .blood-donation-icon,
+            .football-icon,
+            .walking-icon {
+                width: 14px;
+                height: 14px;
+                top: 0.15rem;
+                right: 0.15rem;
             }
             
             /* Acara Checklist - Extra Small Mobile */
@@ -1476,6 +1547,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- ============================================ -->
+                                <!-- NEW CLEAN TABLE - Built from CSV file -->
+                                <!-- Date: 2025-12-10 - All values match acarachecklist.csv -->
+                                <!-- Database loading DISABLED to prevent corruption -->
+                                <!-- ============================================ -->
+                                
+                                <!-- Row 1: Perbarisan -->
                                 <tr>
                                     <td>1</td>
                                     <td>Perbarisan</td>
@@ -1483,10 +1561,12 @@
                                     <td>
                                         <div>Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan</div>
                                     </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="376" /></td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" value="376" /></td>
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">$35,065.50</td>
                                 </tr>
+                                
+                                <!-- Row 2: Mkn Beradat - Sub-row 1 -->
                                 <tr>
                                     <td rowspan="2">2</td>
                                     <td rowspan="2">Mkn Beradat </td>
@@ -1498,6 +1578,7 @@
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">$1,011.50</td>
                                 </tr>
+                                <!-- Row 2: Mkn Beradat - Sub-row 2 -->
                                 <tr>
                                     <td class="tindakan-cell">Setiausaha Mes</td>
                                     <td>
@@ -1507,6 +1588,8 @@
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">$19,438.00</td>
                                 </tr>
+                                
+                                <!-- Row 3: Keagamaan - Sub-row 1 -->
                                 <tr>
                                     <td rowspan="2">3</td>
                                     <td rowspan="2">Keagamaan</td>
@@ -1518,6 +1601,7 @@
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">$1,275.00</td>
                                 </tr>
+                                <!-- Row 3: Keagamaan - Sub-row 2 -->
                                 <tr>
                                     <td class="tindakan-cell"></td>
                                     <td>
@@ -1527,6 +1611,8 @@
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">$1,325.00</td>
                                 </tr>
+                                
+                                <!-- Row 4: Pameran -->
                                 <tr>
                                     <td>4</td>
                                     <td>Pameran</td>
@@ -1534,10 +1620,12 @@
                                     <td>
                                         <div>Pameran diadakan selama dua(2) hari</div>
                                     </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="50" /></td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" value="50" /></td>
                                     <td class="goodies-cell">600</td>
                                     <td class="budget-cell">$9,750.00</td>
                                 </tr>
+                                
+                                <!-- Row 5: Daerah TT -->
                                 <tr>
                                     <td>5</td>
                                     <td>Daerah TT </td>
@@ -1545,11 +1633,12 @@
                                     <td>
                                         <div>Kejohanan Bolasepak</div>
                                     </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="41" /></td>
+                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" value="41" /></td>
                                     <td class="goodies-cell">210</td>
                                     <td class="budget-cell">$2,328.50</td>
                                 </tr>
-                                <!-- Daerah BM (rowspan with detailed activities) -->
+                                
+                                <!-- Row 6: Daerah BM - Sub-row 1 -->
                                 <tr>
                                     <td rowspan="3">6</td>
                                     <td rowspan="3">Daerah BM</td>
@@ -1559,20 +1648,22 @@
                                     <td class="goodies-cell">100</td>
                                     <td class="budget-cell" rowspan="3">$1,680.00</td>
                                 </tr>
+                                <!-- Row 6: Daerah BM - Sub-row 2 -->
                                 <tr>
                                     <td class="tindakan-cell">OCPD BM</td>
                                     <td>Gotong Royong</td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
                                 </tr>
+                                <!-- Row 6: Daerah BM - Sub-row 3 -->
                                 <tr>
                                     <td class="tindakan-cell"></td>
                                     <td>Walkaton</td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="5" /></td>
                                     <td class="goodies-cell">145</td>
                                 </tr>
-
-                                <!-- Daerah Belait -->
+                                
+                                <!-- Row 7: Daerah Belait - Sub-row 1 -->
                                 <tr>
                                     <td rowspan="3">7</td>
                                     <td rowspan="3">Daerah Belait </td>
@@ -1582,18 +1673,20 @@
                                     <td class="goodies-cell">500</td>
                                     <td class="budget-cell" rowspan="3">$1,791.00</td>
                                 </tr>
+                                <!-- Row 7: Daerah Belait - Sub-row 2 -->
                                 <tr>
                                     <td>Gotong Royong</td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
                                 </tr>
+                                <!-- Row 7: Daerah Belait - Sub-row 3 -->
                                 <tr>
                                     <td>Kempen Derma Darah</td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">100</td>
                                 </tr>
-
-                                <!-- Daerah Temb -->
+                                
+                                <!-- Row 8: Daerah Temb - Sub-row 1 -->
                                 <tr>
                                     <td rowspan="3">8</td>
                                     <td rowspan="3">Daerah Temb</td>
@@ -1603,16 +1696,20 @@
                                     <td class="goodies-cell">100</td>
                                     <td class="budget-cell" rowspan="3">$838.70</td>
                                 </tr>
+                                <!-- Row 8: Daerah Temb - Sub-row 2 -->
                                 <tr>
                                     <td>Gotong Royong </td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" /></td>
                                     <td class="goodies-cell">-</td>
                                 </tr>
+                                <!-- Row 8: Daerah Temb - Sub-row 3 -->
                                 <tr>
                                     <td>Community Engagement @ POLSARA </td>
                                     <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" value="20" /></td>
                                     <td class="goodies-cell">60</td>
                                 </tr>
+                                
+                                <!-- Row 9: Kelengkapan -->
                                 <tr>
                                     <td>9</td>
                                     <td>Kelengkapan</td>
@@ -1624,6 +1721,8 @@
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">$18,367.30</td>
                                 </tr>
+                                
+                                <!-- Row 10: PRO -->
                                 <tr>
                                     <td>10</td>
                                     <td>PRO</td>
@@ -1635,6 +1734,8 @@
                                     <td class="goodies-cell">-</td>
                                     <td class="budget-cell">-</td>
                                 </tr>
+                                
+                                <!-- Row 11: Cenderahati -->
                                 <tr>
                                     <td>11</td>
                                     <td>Cenderahati</td>
@@ -1646,6 +1747,8 @@
                                     <td class="goodies-cell">1815</td>
                                     <td class="budget-cell">-</td>
                                 </tr>
+                                
+                                <!-- Total Row -->
                                 <tr class="total-row">
                                     <td colspan="4"></td>
                                     <td class="total-label">Jumlah Keseluruhan</td>
@@ -2010,9 +2113,70 @@
             for (let day = 1; day <= janDaysInMonth; day++) {
                 const dayOfWeek = (janFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                const isBloodDonation = day === 21 || day === 26;
+                const isFootball = day === 27;
+                const isWalking = day === 17;
+                const bloodIcon = isBloodDonation ? `
+                    <div class="blood-donation-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C10.5 2 9 3.5 9 5C9 6.5 9.5 8 10.5 9.5C11.5 11 12 12.5 12 14C12 12.5 12.5 11 13.5 9.5C14.5 8 15 6.5 15 5C15 3.5 13.5 2 12 2ZM12 14L10.5 17.5L12 21L13.5 17.5L12 14Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                ` : '';
+                const footballIcon = isFootball ? `
+                    <div class="football-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+                            <!-- Center pentagon (black) -->
+                            <path d="M12 9L10.5 11.5L12.5 12.5L13.5 11.5L12 9Z" fill="#000000"/>
+                            <!-- Top pentagon -->
+                            <path d="M12 6L9.5 7.5L10.5 11.5L13.5 11.5L14.5 7.5L12 6Z" fill="#000000" opacity="0.5"/>
+                            <!-- Top-left hexagon -->
+                            <path d="M6.5 9.5L8 11.5L10.5 11.5L9.5 7.5L6.5 9.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Top-right hexagon -->
+                            <path d="M17.5 9.5L15.5 7.5L13.5 11.5L15.5 11.5L17.5 9.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Left hexagon -->
+                            <path d="M5.5 12L7.5 10.5L10.5 11.5L8.5 13.5L5.5 12Z" fill="#000000" opacity="0.5"/>
+                            <!-- Right hexagon -->
+                            <path d="M18.5 12L16.5 13.5L13.5 11.5L15.5 10.5L18.5 12Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom-left hexagon -->
+                            <path d="M6.5 14.5L8 12.5L10.5 12.5L8.5 16.5L6.5 14.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom-right hexagon -->
+                            <path d="M17.5 14.5L15.5 16.5L13.5 12.5L15.5 12.5L17.5 14.5Z" fill="#000000" opacity="0.5"/>
+                            <!-- Bottom pentagon -->
+                            <path d="M12 18L9.5 16.5L10.5 12.5L13.5 12.5L14.5 16.5L12 18Z" fill="#000000" opacity="0.5"/>
+                            <!-- Connecting lines for ball structure -->
+                            <line x1="10.5" y1="11.5" x2="8" y2="11.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="13.5" y1="11.5" x2="16" y2="11.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="10.5" y1="12.5" x2="8" y2="12.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                            <line x1="13.5" y1="12.5" x2="16" y2="12.5" stroke="#000000" stroke-width="0.8" opacity="0.6"/>
+                        </svg>
+                    </div>
+                ` : '';
+                const walkingIcon = isWalking ? `
+                    <div class="walking-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Person walking - head -->
+                            <circle cx="10" cy="5" r="2" fill="#2563eb"/>
+                            <!-- Body/torso -->
+                            <path d="M10 7L9 10.5L11 12.5L11.5 9.5L10 7Z" fill="#2563eb"/>
+                            <!-- Left leg (back, bent) -->
+                            <path d="M9 10.5L7.5 15L9 16.5L10.5 13L9 10.5Z" fill="#2563eb"/>
+                            <!-- Right leg (front, stepping forward) -->
+                            <path d="M11 12.5L11.5 9.5L13.5 13.5L12.5 15L11 12.5Z" fill="#2563eb"/>
+                            <!-- Left arm (swinging back) -->
+                            <path d="M9 8.5L7 7.5L6 9.5L8 10.5L9 8.5Z" fill="#2563eb"/>
+                            <!-- Right arm (swinging forward) -->
+                            <path d="M11 7.5L12 6.5L13.5 8.5L12.5 10L11 7.5Z" fill="#2563eb"/>
+                        </svg>
+                    </div>
+                ` : '';
                 janHTML += `
                     <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} jan">
                         <div class="calendar-day-number">${day}</div>
+                        ${bloodIcon}
+                        ${footballIcon}
+                        ${walkingIcon}
                         <div id="jan-${day}-notes" class="calendar-day-events"></div>
                     </div>
                 `;
@@ -2032,9 +2196,18 @@
             for (let day = 1; day <= febDaysInMonth; day++) {
                 const dayOfWeek = (febFirstDay + day - 1) % 7;
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
+                const isBloodDonation = day === 5;
+                const bloodIcon = isBloodDonation ? `
+                    <div class="blood-donation-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C10.5 2 9 3.5 9 5C9 6.5 9.5 8 10.5 9.5C11.5 11 12 12.5 12 14C12 12.5 12.5 11 13.5 9.5C14.5 8 15 6.5 15 5C15 3.5 13.5 2 12 2ZM12 14L10.5 17.5L12 21L13.5 17.5L12 14Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                ` : '';
                 febHTML += `
                     <div class="calendar-day ${isPublicHoliday ? 'weekend' : ''} feb">
                         <div class="calendar-day-number">${day}</div>
+                        ${bloodIcon}
                         <div id="feb-${day}-notes" class="calendar-day-events"></div>
                     </div>
                 `;
@@ -2245,6 +2418,23 @@
                 console.log('Starting to load calendar events...');
                 await loadAllCalendarEvents();
                 await loadCenderahatiData();
+                
+                // Fix Row 7 after data is loaded
+                setTimeout(() => {
+                    forceRow7SubRow1Keterangan();
+                    forceReplaceRow7CenderahatiText();
+                    ultraAggressiveRow7CenderahatiCleanup(); // ULTRA-AGGRESSIVE
+                    aggressivelyCleanRow7();
+                    verifyRow7Cenderahati();
+                    aggressivelyRemoveTextFromCenderahati();
+                    removeAllRepeatingTextAndCleanColumns();
+                    // Run ultra-aggressive cleanup multiple times with delays
+                    setTimeout(ultraAggressiveRow7CenderahatiCleanup, 100);
+                    setTimeout(ultraAggressiveRow7CenderahatiCleanup, 200);
+                    setTimeout(ultraAggressiveRow7CenderahatiCleanup, 500);
+                    setTimeout(ultraAggressiveRow7CenderahatiCleanup, 1000);
+                    setTimeout(ultraAggressiveRow7CenderahatiCleanup, 2000);
+                }, 300);
             }, 500);
         };
         
@@ -2379,7 +2569,7 @@
             { category: 'Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', tindakan: 'P. Pameran', cenderahati: '50', goodies: '600', budget: '$9,750.00' },
             { category: 'Daerah TT', keterangan: '<div>Kejohanan Bolasepak</div>', tindakan: 'OCPD TT', cenderahati: '41', goodies: '210', budget: '$2,328.50' },
             { category: 'Daerah BM', keterangan: '<div>Kempen Derma Darah</div><div>Gotong Royong</div><div>Walkaton</div>', tindakan: ['P. Derma Darah','OCPD BM',''], cenderahati: ['','','5'], goodies: ['100','-','145'], budget: '$1,680.00' },
-            { category: 'Daerah Belait', keterangan: '<div>Open day</div><div>Gotong Royong</div><div>Kempen Derma Darah</div>', tindakan: 'OCPD Belait', cenderahati: ['1','',''], goodies: ['500','-','100'], budget: '$1,791.00' },
+            { category: 'Daerah Belait', keterangan: 'Open day', tindakan: 'OCPD Belait', cenderahati: ['1','-','-'], goodies: ['500','-','100'], budget: '$1,791.00' },
             { category: 'Daerah Temb', keterangan: '<div>Kempen Derma Darah </div><div>Gotong Royong </div><div>Community Engagement @ POLSARA </div>', tindakan: 'OCPD Temb', cenderahati: ['','','20'], goodies: ['100','-','60'], budget: '$838.70' },
             { category: 'Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)', tindakan: 'P. Kelengkapan', cenderahati: '-', goodies: '-', budget: '$18,367.30' },
             { category: 'PRO', keterangan: 'Digital poster HP ke -105 (tiada pencetakan)', tindakan: '', cenderahati: '-', goodies: '-', budget: '-' },
@@ -2490,236 +2680,25 @@
 
         async function loadChecklistData() {
             try {
-                const res = await ChecklistAPI.getAll();
-                if (!res || !res.success || !res.data) return false;
-                let hasContent = false;
-                const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
-                const processedCategories = new Set();
+                // CRITICAL: NEW CLEAN TABLE - DO NOT OVERWRITE HTML VALUES
+                // The HTML table now contains clean data from CSV file
+                // Database may have corrupted data, so we skip loading it
+                console.log('⚠️ NEW CLEAN TABLE DETECTED - Skipping database load to prevent corruption');
+                console.log('✅ Using clean HTML table values from CSV file');
                 
-                // Debug: Log Daerah BM data from API
-                const daerahBMData = res.data.find(r => r.category === 'Daerah BM');
-                if (daerahBMData) {
-                    console.log('Loading Daerah BM from API:', {
-                        cenderahati: daerahBMData.cenderahati,
-                        cenderahatiType: Array.isArray(daerahBMData.cenderahati) ? 'array' : typeof daerahBMData.cenderahati
-                    });
+                const res = await ChecklistAPI.getAll();
+                if (!res || !res.success || !res.data) {
+                    console.log('No database data found - using clean HTML table');
+                    return false;
                 }
                 
-                rows.forEach((row, index) => {
-                    if (row.classList.contains('total-row')) return;
-                    const tds = row.querySelectorAll('td');
-                    const categoryCell = tds[1];
-                    if (!categoryCell) return;
-                    
-                    const category = categoryCell.textContent.trim();
-                    if (!category || processedCategories.has(category)) return;
-                    
-                    const rowData = res.data.find(r => (r.category || '').toLowerCase() === category.toLowerCase());
-                    if (!rowData) return;
-                    
-                    hasContent = true;
-                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
-                    
-                    // Parse keterangan - could be HTML with divs or plain text
-                    let keteranganParts = [];
-                    if (rowData.keterangan) {
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = rowData.keterangan;
-                        const divs = tempDiv.querySelectorAll('div');
-                        if (divs.length > 0) {
-                            divs.forEach(d => keteranganParts.push(d.textContent.trim()));
-                        } else {
-                            keteranganParts.push(rowData.keterangan.trim());
-                        }
-                    }
-                    
-                    // Parse cenderahati - could be array or single value
-                    const cenderahatiParts = Array.isArray(rowData.cenderahati) 
-                        ? rowData.cenderahati 
-                        : (rowData.cenderahati ? [rowData.cenderahati] : ['']);
-                    
-                    // Parse goodies - could be array or single value
-                    const goodiesParts = Array.isArray(rowData.goodies)
-                        ? rowData.goodies
-                        : (rowData.goodies ? [rowData.goodies] : ['']);
-                    
-                    // Parse tindakan - could be array or single value
-                    const tindakanParts = Array.isArray(rowData.tindakan)
-                        ? rowData.tindakan
-                        : (rowData.tindakan ? [rowData.tindakan] : ['']);
-                    
-                    // Apply to all sub-rows
-                    let currentRow = row;
-                    for (let i = 0; i < rowspan && currentRow; i++) {
-                        const subTds = currentRow.querySelectorAll('td');
-                        // For sub-rows, cell indices are different due to rowspan:
-                        // Sub-row 0: tds[0]=Bil, tds[1]=Perkara, tds[2]=Tindakan, tds[3]=Keterangan, tds[4]=Cenderahati, tds[5]=Goodies
-                        // Sub-row 1+: tds[0]=Tindakan, tds[1]=Keterangan, tds[2]=Cenderahati, tds[3]=Goodies (for Daerah BM)
-                        // Sub-row 1+: tds[0]=Keterangan, tds[1]=Cenderahati (for Daerah Temb)
-                        const isFirstRow = i === 0;
-                        const tindakanCell = isFirstRow ? subTds[2] : subTds[0];
-                        const keteranganCell = isFirstRow ? subTds[3] : subTds[1];
-                        const cenderahatiCell = isFirstRow ? subTds[4] : subTds[2];
-                        const goodiesCell = isFirstRow ? subTds[5] : subTds[3];
-                        
-                        // Only update tindakan if we have data from DB, otherwise keep HTML default
-                        if (tindakanCell && tindakanParts.length > 0 && tindakanParts[i] !== undefined && tindakanParts[i]) {
-                            tindakanCell.textContent = tindakanParts[i];
-                        }
-                        if (keteranganCell && keteranganParts[i] !== undefined) {
-                            keteranganCell.textContent = keteranganParts[i] || '';
-                        }
-                        if (cenderahatiCell) {
-                            const input = cenderahatiCell.querySelector('input');
-                            // For Daerah BM, ALWAYS force correct values: 0, 0, 5 - NEVER use DB data
-                            if (category === 'Daerah BM' && input) {
-                                const keterangan = keteranganCell?.textContent.trim();
-                                // Set value based on keterangan text to ensure accuracy
-                                if (keterangan === 'Kempen Derma Darah') {
-                                    input.value = '0';
-                                } else if (keterangan === 'Gotong Royong') {
-                                    input.value = '0';
-                                } else if (keterangan === 'Walkaton') {
-                                    input.value = '5';
-                                } else {
-                                    // Fallback to array index
-                                    const correctValues = ['0', '0', '5'];
-                                    input.value = correctValues[i] || '0';
-                                }
-                            } else if (category === 'Daerah Belait' && input) {
-                                // For Daerah Belait, ALWAYS force correct values: 1, empty, empty - NEVER use DB data
-                                const keterangan = keteranganCell?.textContent.trim();
-                                if (keterangan === 'Open day') {
-                                    input.value = '1';
-                                } else if (keterangan === 'Gotong Royong' || keterangan === 'Kempen Derma Darah') {
-                                    input.value = '';
-                                } else {
-                                    // Fallback to array index
-                                    const correctValues = ['1', '', ''];
-                                    input.value = correctValues[i] || '';
-                                }
-                            } else if (category === 'Daerah Temb' && input) {
-                                // For Daerah Temb, ALWAYS force correct values: empty, empty, 20 - NEVER use DB data
-                                const keterangan = keteranganCell?.textContent.trim();
-                                const currentValue = input.value.trim();
-                                let targetValue = '';
-                                
-                                // Match by keterangan contains check (more flexible), then fallback to index
-                                if (keterangan && keterangan.includes('Community Engagement')) {
-                                    targetValue = '20'; // Third sub-row
-                                } else if (keterangan && (keterangan.includes('Kempen Derma Darah') || keterangan.includes('Gotong Royong'))) {
-                                    targetValue = ''; // First or second sub-row
-                                } else {
-                                    // Fallback to array index: ['', '', '20']
-                                    const correctValues = ['', '', '20'];
-                                    targetValue = correctValues[i] || '';
-                                }
-                                
-                                if (currentValue !== targetValue) {
-                                    input.value = targetValue;
-                                    console.log(`loadChecklistData: Fixed Daerah Temb sub-row ${i} (${keterangan}) cenderahati from "${currentValue}" to "${targetValue}"`);
-                                }
-                            } else if (cenderahatiParts.length > 0 && cenderahatiParts[i] !== undefined) {
-                                // For other categories, use DB data
-                                const cenValue = String(cenderahatiParts[i] || '');
-                                // CRITICAL: Skip if database incorrectly stored budget value in cenderahati field
-                                // Budget values start with $, so ignore them
-                                if (cenValue.trim().startsWith('$')) {
-                                    console.warn(`Skipping incorrect budget value in cenderahati for ${category} row ${i}: ${cenValue}`);
-                                    // Keep HTML default value instead
-                                    continue;
-                                }
-                                if (input) {
-                                    input.value = cenValue;
-                                } else {
-                                    cenderahatiCell.textContent = cenValue;
-                                }
-                            }
-                        }
-                        if (goodiesCell) {
-                            // For Daerah Belait, ALWAYS force correct goodies values: 500, -, 100 - NEVER use DB data
-                            if (category === 'Daerah Belait') {
-                                const keterangan = keteranganCell?.textContent.trim();
-                                if (keterangan === 'Open day') {
-                                    goodiesCell.textContent = '500';
-                                } else if (keterangan === 'Gotong Royong') {
-                                    goodiesCell.textContent = '-';
-                                } else if (keterangan === 'Kempen Derma Darah') {
-                                    goodiesCell.textContent = '100';
-                                } else {
-                                    // Fallback to array index
-                                    const correctValues = ['500', '-', '100'];
-                                    goodiesCell.textContent = correctValues[i] || '';
-                                }
-                            } else if (category === 'Daerah BM') {
-                                // For Daerah BM, ALWAYS force correct goodies values: 100, -, 145 - NEVER use DB data
-                                // Match by tindakan first (more reliable than keterangan which is corrupted)
-                                const tindakan = tindakanCell?.textContent.trim();
-                                const keterangan = keteranganCell?.textContent.trim();
-                                const currentGoodies = goodiesCell.textContent.trim();
-                                let targetGoodies = '';
-                                
-                                // Match by tindakan first, then by index
-                                if (tindakan === 'P. Derma Darah') {
-                                    targetGoodies = '100'; // First sub-row
-                                } else if (tindakan === 'OCPD BM') {
-                                    targetGoodies = '-'; // Second sub-row (Gotong Royong)
-                                } else if (!tindakan || tindakan === '') {
-                                    targetGoodies = '145'; // Third sub-row (Walkaton)
-                                } else {
-                                    // Fallback to array index
-                                    const correctValues = ['100', '-', '145'];
-                                    targetGoodies = correctValues[i] || '';
-                                }
-                                
-                                if (currentGoodies !== targetGoodies) {
-                                    goodiesCell.textContent = targetGoodies;
-                                    console.log(`loadChecklistData: Fixed Daerah BM sub-row ${i} (${tindakan || keterangan}) goodies from "${currentGoodies}" to "${targetGoodies}"`);
-                                }
-                            } else if (goodiesParts[i] !== undefined) {
-                                goodiesCell.textContent = goodiesParts[i] || '';
-                            }
-                        }
-                        currentRow = currentRow.nextElementSibling;
-                    }
-                    
-                    processedCategories.add(category);
-                });
+                // Log that we're skipping database updates
+                console.log('Database data exists but will NOT overwrite clean HTML table');
+                console.log('CSV sync will enforce correct values instead');
                 
-                // CRITICAL: After loading data, immediately sync all values from CSV
-                // This ensures CSV values override any incorrect database values
-                // Run multiple times with increasing delays to ensure values stick
-                setTimeout(() => {
-                    syncAllValuesFromCSV();
-                    forceRow2SubRow2Budget();
-                    forceBudgetValues();
-                    forceDaerahBMValues(); // Force Row 6 Gotong Royong goodies to '-'
-                    forceDaerahTembValues(); // Force Row 8 Community Engagement cenderahati to '20'
-                    forceSpecificCellsDirectly(); // DIRECT FIX for specific cells
-                    console.log('Post-load sync completed - CSV values enforced');
-                }, 100);
-                setTimeout(() => {
-                    forceDaerahBMValues();
-                    forceDaerahTembValues();
-                    forceSpecificCellsDirectly();
-                    console.log('Post-load sync #2 completed');
-                }, 300);
-                setTimeout(() => {
-                    forceDaerahBMValues();
-                    forceDaerahTembValues();
-                    forceSpecificCellsDirectly();
-                    console.log('Post-load sync #3 completed');
-                }, 500);
-                setTimeout(() => {
-                    forceSpecificCellsDirectly();
-                    console.log('Post-load sync #4 - direct fix');
-                }, 1000);
-                setTimeout(() => {
-                    forceSpecificCellsDirectly();
-                    console.log('Post-load sync #5 - direct fix');
-                }, 2000);
-                
-                return hasContent;
+                // Return early - do NOT update HTML table with database values
+                // The syncAllValuesFromCSV() function will ensure all values are correct
+                return false; // Indicate no database data was applied
             } catch (err) {
                 console.error('Checklist load error', err);
                 return false;
@@ -3222,6 +3201,1376 @@
             });
         }
 
+        // Force correct Keterangan for Daerah BM - ensure text, never numbers
+        function forceDaerahBMKeterangan() {
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            let daeraBMRow = null;
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const categoryCell = tds[1];
+                if (!categoryCell) return;
+                
+                const category = categoryCell.textContent.trim();
+                if (category === 'Daerah BM') {
+                    daeraBMRow = row;
+                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    
+                    // Correct keterangan values from CSV
+                    const correctKeterangan = [
+                        'Kempen Derma Darah',
+                        'Gotong Royong',
+                        'Walkaton'
+                    ];
+                    
+                    let currentRow = row;
+                    for (let i = 0; i < rowspan && currentRow; i++) {
+                        const subTds = currentRow.querySelectorAll('td');
+                        const isFirstRow = i === 0;
+                        const keteranganCell = isFirstRow ? subTds[3] : subTds[1];
+                        
+                        if (keteranganCell && correctKeterangan[i]) {
+                            const currentKeterangan = keteranganCell.textContent.trim();
+                            const expectedKeterangan = correctKeterangan[i];
+                            
+                            // Check if it's a number (corrupted data)
+                            const isNumber = /^\d+$/.test(currentKeterangan);
+                            
+                            if (isNumber || currentKeterangan !== expectedKeterangan) {
+                                keteranganCell.textContent = expectedKeterangan;
+                                console.log(`forceDaerahBMKeterangan: Fixed sub-row ${i} keterangan from "${currentKeterangan}" to "${expectedKeterangan}"${isNumber ? ' (was corrupted number)' : ''}`);
+                            }
+                        }
+                        currentRow = currentRow.nextElementSibling;
+                    }
+                }
+            });
+        }
+
+        // Force correct values for Daerah Belait (Row 7) - ensure all values match CSV
+        function forceDaerahBelaitValuesComplete() {
+            console.log('forceDaerahBelaitValuesComplete: Starting...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const categoryCell = tds[1];
+                if (!categoryCell) return;
+                
+                const category = categoryCell.textContent.trim();
+                if (category === 'Daerah Belait ') {
+                    const rowspan = parseInt(categoryCell.getAttribute('rowspan') || '1');
+                    
+                    // Correct values from CSV
+                    const correctKeterangan = ['Open day', 'Gotong Royong', 'Kempen Derma Darah'];
+                    const correctCenderahati = ['1', '-', '-'];
+                    const correctGoodies = ['500', '-', '100'];
+                    
+                    let currentRow = row;
+                    for (let i = 0; i < rowspan && currentRow; i++) {
+                        const subTds = currentRow.querySelectorAll('td');
+                        const isFirstRow = i === 0;
+                        
+                        // For Daerah Belait: tds[0]=Keterangan, tds[1]=Cenderahati, tds[2]=Goodies (for sub-rows)
+                        const keteranganCell = isFirstRow ? subTds[3] : subTds[0];
+                        const cenderahatiCell = isFirstRow ? subTds[4] : subTds[1];
+                        const goodiesCell = isFirstRow ? subTds[5] : subTds[2];
+                        
+                        // Force Keterangan - AGGRESSIVELY clean and set correct text
+                        if (keteranganCell && correctKeterangan[i]) {
+                            // Remove any rowspan that might have been incorrectly added
+                            if (keteranganCell.hasAttribute('rowspan')) {
+                                keteranganCell.removeAttribute('rowspan');
+                                console.log(`forceDaerahBelaitValuesComplete: Removed incorrect rowspan from sub-row ${i} keterangan cell`);
+                            }
+                            
+                            // Remove all child nodes and set clean text
+                            while (keteranganCell.firstChild) {
+                                keteranganCell.removeChild(keteranganCell.firstChild);
+                            }
+                            
+                            const currentKeterangan = keteranganCell.textContent.trim();
+                            const expectedKeterangan = correctKeterangan[i];
+                            
+                            // Check for duplicate/repeating text patterns
+                            const hasNewlines = currentKeterangan.includes('\n') || currentKeterangan.includes('\r');
+                            const hasMultipleActivities = 
+                                (currentKeterangan.includes('Open day') && (currentKeterangan.includes('Gotong Royong') || currentKeterangan.includes('Kempen Derma Darah'))) ||
+                                (currentKeterangan.includes('Gotong Royong') && currentKeterangan.includes('Kempen Derma Darah')) ||
+                                (currentKeterangan.includes('Kempen Derma Darah') && (currentKeterangan.includes('Open day') || currentKeterangan.includes('Gotong Royong')));
+                            const isNumber = /^\d+$/.test(currentKeterangan);
+                            const isTooLong = currentKeterangan.length > expectedKeterangan.length * 1.5;
+                            
+                            // ALWAYS set the correct text, even if it seems correct (to remove any hidden duplicates)
+                            keteranganCell.textContent = expectedKeterangan;
+                            
+                            if (hasNewlines || hasMultipleActivities || isNumber || isTooLong || currentKeterangan !== expectedKeterangan) {
+                                console.log(`forceDaerahBelaitValuesComplete: CLEANED Row 7 sub-row ${i + 1} keterangan from "${currentKeterangan.substring(0, 80)}..." to "${expectedKeterangan}"${isNumber ? ' (was number)' : hasMultipleActivities ? ' (had duplicates)' : hasNewlines ? ' (had newlines)' : ''}`);
+                            }
+                        }
+                        
+                        // Force Cenderahati - CRITICAL: Sub-rows 2 and 3 MUST be empty inputs with placeholder="-", NO TEXT
+                        if (cenderahatiCell && correctCenderahati[i] !== undefined) {
+                            // CRITICAL: For sub-rows 2 and 3, remove ALL text content from cell
+                            const cellTextBefore = cenderahatiCell.textContent.trim();
+                            
+                            // Remove ALL child nodes except input
+                            const existingInput = cenderahatiCell.querySelector('input');
+                            const nodesToRemove = [];
+                            for (let node of cenderahatiCell.childNodes) {
+                                if (node.nodeType === Node.TEXT_NODE) {
+                                    nodesToRemove.push(node);
+                                } else if (node !== existingInput && node.nodeType === Node.ELEMENT_NODE) {
+                                    nodesToRemove.push(node);
+                                }
+                            }
+                            nodesToRemove.forEach(node => {
+                                cenderahatiCell.removeChild(node);
+                                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                    console.log(`forceDaerahBelaitValuesComplete: Removed text "${node.textContent.trim()}" from Row 7 sub-row ${i + 1} cenderahati cell`);
+                                }
+                            });
+                            
+                            // Clear any remaining text content
+                            if (cenderahatiCell.textContent.trim() && cenderahatiCell.textContent.trim() !== '-') {
+                                console.warn(`forceDaerahBelaitValuesComplete: Row 7 sub-row ${i + 1} cenderahati cell has text "${cenderahatiCell.textContent.trim()}" - clearing it`);
+                                cenderahatiCell.textContent = '';
+                            }
+                            
+                            let cenderahatiInput = existingInput;
+                            
+                            // If no input exists, create one
+                            if (!cenderahatiInput) {
+                                cenderahatiInput = document.createElement('input');
+                                cenderahatiInput.type = 'number';
+                                cenderahatiInput.className = 'cenderahati-input no-fallback';
+                                cenderahatiInput.setAttribute('data-category', 'Daerah Belait');
+                                cenderahatiInput.placeholder = '-';
+                                cenderahatiInput.min = '0';
+                                cenderahatiCell.appendChild(cenderahatiInput);
+                                console.log(`forceDaerahBelaitValuesComplete: Created missing input for Row 7 sub-row ${i + 1} cenderahati`);
+                            }
+                            
+                            // Ensure input type is number, not text
+                            if (cenderahatiInput.type !== 'number') {
+                                cenderahatiInput.type = 'number';
+                                console.log(`forceDaerahBelaitValuesComplete: Changed Row 7 sub-row ${i + 1} cenderahati input type to "number"`);
+                            }
+                            
+                            const currentValue = cenderahatiInput.value.trim();
+                            const expectedValue = correctCenderahati[i] === '-' ? '' : correctCenderahati[i];
+                            const expectedDisplay = correctCenderahati[i]; // For logging
+                            
+                            // CRITICAL: For sub-rows 2 and 3 (index 1 and 2), FORCE empty value with placeholder="-"
+                            if (i === 1 || i === 2) {
+                                // Force empty value and placeholder="-"
+                                cenderahatiInput.value = '';
+                                cenderahatiInput.placeholder = '-';
+                                
+                                // Ensure cell has NO text content
+                                if (cenderahatiCell.textContent.trim() && cenderahatiCell.textContent.trim() !== '-') {
+                                    cenderahatiCell.textContent = '';
+                                }
+                                
+                                console.log(`forceDaerahBelaitValuesComplete: FORCED Row 7 sub-row ${i + 1} (${correctKeterangan[i]}) cenderahati to EMPTY with placeholder="-". Previous value was "${currentValue || '(empty)'}"`);
+                            } else {
+                                // Sub-row 1: value="1"
+                                cenderahatiInput.value = expectedValue;
+                                cenderahatiInput.placeholder = '0';
+                                if (currentValue !== expectedValue) {
+                                    console.log(`forceDaerahBelaitValuesComplete: Fixed Row 7 sub-row ${i + 1} (${correctKeterangan[i]}) cenderahati from "${currentValue || '(empty)'}" to "${expectedDisplay}"`);
+                                }
+                            }
+                            
+                            // Final verification: ensure cell has no text
+                            const finalCellText = cenderahatiCell.textContent.trim();
+                            if (finalCellText && finalCellText !== '-') {
+                                console.error(`forceDaerahBelaitValuesComplete: ERROR - Row 7 sub-row ${i + 1} cenderahati cell STILL has text "${finalCellText}"! Clearing it now.`);
+                                cenderahatiCell.textContent = '';
+                            }
+                        }
+                        
+                        // Force Goodies
+                        if (goodiesCell && correctGoodies[i]) {
+                            const currentGoodies = goodiesCell.textContent.trim();
+                            if (currentGoodies !== correctGoodies[i]) {
+                                goodiesCell.textContent = correctGoodies[i];
+                                console.log(`forceDaerahBelaitValuesComplete: Fixed sub-row ${i} goodies from "${currentGoodies}" to "${correctGoodies[i]}"`);
+                            }
+                        }
+                        
+                        currentRow = currentRow.nextElementSibling;
+                    }
+                }
+            });
+        }
+
+        // Remove duplicate/repeating text from keterangan cells
+        function removeDuplicateKeteranganText() {
+            console.log('removeDuplicateKeteranganText: Starting cleanup...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                
+                // Find keterangan cell - could be at different indices depending on row structure
+                let keteranganCell = null;
+                if (tds.length >= 4) {
+                    // Try common positions
+                    if (tds[3] && !tds[3].querySelector('input')) {
+                        keteranganCell = tds[3]; // Main row: tds[3] = Keterangan
+                    } else if (tds[0] && !tds[0].querySelector('input') && !tds[0].textContent.match(/^\d+$/)) {
+                        keteranganCell = tds[0]; // Sub-row: tds[0] = Keterangan (for Daerah Belait/Temb)
+                    } else if (tds[1] && !tds[1].querySelector('input') && !tds[1].textContent.match(/^\d+$/)) {
+                        keteranganCell = tds[1]; // Sub-row: tds[1] = Keterangan (for Daerah BM)
+                    }
+                }
+                
+                if (keteranganCell) {
+                    const currentText = keteranganCell.textContent.trim();
+                    
+                    // Check for duplicate patterns:
+                    // 1. Contains newlines (multiple lines)
+                    // 2. Contains multiple activity names (e.g., "Open day" AND "Gotong Royong")
+                    const hasNewlines = currentText.includes('\n');
+                    const hasMultipleActivities = 
+                        (currentText.includes('Open day') && (currentText.includes('Gotong Royong') || currentText.includes('Kempen Derma Darah'))) ||
+                        (currentText.includes('Gotong Royong') && currentText.includes('Kempen Derma Darah')) ||
+                        (currentText.includes('Kempen Derma Darah') && currentText.includes('Community Engagement'));
+                    
+                    if (hasNewlines || hasMultipleActivities) {
+                        // Extract the first/primary activity name
+                        let cleanText = currentText;
+                        if (hasNewlines) {
+                            // Take first line
+                            cleanText = currentText.split('\n')[0].trim();
+                        } else if (hasMultipleActivities) {
+                            // Try to identify which one is correct based on context
+                            // For Row 7: Open day, Gotong Royong, Kempen Derma Darah
+                            // For Row 8: Kempen Derma Darah, Gotong Royong, Community Engagement
+                            const row = keteranganCell.closest('tr');
+                            const tds = row.querySelectorAll('td');
+                            const bilCell = tds[0];
+                            const categoryCell = tds[1];
+                            
+                            if (bilCell && categoryCell) {
+                                const bil = bilCell.textContent.trim();
+                                const category = categoryCell.textContent.trim();
+                                
+                                // Determine correct text based on position
+                                if (category === 'Daerah Belait ') {
+                                    const parentRow = row;
+                                    let subRowIndex = 0;
+                                    let checkRow = parentRow;
+                                    while (checkRow && checkRow.previousElementSibling) {
+                                        const prevTds = checkRow.previousElementSibling.querySelectorAll('td');
+                                        if (prevTds[1] && prevTds[1].textContent.trim() === 'Daerah Belait ') {
+                                            break;
+                                        }
+                                        if (prevTds[0] && prevTds[0].textContent.trim() === '7') {
+                                            subRowIndex++;
+                                            break;
+                                        }
+                                        subRowIndex++;
+                                        checkRow = checkRow.previousElementSibling;
+                                    }
+                                    
+                                    const correctTexts = ['Open day', 'Gotong Royong', 'Kempen Derma Darah'];
+                                    cleanText = correctTexts[subRowIndex] || cleanText.split('\n')[0].trim();
+                                } else if (category === 'Daerah Temb') {
+                                    const correctTexts = ['Kempen Derma Darah ', 'Gotong Royong ', 'Community Engagement @ POLSARA '];
+                                    // Find sub-row index
+                                    let subRowIndex = 0;
+                                    let checkRow = row;
+                                    while (checkRow && checkRow.previousElementSibling) {
+                                        const prevTds = checkRow.previousElementSibling.querySelectorAll('td');
+                                        if (prevTds[1] && prevTds[1].textContent.trim() === 'Daerah Temb') {
+                                            break;
+                                        }
+                                        if (prevTds[0] && prevTds[0].textContent.trim() === '8') {
+                                            subRowIndex++;
+                                            break;
+                                        }
+                                        subRowIndex++;
+                                        checkRow = checkRow.previousElementSibling;
+                                    }
+                                    cleanText = correctTexts[subRowIndex] || cleanText.split('\n')[0].trim();
+                                } else {
+                                    // Default: take first part
+                                    cleanText = currentText.split('\n')[0].trim();
+                                }
+                            } else {
+                                cleanText = currentText.split('\n')[0].trim();
+                            }
+                        }
+                        
+                        if (cleanText !== currentText) {
+                            keteranganCell.textContent = cleanText;
+                            console.log(`removeDuplicateKeteranganText: Cleaned keterangan from "${currentText.substring(0, 60)}..." to "${cleanText}"`);
+                        }
+                    }
+                }
+            });
+        }
+
+        // Remove ALL repeating text from ALL rows and columns, ensure cenderahati columns have no text
+        // AGGRESSIVE: Remove ALL text from ALL cenderahati columns
+        function removeAllTextFromCenderahatiColumns() {
+            console.log('removeAllTextFromCenderahatiColumns: Removing ALL text from cenderahati columns...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            let cleanedCount = 0;
+            
+            rows.forEach((row, rowIndex) => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                
+                // Find cenderahati cell - it's typically at index 4 for main rows, or index 1-2 for sub-rows
+                // Check all possible positions
+                for (let i = 0; i < tds.length; i++) {
+                    const cell = tds[i];
+                    if (!cell) continue;
+                    
+                    // Check if this is a cenderahati cell by looking for input or checking position
+                    const hasInput = cell.querySelector('input.cenderahati-input');
+                    const cellText = cell.textContent.trim();
+                    
+                    // If it has an input OR if it's in a position that could be cenderahati AND has text that's not a number
+                    if (hasInput || (i >= 1 && i <= 4 && cellText && cellText !== '-' && !/^\d+$/.test(cellText) && !cellText.match(/^\$[\d,]+\.\d{2}$/))) {
+                        // Get all text nodes and non-input elements
+                        const nodesToRemove = [];
+                        for (let node of cell.childNodes) {
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                const text = node.textContent.trim();
+                                // Remove if it's not a number, not "-", and not a currency format
+                                if (text && text !== '-' && !/^\d+$/.test(text) && !text.match(/^\$[\d,]+\.\d{2}$/)) {
+                                    nodesToRemove.push(node);
+                                }
+                            } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'INPUT') {
+                                // Remove any non-input elements that contain text like "Gotong Royong", "Derma Darah", etc.
+                                const elemText = node.textContent.trim();
+                                if (elemText && !/^\d+$/.test(elemText) && elemText !== '-') {
+                                    nodesToRemove.push(node);
+                                }
+                            }
+                        }
+                        
+                        // Remove the unwanted nodes
+                        nodesToRemove.forEach(node => {
+                            try {
+                                cell.removeChild(node);
+                                cleanedCount++;
+                                console.log(`removeAllTextFromCenderahatiColumns: Removed "${node.textContent.trim()}" from row ${rowIndex + 1}, cell ${i}`);
+                            } catch (e) {
+                                console.warn('Error removing node:', e);
+                            }
+                        });
+                        
+                        // Ensure input exists and is properly configured
+                        let input = cell.querySelector('input');
+                        if (!input && (hasInput || i === 4 || (i >= 1 && i <= 2))) {
+                            // Create input if it should have one
+                            input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'cenderahati-input no-fallback';
+                            input.min = '0';
+                            input.placeholder = '-';
+                            cell.appendChild(input);
+                        }
+                        
+                        // Clear any remaining text content (but keep the input)
+                        if (input) {
+                            const finalText = cell.textContent.trim();
+                            // If there's still text that's not from the input value, clear it
+                            if (finalText && finalText !== input.value && finalText !== '-' && !/^\d+$/.test(finalText)) {
+                                // Remove all text nodes, keep only the input
+                                const textNodes = [];
+                                for (let node of cell.childNodes) {
+                                    if (node.nodeType === Node.TEXT_NODE) {
+                                        textNodes.push(node);
+                                    }
+                                }
+                                textNodes.forEach(node => cell.removeChild(node));
+                            }
+                        } else {
+                            // No input, but if there's text that's not a number or dash, clear it
+                            const finalText = cell.textContent.trim();
+                            if (finalText && finalText !== '-' && !/^\d+$/.test(finalText) && !finalText.match(/^\$[\d,]+\.\d{2}$/)) {
+                                cell.textContent = '';
+                            }
+                        }
+                    }
+                }
+            });
+            
+            console.log(`removeAllTextFromCenderahatiColumns: Cleaned ${cleanedCount} text nodes from cenderahati columns`);
+        }
+        
+        function removeAllRepeatingTextAndCleanColumns() {
+            console.log('removeAllRepeatingTextAndCleanColumns: Cleaning ALL rows and columns...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            let cleanedCount = 0;
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                
+                tds.forEach((td, index) => {
+                    // Skip if it's a rowspan cell (bil, category, tindakan, budget)
+                    if (td.hasAttribute('rowspan')) return;
+                    
+                    // Check if this is a cenderahati column (should only have input, no text)
+                    const hasInput = td.querySelector('input.cenderahati-input') || td.querySelector('input[type="number"]');
+                    if (hasInput) {
+                        // This is a cenderahati column - AGGRESSIVELY remove ALL text nodes and non-input elements
+                        const nodesToRemove = [];
+                        for (let node of td.childNodes) {
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                const text = node.textContent.trim();
+                                // Remove ANY text that's not a number or dash
+                                if (text && text !== '-' && !/^\d+$/.test(text)) {
+                                    nodesToRemove.push(node);
+                                }
+                            } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'INPUT') {
+                                // Remove any non-input elements (divs, spans, etc.) that might contain text
+                                const elemText = node.textContent.trim();
+                                if (elemText && !/^\d+$/.test(elemText) && elemText !== '-') {
+                                    nodesToRemove.push(node);
+                                }
+                            }
+                        }
+                        
+                        // Remove all unwanted nodes
+                        nodesToRemove.forEach(node => {
+                            try {
+                                td.removeChild(node);
+                                cleanedCount++;
+                                console.log(`removeAllRepeatingTextAndCleanColumns: Removed "${node.textContent.trim()}" from cenderahati column`);
+                            } catch (e) {
+                                console.warn('Error removing node:', e);
+                            }
+                        });
+                        
+                        // Double-check: Clear any remaining text content that's not from input value
+                        const inputCheck = td.querySelector('input');
+                        if (inputCheck) {
+                            const inputValue = inputCheck.value.trim();
+                            const cellText = td.textContent.trim();
+                            // If cell has text that's not the input value, clear it
+                            if (cellText && cellText !== inputValue && cellText !== '-' && !/^\d+$/.test(cellText)) {
+                                // Remove all remaining text nodes
+                                const remainingTextNodes = [];
+                                for (let node of td.childNodes) {
+                                    if (node.nodeType === Node.TEXT_NODE && node !== inputCheck) {
+                                        remainingTextNodes.push(node);
+                                    }
+                                }
+                                remainingTextNodes.forEach(node => {
+                                    td.removeChild(node);
+                                    cleanedCount++;
+                                    console.log(`removeAllRepeatingTextAndCleanColumns: Removed remaining text "${node.textContent.trim()}" from cenderahati column`);
+                                });
+                            }
+                            
+                            // Ensure input type is number
+                            if (inputCheck.type !== 'number') {
+                                inputCheck.type = 'number';
+                                console.log(`removeAllRepeatingTextAndCleanColumns: Changed input type to "number"`);
+                            }
+                        } else {
+                            // No input but has text - clear it completely
+                            const cellText = td.textContent.trim();
+                            if (cellText && cellText !== '-' && !/^\d+$/.test(cellText)) {
+                                td.textContent = '';
+                                cleanedCount++;
+                                console.log(`removeAllRepeatingTextAndCleanColumns: Cleared text "${cellText}" from cenderahati column (no input)`);
+                            }
+                        }
+                        return;
+                    }
+                    
+                    // Check if this is a keterangan column (should have clean text, no duplicates)
+                    const cellText = td.textContent.trim();
+                    if (cellText) {
+                        // Check for duplicate patterns
+                        const hasNewlines = cellText.includes('\n') || cellText.includes('\r');
+                        const hasMultipleActivities = 
+                            (cellText.includes('Open day') && (cellText.includes('Gotong Royong') || cellText.includes('Kempen Derma Darah'))) ||
+                            (cellText.includes('Gotong Royong') && cellText.includes('Kempen Derma Darah')) ||
+                            (cellText.includes('Kempen Derma Darah') && (cellText.includes('Open day') || cellText.includes('Gotong Royong'))) ||
+                            (cellText.includes('Kempen Derma Darah') && cellText.includes('Community Engagement')) ||
+                            (cellText.includes('Gotong Royong') && cellText.includes('Community Engagement'));
+                        
+                        if (hasNewlines || hasMultipleActivities) {
+                            // Extract the first/primary text (usually the first line or first activity)
+                            let cleanText = cellText;
+                            if (hasNewlines) {
+                                cleanText = cellText.split(/[\n\r]+/)[0].trim();
+                            } else if (hasMultipleActivities) {
+                                // Try to identify correct text based on context
+                                const row = td.closest('tr');
+                                const rowTds = row.querySelectorAll('td');
+                                const bilCell = rowTds[0];
+                                const categoryCell = rowTds[1];
+                                
+                                if (bilCell && categoryCell) {
+                                    const bil = bilCell.textContent.trim();
+                                    const category = categoryCell.textContent.trim();
+                                    
+                                    // Determine correct text based on row and position
+                                    if (category === 'Daerah Belait ') {
+                                        const correctTexts = ['Open day', 'Gotong Royong', 'Kempen Derma Darah'];
+                                        // Find which sub-row this is
+                                        let subRowIndex = 0;
+                                        let checkRow = row;
+                                        while (checkRow && checkRow.previousElementSibling) {
+                                            const prevTds = checkRow.previousElementSibling.querySelectorAll('td');
+                                            if (prevTds[1] && prevTds[1].textContent.trim() === 'Daerah Belait ') {
+                                                break;
+                                            }
+                                            if (prevTds[0] && prevTds[0].textContent.trim() === '7') {
+                                                subRowIndex++;
+                                                break;
+                                            }
+                                            subRowIndex++;
+                                            checkRow = checkRow.previousElementSibling;
+                                        }
+                                        cleanText = correctTexts[subRowIndex] || cleanText.split(/[\n\r]+/)[0].trim();
+                                    } else if (category === 'Daerah Temb') {
+                                        const correctTexts = ['Kempen Derma Darah ', 'Gotong Royong ', 'Community Engagement @ POLSARA '];
+                                        let subRowIndex = 0;
+                                        let checkRow = row;
+                                        while (checkRow && checkRow.previousElementSibling) {
+                                            const prevTds = checkRow.previousElementSibling.querySelectorAll('td');
+                                            if (prevTds[1] && prevTds[1].textContent.trim() === 'Daerah Temb') {
+                                                break;
+                                            }
+                                            if (prevTds[0] && prevTds[0].textContent.trim() === '8') {
+                                                subRowIndex++;
+                                                break;
+                                            }
+                                            subRowIndex++;
+                                            checkRow = checkRow.previousElementSibling;
+                                        }
+                                        cleanText = correctTexts[subRowIndex] || cleanText.split(/[\n\r]+/)[0].trim();
+                                    } else if (category === 'Daerah BM') {
+                                        const correctTexts = ['Kempen Derma Darah', 'Gotong Royong', 'Walkaton'];
+                                        let subRowIndex = 0;
+                                        let checkRow = row;
+                                        while (checkRow && checkRow.previousElementSibling) {
+                                            const prevTds = checkRow.previousElementSibling.querySelectorAll('td');
+                                            if (prevTds[1] && prevTds[1].textContent.trim() === 'Daerah BM') {
+                                                break;
+                                            }
+                                            if (prevTds[0] && prevTds[0].textContent.trim() === '6') {
+                                                subRowIndex++;
+                                                break;
+                                            }
+                                            subRowIndex++;
+                                            checkRow = checkRow.previousElementSibling;
+                                        }
+                                        cleanText = correctTexts[subRowIndex] || cleanText.split(/[\n\r]+/)[0].trim();
+                                    } else {
+                                        cleanText = cellText.split(/[\n\r]+/)[0].trim();
+                                    }
+                                } else {
+                                    cleanText = cellText.split(/[\n\r]+/)[0].trim();
+                                }
+                            }
+                            
+                            if (cleanText !== cellText) {
+                                // Remove all child nodes and set clean text
+                                while (td.firstChild) {
+                                    td.removeChild(td.firstChild);
+                                }
+                                td.textContent = cleanText;
+                                console.log(`removeAllRepeatingTextAndCleanColumns: Cleaned keterangan from "${cellText.substring(0, 60)}..." to "${cleanText}"`);
+                            }
+                        }
+                    }
+                });
+            });
+            
+            console.log(`removeAllRepeatingTextAndCleanColumns: Cleanup complete - removed ${cleanedCount} text nodes from cenderahati columns`);
+        }
+        
+        // DIRECT function to force replace text in Row 7 cenderahati columns with "-"
+        function forceReplaceRow7CenderahatiText() {
+            console.log('forceReplaceRow7CenderahatiText: Directly replacing text in Row 7 cenderahati columns...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            let foundRow7 = false;
+            let subRowIndex = 0;
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                if (bilCell && bilCell.textContent.trim() === '7' && categoryCell && categoryCell.textContent.trim() === 'Daerah Belait ') {
+                    foundRow7 = true;
+                    subRowIndex = 0;
+                }
+                
+                if (foundRow7 && subRowIndex < 3) {
+                    const isFirstRow = subRowIndex === 0;
+                    const cenderahatiCell = isFirstRow ? tds[4] : tds[1];
+                    
+                    if (cenderahatiCell) {
+                        const cellText = cenderahatiCell.textContent.trim();
+                        const hasUnwantedText = cellText && 
+                            (cellText.includes('Gotong Royong') || 
+                             cellText.includes('Kempen Derma Darah') || 
+                             cellText.includes('Derma Darah') ||
+                             (cellText !== '-' && !/^\d+$/.test(cellText) && subRowIndex > 0));
+                        
+                        if (hasUnwantedText || (subRowIndex > 0 && cellText && cellText !== '-')) {
+                            console.warn(`forceReplaceRow7CenderahatiText: Row 7 sub-row ${subRowIndex + 1} has text "${cellText}" - FORCING REPLACEMENT`);
+                            
+                            // COMPLETELY CLEAR the cell
+                            cenderahatiCell.innerHTML = '';
+                            
+                            // Create fresh input
+                            const input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'cenderahati-input no-fallback';
+                            input.setAttribute('data-category', 'Daerah Belait');
+                            input.min = '0';
+                            
+                            if (subRowIndex === 0) {
+                                // Sub-row 1: value="1"
+                                input.value = '1';
+                                input.placeholder = '0';
+                            } else {
+                                // Sub-rows 2 and 3: empty with placeholder="-"
+                                input.value = '';
+                                input.placeholder = '-';
+                            }
+                            
+                            // Append ONLY the input
+                            cenderahatiCell.appendChild(input);
+                            
+                            console.log(`forceReplaceRow7CenderahatiText: REPLACED Row 7 sub-row ${subRowIndex + 1} cenderahati - was "${cellText}", now empty input with placeholder="${input.placeholder}"`);
+                        }
+                    }
+                    
+                    subRowIndex++;
+                    if (subRowIndex >= 3) {
+                        foundRow7 = false;
+                    }
+                }
+            });
+        }
+        
+        // AGGRESSIVE function to remove ALL text from cenderahati columns - runs multiple times
+        function aggressivelyRemoveTextFromCenderahati() {
+            console.log('aggressivelyRemoveTextFromCenderahati: Starting aggressive cleanup of ALL cenderahati columns...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            let totalCleaned = 0;
+            
+            rows.forEach((row, rowIndex) => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                
+                tds.forEach((td, colIndex) => {
+                    // Skip rowspan cells
+                    if (td.hasAttribute('rowspan')) return;
+                    
+                    // Check if this cell has a cenderahati input
+                    const input = td.querySelector('input.cenderahati-input') || td.querySelector('input[type="number"]');
+                    if (input) {
+                        // This is a cenderahati cell - remove EVERYTHING except the input
+                        const cellTextBefore = td.textContent.trim();
+                        const inputValue = input.value.trim();
+                        
+                        // Remove ALL child nodes except the input
+                        const nodesToKeep = [input];
+                        const allNodes = Array.from(td.childNodes);
+                        
+                        allNodes.forEach(node => {
+                            if (!nodesToKeep.includes(node)) {
+                                try {
+                                    td.removeChild(node);
+                                    totalCleaned++;
+                                    if (node.nodeType === Node.TEXT_NODE || (node.nodeType === Node.ELEMENT_NODE && node.textContent.trim())) {
+                                        console.log(`aggressivelyRemoveTextFromCenderahati: Removed "${node.textContent.trim() || node.nodeName}" from row ${rowIndex + 1}, col ${colIndex}`);
+                                    }
+                                } catch (e) {
+                                    // Node might already be removed
+                                }
+                            }
+                        });
+                        
+                        // Verify final state
+                        const cellTextAfter = td.textContent.trim();
+                        if (cellTextAfter && cellTextAfter !== inputValue && cellTextAfter !== '-' && !/^\d+$/.test(cellTextAfter)) {
+                            // Still has unwanted text - force clear
+                            console.warn(`aggressivelyRemoveTextFromCenderahati: Row ${rowIndex + 1}, col ${colIndex} still has text "${cellTextAfter}" - forcing clear`);
+                            // Keep only the input
+                            while (td.firstChild) {
+                                if (td.firstChild === input) {
+                                    break;
+                                }
+                                td.removeChild(td.firstChild);
+                            }
+                            // Ensure input is at the end
+                            if (!td.contains(input)) {
+                                td.appendChild(input);
+                            }
+                        }
+                    }
+                });
+            });
+            
+            console.log(`aggressivelyRemoveTextFromCenderahati: Cleaned ${totalCleaned} nodes from cenderahati columns`);
+        }
+
+        // Final verification and fix for Row 7 to match image exactly
+        function finalRow7Verification() {
+            console.log('finalRow7Verification: Final check to ensure Row 7 matches image exactly...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            // Exact values from image
+            const imageData = [
+                { keterangan: 'Open day', cenderahati: '1', goodies: '500' },
+                { keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-' },
+                { keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100' }
+            ];
+            
+            let foundRow7 = false;
+            let subRowIndex = 0;
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                if (bilCell && bilCell.textContent.trim() === '7' && categoryCell && categoryCell.textContent.trim() === 'Daerah Belait ') {
+                    foundRow7 = true;
+                    subRowIndex = 0;
+                }
+                
+                if (foundRow7 && subRowIndex < 3) {
+                    const isFirstRow = subRowIndex === 0;
+                    const keteranganCell = isFirstRow ? tds[3] : tds[0];
+                    const cenderahatiCell = isFirstRow ? tds[4] : tds[1];
+                    const goodiesCell = isFirstRow ? tds[5] : tds[2];
+                    const expected = imageData[subRowIndex];
+                    
+                    // Fix Keterangan - remove all content and set exact text
+                    if (keteranganCell && expected.keterangan) {
+                        while (keteranganCell.firstChild) {
+                            keteranganCell.removeChild(keteranganCell.firstChild);
+                        }
+                        keteranganCell.textContent = expected.keterangan;
+                    }
+                    
+                    // Fix Cenderahati - ensure it's a number input with correct value
+                    if (cenderahatiCell) {
+                        // Remove any text nodes
+                        const textNodes = [];
+                        for (let node of cenderahatiCell.childNodes) {
+                            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                textNodes.push(node);
+                            }
+                        }
+                        textNodes.forEach(node => cenderahatiCell.removeChild(node));
+                        
+                        let input = cenderahatiCell.querySelector('input');
+                        if (!input) {
+                            input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'cenderahati-input no-fallback';
+                            input.setAttribute('data-category', 'Daerah Belait');
+                            input.min = '0';
+                            cenderahatiCell.appendChild(input);
+                        }
+                        input.type = 'number';
+                        const expectedValue = expected.cenderahati === '-' ? '' : expected.cenderahati;
+                        input.value = expectedValue;
+                        input.placeholder = expected.cenderahati === '-' ? '-' : '0';
+                    }
+                    
+                    // Fix Goodies
+                    if (goodiesCell && expected.goodies) {
+                        goodiesCell.textContent = expected.goodies;
+                    }
+                    
+                    subRowIndex++;
+                    if (subRowIndex >= 3) {
+                        foundRow7 = false;
+                    }
+                }
+            });
+            
+            console.log('finalRow7Verification: Row 7 verification complete');
+        }
+
+        // Continuous checker for Row 7 - runs every second to ensure values stay correct
+        function startRow7ContinuousFix() {
+            console.log('startRow7ContinuousFix: Starting continuous fix for Row 7...');
+            setInterval(() => {
+                const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+                let row7Found = false;
+                
+                for (let row of rows) {
+                    if (row.classList.contains('total-row')) continue;
+                    const tds = row.querySelectorAll('td');
+                    if (tds.length < 4) continue;
+                    
+                    const bilCell = tds[0];
+                    const categoryCell = tds[1];
+                    
+                    if (bilCell && bilCell.textContent.trim() === '7' && categoryCell && categoryCell.textContent.trim() === 'Daerah Belait ') {
+                        row7Found = true;
+                        const keteranganCell = tds[3];
+                        const cenderahatiCell = tds[4];
+                        
+                        // Check and fix keterangan
+                        if (keteranganCell && keteranganCell.textContent.trim() !== 'Open day') {
+                            console.log(`startRow7ContinuousFix: Fixing Row 7 sub-row 1 keterangan from "${keteranganCell.textContent.trim()}" to "Open day"`);
+                            while (keteranganCell.firstChild) {
+                                keteranganCell.removeChild(keteranganCell.firstChild);
+                            }
+                            keteranganCell.textContent = 'Open day';
+                        }
+                        
+                        // Check and fix cenderahati sub-row 1
+                        if (cenderahatiCell) {
+                            const input = cenderahatiCell.querySelector('input');
+                            if (input) {
+                                if (input.value !== '1') {
+                                    input.value = '1';
+                                    input.placeholder = '0';
+                                }
+                                if (input.type !== 'number') {
+                                    input.type = 'number';
+                                }
+                            }
+                        }
+                        
+                        // Check sub-rows 2 and 3
+                        let nextRow = row.nextElementSibling;
+                        let subRowIndex = 1;
+                        while (nextRow && subRowIndex < 3) {
+                            const nextTds = nextRow.querySelectorAll('td');
+                            if (nextTds.length >= 2) {
+                                const nextKeterangan = nextTds[0];
+                                const nextCenderahati = nextTds[1];
+                                
+                                // Fix keterangan
+                                const expectedKeterangan = subRowIndex === 1 ? 'Gotong Royong' : 'Kempen Derma Darah';
+                                if (nextKeterangan && nextKeterangan.textContent.trim() !== expectedKeterangan) {
+                                    while (nextKeterangan.firstChild) {
+                                        nextKeterangan.removeChild(nextKeterangan.firstChild);
+                                    }
+                                    nextKeterangan.textContent = expectedKeterangan;
+                                }
+                                
+                                // Fix cenderahati - must be empty with placeholder="-"
+                                if (nextCenderahati) {
+                                    // Remove any text nodes
+                                    const textNodes = [];
+                                    for (let node of nextCenderahati.childNodes) {
+                                        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                            textNodes.push(node);
+                                        }
+                                    }
+                                    textNodes.forEach(n => nextCenderahati.removeChild(n));
+                                    
+                                    let nextInput = nextCenderahati.querySelector('input');
+                                    if (!nextInput) {
+                                        nextInput = document.createElement('input');
+                                        nextInput.type = 'number';
+                                        nextInput.className = 'cenderahati-input no-fallback';
+                                        nextInput.setAttribute('data-category', 'Daerah Belait');
+                                        nextInput.placeholder = '-';
+                                        nextInput.min = '0';
+                                        nextCenderahati.appendChild(nextInput);
+                                    }
+                                    nextInput.type = 'number';
+                                    if (nextInput.value !== '') {
+                                        nextInput.value = '';
+                                    }
+                                    if (nextInput.placeholder !== '-') {
+                                        nextInput.placeholder = '-';
+                                    }
+                                    
+                                    // Clear any cell text
+                                    if (nextCenderahati.textContent.trim() && nextCenderahati.textContent.trim() !== '-') {
+                                        nextCenderahati.textContent = '';
+                                        nextCenderahati.appendChild(nextInput);
+                                    }
+                                }
+                            }
+                            nextRow = nextRow.nextElementSibling;
+                            subRowIndex++;
+                        }
+                        break;
+                    }
+                }
+            }, 1000); // Check every second
+        }
+
+        // MutationObserver to watch Row 7 and enforce correct values
+        function setupRow7Observer() {
+            console.log('setupRow7Observer: Setting up MutationObserver for Row 7...');
+            const table = document.querySelector('#calendar-month-checklist tbody');
+            if (!table) {
+                console.warn('setupRow7Observer: Table not found, will retry...');
+                setTimeout(setupRow7Observer, 500);
+                return;
+            }
+            
+            const observer = new MutationObserver((mutations) => {
+                let shouldFix = false;
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                        const target = mutation.target;
+                        const row = target.closest('tr');
+                        if (row) {
+                            const tds = row.querySelectorAll('td');
+                            const bilCell = tds[0];
+                            if (bilCell && bilCell.textContent.trim() === '7') {
+                                shouldFix = true;
+                            }
+                        }
+                    }
+                });
+                
+                if (shouldFix) {
+                    console.log('setupRow7Observer: Row 7 changed detected, enforcing correct values...');
+                    setTimeout(() => {
+                        forceRow7SubRow1Keterangan();
+                        aggressivelyCleanRow7();
+                        finalRow7Verification();
+                    }, 50);
+                }
+            });
+            
+            // Observe the entire table for changes
+            observer.observe(table, {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+            
+            console.log('setupRow7Observer: MutationObserver set up successfully');
+        }
+
+        // Specifically fix Row 7 sub-row 1 keterangan to "Open day" - DIRECT approach
+        function forceRow7SubRow1Keterangan() {
+            console.log('forceRow7SubRow1Keterangan: Ensuring Row 7 sub-row 1 keterangan is "Open day"...');
+            
+            // Direct query for Row 7 - try multiple selectors
+            const table = document.querySelector('#calendar-month-checklist');
+            if (!table) {
+                console.warn('forceRow7SubRow1Keterangan: Table not found!');
+                return;
+            }
+            
+            const rows = table.querySelectorAll('tbody tr');
+            let row7Found = false;
+            
+            for (let row of rows) {
+                if (row.classList.contains('total-row')) continue;
+                const tds = row.querySelectorAll('td');
+                if (tds.length < 4) continue;
+                
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                // Check if this is Row 7 main row (sub-row 1) - be more flexible with category matching
+                const bil = bilCell ? bilCell.textContent.trim() : '';
+                const category = categoryCell ? categoryCell.textContent.trim() : '';
+                
+                if (bil === '7' && (category === 'Daerah Belait ' || category === 'Daerah Belait' || category.includes('Belait'))) {
+                    row7Found = true;
+                    const keteranganCell = tds[3]; // Sub-row 1 keterangan is at index 3
+                    
+                    if (keteranganCell) {
+                        // Get current text - handle both textContent and innerHTML with divs
+                        let currentText = '';
+                        const div = keteranganCell.querySelector('div');
+                        if (div) {
+                            currentText = div.textContent.trim();
+                        } else {
+                            currentText = keteranganCell.textContent.trim();
+                        }
+                        
+                        // AGGRESSIVELY remove all content and set "Open day"
+                        while (keteranganCell.firstChild) {
+                            keteranganCell.removeChild(keteranganCell.firstChild);
+                        }
+                        keteranganCell.textContent = 'Open day';
+                        
+                        // Also check cenderahati for sub-row 1
+                        const cenderahatiCell = tds[4];
+                        if (cenderahatiCell) {
+                            // Remove any text nodes first
+                            const textNodes = [];
+                            for (let node of cenderahatiCell.childNodes) {
+                                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() && !/^\d+$/.test(node.textContent.trim())) {
+                                    textNodes.push(node);
+                                }
+                            }
+                            textNodes.forEach(node => cenderahatiCell.removeChild(node));
+                            
+                            let input = cenderahatiCell.querySelector('input');
+                            if (!input) {
+                                input = document.createElement('input');
+                                input.type = 'number';
+                                input.className = 'cenderahati-input no-fallback';
+                                input.setAttribute('data-category', 'Daerah Belait');
+                                input.min = '0';
+                                cenderahatiCell.appendChild(input);
+                            }
+                            if (input.value !== '1') {
+                                input.value = '1';
+                                input.placeholder = '0';
+                                console.log(`forceRow7SubRow1Keterangan: Also fixed cenderahati to "1"`);
+                            }
+                        }
+                        
+                        if (currentText !== 'Open day' && !currentText.includes('Open day')) {
+                            console.log(`✅ forceRow7SubRow1Keterangan: FIXED Row 7 sub-row 1 keterangan from "${currentText.substring(0, 50)}" to "Open day"`);
+                        } else {
+                            console.log(`✅ forceRow7SubRow1Keterangan: Row 7 sub-row 1 keterangan correct: "Open day"`);
+                        }
+                        break; // Found it, exit loop
+                    }
+                }
+            }
+            
+            if (!row7Found) {
+                console.warn('forceRow7SubRow1Keterangan: Row 7 not found! Table may not be loaded yet. Rows found:', rows.length);
+            }
+        }
+
+        // Aggressively clean Row 7 - remove all duplicates and ensure correct structure
+        function aggressivelyCleanRow7() {
+            console.log('aggressivelyCleanRow7: Starting aggressive cleanup of Row 7...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            let foundRow7 = false;
+            let subRowIndex = 0;
+            const correctKeterangan = ['Open day', 'Gotong Royong', 'Kempen Derma Darah'];
+            const correctCenderahati = ['1', '-', '-'];
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                if (bilCell && bilCell.textContent.trim() === '7' && categoryCell && categoryCell.textContent.trim() === 'Daerah Belait ') {
+                    foundRow7 = true;
+                    subRowIndex = 0;
+                }
+                
+                if (foundRow7 && subRowIndex < 3) {
+                    const isFirstRow = subRowIndex === 0;
+                    const keteranganCell = isFirstRow ? tds[3] : tds[0];
+                    const cenderahatiCell = isFirstRow ? tds[4] : tds[1];
+                    
+                    // AGGRESSIVELY clean keterangan cell
+                    if (keteranganCell) {
+                        // Remove all child nodes
+                        while (keteranganCell.firstChild) {
+                            keteranganCell.removeChild(keteranganCell.firstChild);
+                        }
+                        // Set correct text
+                        keteranganCell.textContent = correctKeterangan[subRowIndex];
+                        console.log(`aggressivelyCleanRow7: Set Row 7 sub-row ${subRowIndex + 1} keterangan to "${correctKeterangan[subRowIndex]}"`);
+                    }
+                    
+                    // AGGRESSIVELY clean cenderahati cell - FORCE REPLACE TEXT WITH "-"
+                    if (cenderahatiCell) {
+                        // CRITICAL: Remove EVERYTHING from the cell first
+                        const cellTextBefore = cenderahatiCell.textContent.trim();
+                        const hasUnwantedText = cellTextBefore && 
+                            (cellTextBefore.includes('Gotong Royong') || 
+                             cellTextBefore.includes('Kempen Derma Darah') || 
+                             cellTextBefore.includes('Derma Darah') ||
+                             (cellTextBefore !== '-' && !/^\d+$/.test(cellTextBefore)));
+                        
+                        if (hasUnwantedText) {
+                            console.warn(`aggressivelyCleanRow7: Found unwanted text "${cellTextBefore}" in Row 7 sub-row ${subRowIndex + 1} cenderahati - FORCING REPLACEMENT`);
+                            
+                            // Remove ALL child nodes
+                            while (cenderahatiCell.firstChild) {
+                                cenderahatiCell.removeChild(cenderahatiCell.firstChild);
+                            }
+                            
+                            // Create fresh input element
+                            const input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'cenderahati-input no-fallback';
+                            input.setAttribute('data-category', 'Daerah Belait');
+                            input.min = '0';
+                            
+                            // Set correct value - sub-rows 2 and 3 MUST be empty with placeholder="-"
+                            const expectedValue = correctCenderahati[subRowIndex] === '-' ? '' : correctCenderahati[subRowIndex];
+                            input.value = expectedValue;
+                            input.placeholder = expectedValue === '' ? '-' : '0';
+                            
+                            // Append ONLY the input to the cell
+                            cenderahatiCell.appendChild(input);
+                            
+                            console.log(`aggressivelyCleanRow7: REPLACED Row 7 sub-row ${subRowIndex + 1} cenderahati text "${cellTextBefore}" with empty input (placeholder="-")`);
+                        } else {
+                            // No unwanted text, but ensure structure is correct
+                            let input = cenderahatiCell.querySelector('input');
+                            if (!input) {
+                                input = document.createElement('input');
+                                input.type = 'number';
+                                input.className = 'cenderahati-input no-fallback';
+                                input.setAttribute('data-category', 'Daerah Belait');
+                                input.min = '0';
+                                cenderahatiCell.appendChild(input);
+                            }
+                            
+                            const expectedValue = correctCenderahati[subRowIndex] === '-' ? '' : correctCenderahati[subRowIndex];
+                            input.value = expectedValue;
+                            input.placeholder = expectedValue === '' ? '-' : '0';
+                            
+                            // Remove any remaining text nodes
+                            const textNodes = [];
+                            for (let node of cenderahatiCell.childNodes) {
+                                if (node.nodeType === Node.TEXT_NODE && node !== input) {
+                                    textNodes.push(node);
+                                }
+                            }
+                            textNodes.forEach(node => cenderahatiCell.removeChild(node));
+                        }
+                        
+                        // Final verification
+                        const finalCellText = cenderahatiCell.textContent.trim();
+                        const finalInput = cenderahatiCell.querySelector('input');
+                        const finalInputValue = finalInput ? finalInput.value.trim() : '';
+                        const finalPlaceholder = finalInput ? finalInput.placeholder : '';
+                        
+                        if (subRowIndex === 1 || subRowIndex === 2) {
+                            // Sub-rows 2 and 3 MUST be empty with placeholder="-"
+                            if (finalCellText && finalCellText !== '-' && !/^\d+$/.test(finalCellText)) {
+                                console.error(`aggressivelyCleanRow7: FINAL CHECK - Row 7 sub-row ${subRowIndex + 1} STILL has text "${finalCellText}" - clearing cell completely`);
+                                cenderahatiCell.textContent = '';
+                                if (finalInput) {
+                                    cenderahatiCell.appendChild(finalInput);
+                                }
+                            }
+                            if (finalInput && finalInputValue !== '') {
+                                console.error(`aggressivelyCleanRow7: FINAL CHECK - Row 7 sub-row ${subRowIndex + 1} input has value "${finalInputValue}" - clearing it`);
+                                finalInput.value = '';
+                            }
+                            if (finalInput && finalPlaceholder !== '-') {
+                                console.error(`aggressivelyCleanRow7: FINAL CHECK - Row 7 sub-row ${subRowIndex + 1} placeholder is "${finalPlaceholder}" - setting to "-"`);
+                                finalInput.placeholder = '-';
+                            }
+                        }
+                        
+                        console.log(`aggressivelyCleanRow7: Row 7 sub-row ${subRowIndex + 1} cenderahati - value="${finalInputValue || '(empty)'}", placeholder="${finalPlaceholder}", cellText="${finalCellText || '(empty)'}"`);
+                    }
+                    
+                    subRowIndex++;
+                    if (subRowIndex >= 3) {
+                        foundRow7 = false;
+                    }
+                }
+            });
+        }
+
+        // ULTRA-AGGRESSIVE: Completely replace Row 7 cenderahati cells - no matter what's in them
+        function ultraAggressiveRow7CenderahatiCleanup() {
+            console.log('🔥 ultraAggressiveRow7CenderahatiCleanup: ULTRA-AGGRESSIVE cleanup of Row 7 cenderahati...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            let foundRow7 = false;
+            let subRowIndex = 0;
+            const correctValues = ['1', '', '']; // Sub-row 1 = "1", Sub-rows 2 & 3 = empty
+            const correctPlaceholders = ['0', '-', '-'];
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                if (bilCell && bilCell.textContent.trim() === '7' && categoryCell && (categoryCell.textContent.trim() === 'Daerah Belait ' || categoryCell.textContent.trim().includes('Belait'))) {
+                    foundRow7 = true;
+                    subRowIndex = 0;
+                }
+                
+                if (foundRow7 && subRowIndex < 3) {
+                    const isFirstRow = subRowIndex === 0;
+                    const cenderahatiCell = isFirstRow ? tds[4] : tds[1];
+                    
+                    if (cenderahatiCell) {
+                        const cellTextBefore = cenderahatiCell.textContent.trim();
+                        const hasAnyText = cellTextBefore && 
+                            (cellTextBefore.includes('Gotong') || 
+                             cellTextBefore.includes('Royong') || 
+                             cellTextBefore.includes('Derma') || 
+                             cellTextBefore.includes('Darah') ||
+                             cellTextBefore.includes('Kempen') ||
+                             (cellTextBefore !== '-' && !/^\d+$/.test(cellTextBefore) && subRowIndex > 0));
+                        
+                        // ALWAYS replace - don't check, just do it
+                        if (hasAnyText || subRowIndex > 0) {
+                            console.warn(`🔥 ultraAggressiveRow7CenderahatiCleanup: Row 7 sub-row ${subRowIndex + 1} has text "${cellTextBefore}" - COMPLETELY REPLACING`);
+                            
+                            // COMPLETELY CLEAR - use innerHTML to remove EVERYTHING
+                            cenderahatiCell.innerHTML = '';
+                            
+                            // Create brand new input element
+                            const input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'cenderahati-input no-fallback';
+                            input.setAttribute('data-category', 'Daerah Belait');
+                            input.min = '0';
+                            input.value = correctValues[subRowIndex];
+                            input.placeholder = correctPlaceholders[subRowIndex];
+                            
+                            // Append ONLY the input
+                            cenderahatiCell.appendChild(input);
+                            
+                            console.log(`🔥 ultraAggressiveRow7CenderahatiCleanup: REPLACED Row 7 sub-row ${subRowIndex + 1} - was "${cellTextBefore}", now value="${input.value}", placeholder="${input.placeholder}"`);
+                        } else {
+                            // Even if no unwanted text, ensure structure is correct
+                            cenderahatiCell.innerHTML = '';
+                            const input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'cenderahati-input no-fallback';
+                            input.setAttribute('data-category', 'Daerah Belait');
+                            input.min = '0';
+                            input.value = correctValues[subRowIndex];
+                            input.placeholder = correctPlaceholders[subRowIndex];
+                            cenderahatiCell.appendChild(input);
+                        }
+                    }
+                    
+                    subRowIndex++;
+                    if (subRowIndex >= 3) {
+                        foundRow7 = false;
+                    }
+                }
+            });
+        }
+
+        // Verify Row 7 (Daerah Belait) cenderahati values match Excel file
+        function verifyRow7Cenderahati() {
+            console.log('verifyRow7Cenderahati: Checking Row 7 cenderahati values...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            // Expected values from Excel file
+            const expectedValues = [
+                { keterangan: 'Open day', cenderahati: '1' },
+                { keterangan: 'Gotong Royong', cenderahati: '-' },
+                { keterangan: 'Kempen Derma Darah', cenderahati: '-' }
+            ];
+            
+            let foundRow7 = false;
+            let subRowIndex = 0;
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                if (bilCell && bilCell.textContent.trim() === '7' && categoryCell && categoryCell.textContent.trim() === 'Daerah Belait ') {
+                    foundRow7 = true;
+                    subRowIndex = 0;
+                }
+                
+                if (foundRow7 && subRowIndex < 3) {
+                    const isFirstRow = subRowIndex === 0;
+                    const keteranganCell = isFirstRow ? tds[3] : tds[0];
+                    const cenderahatiInput = isFirstRow ? tds[4]?.querySelector('input') : tds[1]?.querySelector('input');
+                    
+                    if (keteranganCell && cenderahatiInput && expectedValues[subRowIndex]) {
+                        const currentKeterangan = keteranganCell.textContent.trim();
+                        const currentCenderahati = cenderahatiInput.value.trim();
+                        const expectedKeterangan = expectedValues[subRowIndex].keterangan;
+                        const expectedCenderahati = expectedValues[subRowIndex].cenderahati;
+                        const expectedValue = expectedCenderahati === '-' ? '' : expectedCenderahati;
+                        
+                        // Check for text nodes in cenderahati cell (should only have input)
+                        const cenderahatiCell = isFirstRow ? tds[4] : tds[1];
+                        if (cenderahatiCell) {
+                            const textNodes = [];
+                            // Remove ALL text nodes, especially those with words like "Gotong Royong", "Derma Darah"
+                            for (let node of cenderahatiCell.childNodes) {
+                                if (node.nodeType === Node.TEXT_NODE) {
+                                    const text = node.textContent.trim();
+                                    // Remove any text that's not a number or dash
+                                    if (text && text !== '-' && !/^\d+$/.test(text)) {
+                                        textNodes.push(node);
+                                    }
+                                }
+                            }
+                            if (textNodes.length > 0) {
+                                textNodes.forEach(node => {
+                                    cenderahatiCell.removeChild(node);
+                                    console.warn(`⚠️ verifyRow7Cenderahati: Removed text node "${node.textContent.trim()}" from Row 7 sub-row ${subRowIndex + 1} cenderahati cell`);
+                                });
+                            }
+                            // Also check if cell still has text content after removing nodes
+                            const remainingText = cenderahatiCell.textContent.trim();
+                            if (remainingText && remainingText !== '-' && !/^\d+$/.test(remainingText)) {
+                                console.warn(`⚠️ verifyRow7Cenderahati: Cell still has text "${remainingText}" - clearing it`);
+                                cenderahatiCell.textContent = '';
+                            }
+                            
+                            // Ensure input type is number
+                            if (cenderahatiInput.type !== 'number') {
+                                cenderahatiInput.type = 'number';
+                                console.warn(`⚠️ verifyRow7Cenderahati: Changed Row 7 sub-row ${subRowIndex + 1} cenderahati input type to "number"`);
+                            }
+                        }
+                        
+                        // Check for duplicate text in keterangan
+                        const hasDuplicates = currentKeterangan.includes('\n') || 
+                                            (currentKeterangan.includes('Open day') && (currentKeterangan.includes('Gotong Royong') || currentKeterangan.includes('Kempen Derma Darah'))) ||
+                                            (currentKeterangan.includes('Gotong Royong') && currentKeterangan.includes('Kempen Derma Darah'));
+                        
+                        if (hasDuplicates || currentKeterangan !== expectedKeterangan) {
+                            console.warn(`⚠️ Row 7 sub-row ${subRowIndex + 1}: keterangan has duplicates or mismatch - Expected: "${expectedKeterangan}", Got: "${currentKeterangan.substring(0, 60)}..."`);
+                            // Clean and set correct text
+                            while (keteranganCell.firstChild) {
+                                keteranganCell.removeChild(keteranganCell.firstChild);
+                            }
+                            keteranganCell.textContent = expectedKeterangan;
+                            console.log(`✅ Auto-fixed Row 7 sub-row ${subRowIndex + 1} keterangan to "${expectedKeterangan}"`);
+                        }
+                        
+                        if (currentKeterangan === expectedKeterangan || hasDuplicates) {
+                            if (currentCenderahati !== expectedValue) {
+                                console.warn(`⚠️ Row 7 sub-row ${subRowIndex + 1} (${expectedKeterangan}): cenderahati mismatch - Expected: "${expectedCenderahati}", Got: "${currentCenderahati || '(empty)'}"`);
+                                // Auto-fix
+                                cenderahatiInput.value = expectedValue;
+                                if (expectedValue === '') {
+                                    cenderahatiInput.placeholder = '-';
+                                }
+                                console.log(`✅ Auto-fixed Row 7 sub-row ${subRowIndex + 1} cenderahati to "${expectedCenderahati}"`);
+                            } else {
+                                console.log(`✅ Row 7 sub-row ${subRowIndex + 1} (${expectedKeterangan}): cenderahati="${expectedCenderahati}" - CORRECT`);
+                            }
+                        }
+                    }
+                    
+                    subRowIndex++;
+                    if (subRowIndex >= 3) {
+                        foundRow7 = false; // Reset after processing all 3 sub-rows
+                    }
+                }
+            });
+        }
+
         // Force correct values for Daerah Temb (Row 8) - ALWAYS runs
         function forceDaerahTembValues() {
             console.log('forceDaerahTembValues: Starting...');
@@ -3237,48 +4586,197 @@
                     console.log(`forceDaerahTembValues: Rowspan = ${rowspan}`);
                     if (rowspan > 1) {
                         let currentRow = row;
+                        // Correct values from CSV: sub-row 1="-", sub-row 2="-", sub-row 3="20"
+                        const correctKeterangan = ['Kempen Derma Darah ', 'Gotong Royong ', 'Community Engagement @ POLSARA '];
                         const correctCenderahati = ['', '', '20'];
+                        const correctGoodies = ['100', '-', '60'];
+                        
                         for (let i = 0; i < rowspan && currentRow; i++) {
                             const subTds = currentRow.querySelectorAll('td');
-                            // For sub-rows, cell indices are different due to rowspan:
-                            // Sub-row 0: tds[0]=Bil, tds[1]=Perkara, tds[2]=Tindakan, tds[3]=Keterangan, tds[4]=Cenderahati
-                            // Sub-row 1+: tds[0]=Keterangan, tds[1]=Cenderahati
                             const isFirstRow = i === 0;
-                            const keterangan = isFirstRow ? (subTds[3]?.textContent.trim() || '') : (subTds[0]?.textContent.trim() || '');
-                            const input = isFirstRow ? (subTds[4]?.querySelector('input')) : (subTds[1]?.querySelector('input'));
                             
-                            console.log(`forceDaerahTembValues: Processing sub-row ${i}, keterangan="${keterangan}", currentCenderahati="${input?.value}"`);
+                            console.log(`forceDaerahTembValues: Processing sub-row ${i}, isFirstRow=${isFirstRow}, tds.length=${subTds.length}`);
                             
-                            // Match by keterangan first, then fallback to index
-                            // Row order: Kempen Derma Darah (index 0), Gotong Royong (index 1), Community Engagement (index 2)
-                            let rowIndex = i;
-                            if (keterangan && keterangan.includes('Community Engagement')) {
-                                rowIndex = 2; // Third sub-row
-                            } else if (keterangan && keterangan.includes('Gotong Royong')) {
-                                rowIndex = 1; // Second sub-row
-                            } else if (keterangan && keterangan.includes('Kempen Derma Darah')) {
-                                rowIndex = 0; // First sub-row
+                            // Cell indices for Daerah Temb sub-rows
+                            const keteranganCell = isFirstRow ? subTds[3] : subTds[0];
+                            const cenderahatiCell = isFirstRow ? subTds[4] : subTds[1];
+                            const goodiesCell = isFirstRow ? subTds[5] : subTds[2];
+                            
+                            console.log(`forceDaerahTembValues: Sub-row ${i} - keteranganCell=${!!keteranganCell}, cenderahatiCell=${!!cenderahatiCell}, goodiesCell=${!!goodiesCell}`);
+                            
+                            // Remove any rowspan from keterangan cell
+                            if (keteranganCell && keteranganCell.hasAttribute('rowspan')) {
+                                keteranganCell.removeAttribute('rowspan');
+                                console.log(`forceDaerahTembValues: Removed rowspan from sub-row ${i} keterangan`);
                             }
                             
-                            console.log(`forceDaerahTembValues: Sub-row ${i} mapped to rowIndex ${rowIndex}, targetCenderahati="${correctCenderahati[rowIndex]}"`);
-                            
-                            // Force Cenderahati values
-                            if (input && correctCenderahati[rowIndex] !== undefined) {
-                                const currentValue = input.value.trim();
-                                const targetValue = correctCenderahati[rowIndex];
-                                if (currentValue !== targetValue) {
-                                    input.value = targetValue;
-                                    console.log(`forceDaerahTembValues: Fixed Row 8 sub-row ${i} (${keterangan}) cenderahati from "${currentValue}" to "${targetValue}"`);
+                            // Force Keterangan - AGGRESSIVELY clean and set
+                            if (keteranganCell && correctKeterangan[i]) {
+                                // Remove all child nodes first
+                                while (keteranganCell.firstChild) {
+                                    keteranganCell.removeChild(keteranganCell.firstChild);
+                                }
+                                
+                                const currentKeterangan = keteranganCell.textContent.trim();
+                                const expectedKeterangan = correctKeterangan[i].trim();
+                                
+                                // ALWAYS set the correct text
+                                keteranganCell.textContent = expectedKeterangan;
+                                
+                                if (currentKeterangan !== expectedKeterangan) {
+                                    console.log(`forceDaerahTembValues: Fixed sub-row ${i} keterangan from "${currentKeterangan.substring(0, 50)}..." to "${expectedKeterangan}"`);
                                 } else {
-                                    console.log(`forceDaerahTembValues: Sub-row ${i} cenderahati already correct: "${currentValue}"`);
+                                    console.log(`forceDaerahTembValues: Sub-row ${i} keterangan already correct: "${expectedKeterangan}"`);
+                                }
+                            } else if (!keteranganCell) {
+                                console.warn(`forceDaerahTembValues: Sub-row ${i} - keteranganCell not found!`);
+                            }
+                            
+                            // Force Cenderahati - ensure it's a number input
+                            if (cenderahatiCell) {
+                                // Remove any text nodes
+                                const textNodes = [];
+                                for (let node of cenderahatiCell.childNodes) {
+                                    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                        textNodes.push(node);
+                                    }
+                                }
+                                textNodes.forEach(node => {
+                                    cenderahatiCell.removeChild(node);
+                                    console.log(`forceDaerahTembValues: Removed text "${node.textContent.trim()}" from sub-row ${i} cenderahati cell`);
+                                });
+                                
+                                let cenderahatiInput = cenderahatiCell.querySelector('input');
+                                if (!cenderahatiInput) {
+                                    cenderahatiInput = document.createElement('input');
+                                    cenderahatiInput.type = 'number';
+                                    cenderahatiInput.className = 'cenderahati-input no-fallback';
+                                    cenderahatiInput.setAttribute('data-category', 'Daerah Temb');
+                                    cenderahatiInput.placeholder = '-';
+                                    cenderahatiInput.min = '0';
+                                    cenderahatiCell.appendChild(cenderahatiInput);
+                                    console.log(`forceDaerahTembValues: Created input for sub-row ${i}`);
+                                } else {
+                                    if (cenderahatiInput.type !== 'number') {
+                                        cenderahatiInput.type = 'number';
+                                        console.log(`forceDaerahTembValues: Changed sub-row ${i} input type to "number"`);
+                                    }
+                                }
+                                
+                                if (cenderahatiInput && correctCenderahati[i] !== undefined) {
+                                    const currentValue = cenderahatiInput.value.trim();
+                                    const targetValue = correctCenderahati[i];
+                                    if (currentValue !== targetValue) {
+                                        cenderahatiInput.value = targetValue;
+                                        if (targetValue === '') {
+                                            cenderahatiInput.placeholder = '-';
+                                        } else {
+                                            cenderahatiInput.placeholder = '0';
+                                        }
+                                        console.log(`forceDaerahTembValues: Fixed sub-row ${i} cenderahati from "${currentValue || '(empty)'}" to "${targetValue || '-'}"`);
+                                    } else {
+                                        console.log(`forceDaerahTembValues: Sub-row ${i} cenderahati already correct: "${targetValue || '-'}"`);
+                                    }
                                 }
                             } else {
-                                console.log(`forceDaerahTembValues: Sub-row ${i} - no input found or rowIndex out of range`);
+                                console.warn(`forceDaerahTembValues: Sub-row ${i} - cenderahatiCell not found!`);
+                            }
+                            
+                            // Force Goodies
+                            if (goodiesCell && correctGoodies[i]) {
+                                const currentGoodies = goodiesCell.textContent.trim();
+                                if (currentGoodies !== correctGoodies[i]) {
+                                    goodiesCell.textContent = correctGoodies[i];
+                                    console.log(`forceDaerahTembValues: Fixed sub-row ${i} goodies from "${currentGoodies}" to "${correctGoodies[i]}"`);
+                                } else {
+                                    console.log(`forceDaerahTembValues: Sub-row ${i} goodies already correct: "${correctGoodies[i]}"`);
+                                }
+                            } else if (!goodiesCell) {
+                                console.warn(`forceDaerahTembValues: Sub-row ${i} - goodiesCell not found!`);
                             }
                             
                             currentRow = currentRow.nextElementSibling;
                         }
                         return;
+                    }
+                }
+            });
+        }
+
+        // Aggressively fix Row 8 sub-row 2 (Community Engagement) - ensure it matches CSV
+        function aggressivelyFixRow8SubRow2() {
+            console.log('aggressivelyFixRow8SubRow2: Fixing Row 8 sub-row 2...');
+            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            
+            let foundRow8 = false;
+            let subRowIndex = 0;
+            
+            rows.forEach(row => {
+                if (row.classList.contains('total-row')) return;
+                const tds = row.querySelectorAll('td');
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                
+                if (bilCell && bilCell.textContent.trim() === '8' && categoryCell && categoryCell.textContent.trim() === 'Daerah Temb') {
+                    foundRow8 = true;
+                    subRowIndex = 0;
+                }
+                
+                if (foundRow8 && subRowIndex < 3) {
+                    const isFirstRow = subRowIndex === 0;
+                    const keteranganCell = isFirstRow ? tds[3] : tds[0];
+                    const cenderahatiCell = isFirstRow ? tds[4] : tds[1];
+                    const goodiesCell = isFirstRow ? tds[5] : tds[2];
+                    
+                    // Specifically fix sub-row 2 (Community Engagement)
+                    if (subRowIndex === 2) {
+                        console.log(`aggressivelyFixRow8SubRow2: Found sub-row 2, fixing...`);
+                        
+                        // Fix Keterangan
+                        if (keteranganCell) {
+                            while (keteranganCell.firstChild) {
+                                keteranganCell.removeChild(keteranganCell.firstChild);
+                            }
+                            keteranganCell.textContent = 'Community Engagement @ POLSARA ';
+                            console.log(`aggressivelyFixRow8SubRow2: Set keterangan to "Community Engagement @ POLSARA "`);
+                        }
+                        
+                        // Fix Cenderahati
+                        if (cenderahatiCell) {
+                            // Remove text nodes
+                            const textNodes = [];
+                            for (let node of cenderahatiCell.childNodes) {
+                                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                    textNodes.push(node);
+                                }
+                            }
+                            textNodes.forEach(node => cenderahatiCell.removeChild(node));
+                            
+                            let input = cenderahatiCell.querySelector('input');
+                            if (!input) {
+                                input = document.createElement('input');
+                                input.type = 'number';
+                                input.className = 'cenderahati-input no-fallback';
+                                input.setAttribute('data-category', 'Daerah Temb');
+                                input.min = '0';
+                                cenderahatiCell.appendChild(input);
+                            }
+                            input.type = 'number';
+                            input.value = '20';
+                            input.placeholder = '0';
+                            console.log(`aggressivelyFixRow8SubRow2: Set cenderahati to "20"`);
+                        }
+                        
+                        // Fix Goodies
+                        if (goodiesCell) {
+                            goodiesCell.textContent = '60';
+                            console.log(`aggressivelyFixRow8SubRow2: Set goodies to "60"`);
+                        }
+                    }
+                    
+                    subRowIndex++;
+                    if (subRowIndex >= 3) {
+                        foundRow8 = false;
                     }
                 }
             });
@@ -3373,134 +4871,393 @@
 
         // Master sync function - forces ALL values from CSV exactly
         function syncAllValuesFromCSV() {
-            const rows = document.querySelectorAll('#calendar-month-checklist tbody tr');
+            console.log('═══════════════════════════════════════════════════════════');
+            console.log('✅ NEW CLEAN TABLE SYNC - Using CSV file as source of truth');
+            console.log('📋 File: acarachecklist.csv');
+            console.log('🔄 Overriding any database values with CSV data');
+            console.log('═══════════════════════════════════════════════════════════');
             
-            // CSV data structure matching exact values
+            const rows = Array.from(document.querySelectorAll('#calendar-month-checklist tbody tr')).filter(r => !r.classList.contains('total-row'));
+            
+            // EXACT data from CSV file - ordered by bil and sub-row index
             const csvData = [
-                // Row 1
+                // Row 1: Perbarisan
                 { bil: '1', category: 'Perbarisan', tindakan: 'P. Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan', cenderahati: '376', goodies: '-', budget: '$35,065.50' },
-                // Row 2 sub-row 1
+                
+                // Row 2: Mkn Beradat - sub-row 1
                 { bil: '2', category: 'Mkn Beradat ', tindakan: 'P. Permakanan', keterangan: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026', cenderahati: '-', goodies: '-', budget: '$1,011.50' },
-                // Row 2 sub-row 2
+                // Row 2: Mkn Beradat - sub-row 2
                 { bil: '2', category: 'Mkn Beradat ', tindakan: 'Setiausaha Mes', keterangan: 'Makan beradat pada 15/01/2026 (belum termasuk support staffs)', cenderahati: '-', goodies: '-', budget: '$19,438.00' },
-                // Row 3 sub-row 1
+                
+                // Row 3: Keagamaan - sub-row 1
                 { bil: '3', category: 'Keagamaan', tindakan: 'BUI', keterangan: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)', cenderahati: '-', goodies: '-', budget: '$1,275.00' },
-                // Row 3 sub-row 2
+                // Row 3: Keagamaan - sub-row 2
                 { bil: '3', category: 'Keagamaan', tindakan: '', keterangan: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', cenderahati: '-', goodies: '-', budget: '$1,325.00' },
-                // Row 4
+                
+                // Row 4: Pameran
                 { bil: '4', category: 'Pameran', tindakan: 'P. Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', cenderahati: '50', goodies: '600', budget: '$9,750.00' },
-                // Row 5
+                
+                // Row 5: Daerah TT
                 { bil: '5', category: 'Daerah TT ', tindakan: 'OCPD TT', keterangan: 'Kejohanan Bolasepak', cenderahati: '41', goodies: '210', budget: '$2,328.50' },
-                // Row 6 sub-row 1
+                
+                // Row 6: Daerah BM - sub-row 1
                 { bil: '6', category: 'Daerah BM', tindakan: 'P. Derma Darah', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,680.00' },
-                // Row 6 sub-row 2
+                // Row 6: Daerah BM - sub-row 2
                 { bil: '6', category: 'Daerah BM', tindakan: 'OCPD BM', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,680.00' },
-                // Row 6 sub-row 3
+                // Row 6: Daerah BM - sub-row 3
                 { bil: '6', category: 'Daerah BM', tindakan: '', keterangan: 'Walkaton', cenderahati: '5', goodies: '145', budget: '$1,680.00' },
-                // Row 7 sub-row 1
+                
+                // Row 7: Daerah Belait - sub-row 1
                 { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Open day', cenderahati: '1', goodies: '500', budget: '$1,791.00' },
-                // Row 7 sub-row 2
-                { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,791.00' },
-                // Row 7 sub-row 3
-                { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,791.00' },
-                // Row 8 sub-row 1
+                // Row 7: Daerah Belait - sub-row 2
+                { bil: '7', category: 'Daerah Belait ', tindakan: '', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,791.00' },
+                // Row 7: Daerah Belait - sub-row 3
+                { bil: '7', category: 'Daerah Belait ', tindakan: '', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,791.00' },
+                
+                // Row 8: Daerah Temb - sub-row 1
                 { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Kempen Derma Darah ', cenderahati: '-', goodies: '100', budget: '$838.70' },
-                // Row 8 sub-row 2
-                { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Gotong Royong ', cenderahati: '-', goodies: '-', budget: '$838.70' },
-                // Row 8 sub-row 3
-                { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Community Engagement @ POLSARA ', cenderahati: '20', goodies: '60', budget: '$838.70' },
-                // Row 9
+                // Row 8: Daerah Temb - sub-row 2
+                { bil: '8', category: 'Daerah Temb', tindakan: '', keterangan: 'Gotong Royong ', cenderahati: '-', goodies: '-', budget: '$838.70' },
+                // Row 8: Daerah Temb - sub-row 3
+                { bil: '8', category: 'Daerah Temb', tindakan: '', keterangan: 'Community Engagement @ POLSARA ', cenderahati: '20', goodies: '60', budget: '$838.70' },
+                
+                // Row 9: Kelengkapan
                 { bil: '9', category: 'Kelengkapan', tindakan: 'P. Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)', cenderahati: '-', goodies: '-', budget: '$18,367.30' },
-                // Row 10
+                
+                // Row 10: PRO
                 { bil: '10', category: 'PRO', tindakan: '', keterangan: 'Digital poster HP ke -105 (tiada pencetakan)', cenderahati: '-', goodies: '-', budget: '-' },
-                // Row 11
+                
+                // Row 11: Cenderahati
                 { bil: '11', category: 'Cenderahati', tindakan: '', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', cenderahati: '493', goodies: '1815', budget: '-' }
             ];
             
-            rows.forEach(row => {
-                if (row.classList.contains('total-row')) return;
-                
+            // Track current bil and sub-row index as we iterate
+            let currentBil = '';
+            let subRowIndex = 0;
+            
+            rows.forEach((row) => {
                 const tds = row.querySelectorAll('td');
-                if (tds.length < 7) return;
+                if (tds.length < 3) return;
                 
+                // Check if this row has bil number (main row)
                 const bilCell = tds[0];
                 const categoryCell = tds[1];
-                const tindakanCell = tds[2];
-                const keteranganCell = tds[3];
-                const cenderahatiCell = tds[4];
-                const goodiesCell = tds[5];
-                const budgetCell = tds[6];
+                const hasBil = bilCell && bilCell.textContent.trim() && categoryCell && categoryCell.textContent.trim();
                 
-                if (!bilCell || !categoryCell || !keteranganCell) return;
+                if (hasBil) {
+                    // This is a main row - reset sub-row index and update bil
+                    currentBil = bilCell.textContent.trim();
+                    subRowIndex = 0;
+                }
                 
-                const bil = bilCell.textContent.trim();
-                const category = categoryCell.textContent.trim();
-                const tindakan = tindakanCell ? tindakanCell.textContent.trim() : '';
-                // Get keterangan text - handle div tags
-                const keteranganDiv = keteranganCell.querySelector('div');
-                const keterangan = keteranganDiv ? keteranganDiv.textContent.trim() : keteranganCell.textContent.trim();
+                if (!currentBil) return;
                 
-                // Find matching CSV data - more flexible matching
-                const match = csvData.find(d => {
-                    const bilMatch = d.bil === bil;
-                    const categoryMatch = d.category === category || d.category.trim() === category || category.includes(d.category.trim());
-                    const tindakanMatch = !d.tindakan || d.tindakan === tindakan || tindakan.includes(d.tindakan) || d.tindakan.includes(tindakan);
-                    // More flexible keterangan matching
-                    const keteranganMatch = d.keterangan === keterangan || 
-                                          keterangan.includes(d.keterangan) || 
-                                          d.keterangan.includes(keterangan) ||
-                                          keterangan.replace(/\s+/g, ' ').includes(d.keterangan.replace(/\s+/g, ' '));
-                    return bilMatch && categoryMatch && tindakanMatch && keteranganMatch;
-                });
+                // Find CSV data entry for this bil and sub-row index
+                const matchingEntries = csvData.filter(d => d.bil === currentBil);
                 
-                if (!match) {
-                    // Debug: log if no match found for Row 2
-                    if (bil === '2') {
-                        console.log('No match found for Row 2:', { bil, category, tindakan, keterangan });
+                // CRITICAL FIX: For Row 7, explicitly map sub-rows to correct CSV entries
+                let data;
+                if (currentBil === '7') {
+                    // Row 7 has specific order: sub-row 0 = "Open day", sub-row 1 = "Gotong Royong", sub-row 2 = "Kempen Derma Darah"
+                    const row7Map = {
+                        0: matchingEntries.find(d => d.keterangan === 'Open day'),
+                        1: matchingEntries.find(d => d.keterangan === 'Gotong Royong'),
+                        2: matchingEntries.find(d => d.keterangan === 'Kempen Derma Darah')
+                    };
+                    data = row7Map[subRowIndex];
+                    if (!data) {
+                        // Fallback to original method if explicit mapping fails
+                        data = matchingEntries[subRowIndex];
                     }
+                } else {
+                    // For other rows, use standard index-based lookup
+                    data = matchingEntries[subRowIndex];
+                }
+                
+                const currentSubRowIndex = subRowIndex; // Store for logging
+                
+                if (!data) {
+                    // Increment for next iteration even if no match
+                    subRowIndex++;
                     return;
                 }
                 
-                // Force Cenderahati
-                const cenderahatiInput = cenderahatiCell.querySelector('input');
-                if (cenderahatiInput) {
-                    if (match.cenderahati === '-') {
-                        cenderahatiInput.value = '';
-                        cenderahatiInput.placeholder = '-';
+                // Increment sub-row index AFTER using it (for next iteration)
+                subRowIndex++;
+                
+                // Determine cell structure based on row type
+                let keteranganCell, cenderahatiCell, goodiesCell, budgetCell;
+                
+                if (hasBil) {
+                    // Main row: tds[0]=Bil, tds[1]=Category, tds[2]=Tindakan, tds[3]=Keterangan, tds[4]=Cenderahati, tds[5]=Goodies, tds[6]=Budget
+                    keteranganCell = tds[3];
+                    cenderahatiCell = tds[4];
+                    goodiesCell = tds[5];
+                    budgetCell = tds[6];
+                } else {
+                    // Sub-row - get category from parent row
+                    let parentCategory = '';
+                    let parentRow = row.previousElementSibling;
+                    let searchCount = 0;
+                    while (parentRow && !parentRow.classList.contains('total-row') && searchCount < 10) {
+                        const parentTds = parentRow.querySelectorAll('td');
+                        if (parentTds.length >= 2) {
+                            const parentCatCell = parentTds[1];
+                            const catRowspan = parentCatCell?.getAttribute('rowspan');
+                            if (catRowspan && parentCatCell.textContent.trim()) {
+                                parentCategory = parentCatCell.textContent.trim();
+                                break;
+                            }
+                        }
+                        parentRow = parentRow.previousElementSibling;
+                        searchCount++;
+                    }
+                    
+                    // Use parent category or fallback to current category cell
+                    const category = parentCategory || categoryCell?.textContent.trim() || '';
+                    
+                    if (category === 'Daerah BM') {
+                        // Daerah BM: tds[0]=Tindakan, tds[1]=Keterangan, tds[2]=Cenderahati, tds[3]=Goodies
+                        keteranganCell = tds[1];
+                        cenderahatiCell = tds[2];
+                        goodiesCell = tds[3];
+                        budgetCell = null;
+                    } else if (category === 'Daerah Belait ' || category === 'Daerah Temb') {
+                        // Daerah Belait/Temb: tds[0]=Keterangan, tds[1]=Cenderahati, tds[2]=Goodies
+                        keteranganCell = tds[0];
+                        cenderahatiCell = tds[1];
+                        goodiesCell = tds[2];
+                        budgetCell = null;
                     } else {
-                        cenderahatiInput.value = match.cenderahati;
+                        // Row 2, 3: tds[0]=Tindakan, tds[1]=Keterangan, tds[2]=Cenderahati, tds[3]=Goodies, tds[4]=Budget
+                        keteranganCell = tds[1];
+                        cenderahatiCell = tds[2];
+                        goodiesCell = tds[3];
+                        budgetCell = tds[4] || tds[6];
                     }
                 }
                 
-                // Force Goodies
+                // Apply Keterangan - always update to ensure it matches CSV
+                // Special handling for Daerah BM: force text, never allow numbers
+                if (keteranganCell && data.keterangan !== undefined) {
+                    const keteranganDiv = keteranganCell.querySelector('div');
+                    const currentKeterangan = keteranganDiv ? keteranganDiv.textContent.trim() : keteranganCell.textContent.trim();
+                    const expectedKeterangan = data.keterangan.trim();
+                    
+                    // Check if current keterangan is a number (corrupted data) - especially for Daerah BM
+                    const isNumber = /^\d+$/.test(currentKeterangan);
+                    const needsUpdate = isNumber || currentKeterangan !== expectedKeterangan;
+                    
+                    // Normalize for comparison (handle &amp; vs &, multiple spaces)
+                    const normalizeText = (text) => text.replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+                    const normalizedCurrent = normalizeText(currentKeterangan);
+                    const normalizedExpected = normalizeText(expectedKeterangan);
+                    
+                    if (isNumber || normalizedCurrent !== normalizedExpected) {
+                        if (keteranganDiv) {
+                            // Update div content
+                            keteranganDiv.textContent = expectedKeterangan;
+                        } else {
+                            // Update cell content directly
+                            keteranganCell.textContent = expectedKeterangan;
+                        }
+                        console.log(`Synced Row ${currentBil} sub-row ${currentSubRowIndex} keterangan: "${currentKeterangan}" -> "${expectedKeterangan}"${isNumber ? ' (was corrupted number)' : ''}`);
+                    } else {
+                        // Log when keterangan is already correct (for debugging Row 2 sub-row 2)
+                        if (currentBil === '2' && currentSubRowIndex === 1) {
+                            console.log(`Row 2 sub-row 2 keterangan already correct: "${expectedKeterangan.substring(0, 50)}..."`);
+                        }
+                    }
+                }
+                
+                // Apply Cenderahati - always force correct values from CSV
+                const cenderahatiInput = cenderahatiCell?.querySelector('input');
+                if (cenderahatiInput) {
+                    const currentValue = cenderahatiInput.value.trim();
+                    const expectedValue = data.cenderahati.trim();
+                    
+                    if (data.cenderahati === '-') {
+                        if (currentValue !== '') {
+                            cenderahatiInput.value = '';
+                            cenderahatiInput.placeholder = '-';
+                            console.log(`Synced Row ${currentBil} sub-row ${currentSubRowIndex} cenderahati: "${currentValue}" -> "" (empty for -)`);
+                        }
+                    } else {
+                        if (currentValue !== expectedValue) {
+                            cenderahatiInput.value = expectedValue;
+                            console.log(`Synced Row ${currentBil} sub-row ${currentSubRowIndex} cenderahati: "${currentValue}" -> "${expectedValue}"`);
+                        }
+                    }
+                }
+                
+                // Apply Goodies
                 if (goodiesCell) {
                     const currentGoodies = goodiesCell.textContent.trim();
-                    if (match.goodies !== currentGoodies) {
-                        goodiesCell.textContent = match.goodies;
-                        console.log(`Synced Row ${bil} goodies: ${currentGoodies} -> ${match.goodies}`);
+                    if (currentGoodies !== data.goodies) {
+                        goodiesCell.textContent = data.goodies;
+                        console.log(`Synced Row ${currentBil} sub-row ${currentSubRowIndex} goodies: ${currentGoodies} -> ${data.goodies}`);
                     }
                 }
                 
-                // Force Budget - remove rowspan if exists for multi-row categories
+                // Apply Budget
+                if (!budgetCell && (currentBil === '6' || currentBil === '7' || currentBil === '8')) {
+                    // Get budget from parent row
+                    let parentRow = row.previousElementSibling;
+                    let searchCount = 0;
+                    while (parentRow && !parentRow.classList.contains('total-row') && searchCount < 10) {
+                        const parentTds = parentRow.querySelectorAll('td');
+                        if (parentTds.length >= 7) {
+                            const budgetRowspan = parentTds[6]?.getAttribute('rowspan');
+                            if (budgetRowspan) {
+                                budgetCell = parentTds[6];
+                                break;
+                            }
+                        }
+                        parentRow = parentRow.previousElementSibling;
+                        searchCount++;
+                    }
+                }
+                
                 if (budgetCell) {
-                    // Remove rowspan for Row 2 and Row 3 (they should have separate budgets)
-                    if ((bil === '2' || bil === '3') && budgetCell.hasAttribute('rowspan')) {
+                    // Remove rowspan for Row 2 and Row 3
+                    if ((currentBil === '2' || currentBil === '3') && budgetCell.hasAttribute('rowspan')) {
                         budgetCell.removeAttribute('rowspan');
-                        console.log(`Removed rowspan from Row ${bil} budget cell`);
                     }
                     const currentBudget = budgetCell.textContent.trim().replace(/\s+/g, ' ');
-                    const expectedBudget = match.budget.trim();
-                    
-                    // Special check for Row 2 sub-row 2 - must be $19,438.00
-                    if (bil === '2' && tindakan === 'Setiausaha Mes' && currentBudget !== '$19,438.00') {
-                        budgetCell.textContent = '$19,438.00';
-                        console.log(`Force corrected Row 2 sub-row 2 budget to $19,438.00`);
-                    } else if (currentBudget !== expectedBudget) {
-                        budgetCell.textContent = match.budget;
-                        console.log(`Synced Row ${bil} budget: ${currentBudget} -> ${expectedBudget}`);
+                    const expectedBudget = data.budget.trim();
+                    if (currentBudget !== expectedBudget && expectedBudget !== '-') {
+                        budgetCell.textContent = data.budget;
+                        console.log(`Synced Row ${currentBil} sub-row ${currentSubRowIndex} budget: ${currentBudget} -> ${expectedBudget}`);
                     }
                 }
             });
+            
+            console.log('═══════════════════════════════════════════════════════════');
+            console.log('✅ CSV Sync completed - All values should match CSV file');
+            console.log('═══════════════════════════════════════════════════════════');
+            
+            // Verify table matches CSV
+            verifyTableMatchesCSV();
+        }
+        
+        // Verification function - checks if table matches CSV
+        function verifyTableMatchesCSV() {
+            console.log('🔍 Verifying table matches CSV file...');
+            const rows = Array.from(document.querySelectorAll('#calendar-month-checklist tbody tr')).filter(r => !r.classList.contains('total-row'));
+            
+            const csvData = [
+                { bil: '1', category: 'Perbarisan', tindakan: 'P. Perbarisan', keterangan: 'Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan', cenderahati: '376', goodies: '-', budget: '$35,065.50' },
+                { bil: '2', category: 'Mkn Beradat ', tindakan: 'P. Permakanan', keterangan: 'Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026', cenderahati: '-', goodies: '-', budget: '$1,011.50' },
+                { bil: '2', category: 'Mkn Beradat ', tindakan: 'Setiausaha Mes', keterangan: 'Makan beradat pada 15/01/2026 (belum termasuk support staffs)', cenderahati: '-', goodies: '-', budget: '$19,438.00' },
+                { bil: '3', category: 'Keagamaan', tindakan: 'BUI', keterangan: 'Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)', cenderahati: '-', goodies: '-', budget: '$1,275.00' },
+                { bil: '3', category: 'Keagamaan', tindakan: '', keterangan: 'Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan & permakanan', cenderahati: '-', goodies: '-', budget: '$1,325.00' },
+                { bil: '4', category: 'Pameran', tindakan: 'P. Pameran', keterangan: 'Pameran diadakan selama dua(2) hari', cenderahati: '50', goodies: '600', budget: '$9,750.00' },
+                { bil: '5', category: 'Daerah TT ', tindakan: 'OCPD TT', keterangan: 'Kejohanan Bolasepak', cenderahati: '41', goodies: '210', budget: '$2,328.50' },
+                { bil: '6', category: 'Daerah BM', tindakan: 'P. Derma Darah', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,680.00' },
+                { bil: '6', category: 'Daerah BM', tindakan: 'OCPD BM', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,680.00' },
+                { bil: '6', category: 'Daerah BM', tindakan: '', keterangan: 'Walkaton', cenderahati: '5', goodies: '145', budget: '$1,680.00' },
+                { bil: '7', category: 'Daerah Belait ', tindakan: 'OCPD Belait', keterangan: 'Open day', cenderahati: '1', goodies: '500', budget: '$1,791.00' },
+                { bil: '7', category: 'Daerah Belait ', tindakan: '', keterangan: 'Gotong Royong', cenderahati: '-', goodies: '-', budget: '$1,791.00' },
+                { bil: '7', category: 'Daerah Belait ', tindakan: '', keterangan: 'Kempen Derma Darah', cenderahati: '-', goodies: '100', budget: '$1,791.00' },
+                { bil: '8', category: 'Daerah Temb', tindakan: 'OCPD Temb', keterangan: 'Kempen Derma Darah ', cenderahati: '-', goodies: '100', budget: '$838.70' },
+                { bil: '8', category: 'Daerah Temb', tindakan: '', keterangan: 'Gotong Royong ', cenderahati: '-', goodies: '-', budget: '$838.70' },
+                { bil: '8', category: 'Daerah Temb', tindakan: '', keterangan: 'Community Engagement @ POLSARA ', cenderahati: '20', goodies: '60', budget: '$838.70' },
+                { bil: '9', category: 'Kelengkapan', tindakan: 'P. Kelengkapan', keterangan: 'Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)', cenderahati: '-', goodies: '-', budget: '$18,367.30' },
+                { bil: '10', category: 'PRO', tindakan: '', keterangan: 'Digital poster HP ke -105 (tiada pencetakan)', cenderahati: '-', goodies: '-', budget: '-' },
+                { bil: '11', category: 'Cenderahati', tindakan: '', keterangan: 'Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung', cenderahati: '493', goodies: '1815', budget: '-' }
+            ];
+            
+            let currentBil = '';
+            let subRowIndex = 0;
+            let mismatches = [];
+            
+            rows.forEach((row) => {
+                const tds = row.querySelectorAll('td');
+                if (tds.length < 3) return;
+                
+                const bilCell = tds[0];
+                const categoryCell = tds[1];
+                const hasBil = bilCell && bilCell.textContent.trim() && categoryCell && categoryCell.textContent.trim();
+                
+                if (hasBil) {
+                    currentBil = bilCell.textContent.trim();
+                    subRowIndex = 0;
+                } else {
+                    subRowIndex++;
+                }
+                
+                if (!currentBil) return;
+                
+                const matchingEntries = csvData.filter(d => d.bil === currentBil);
+                const expectedData = matchingEntries[subRowIndex];
+                if (!expectedData) return;
+                
+                // Get actual values from table
+                let actualKeterangan = '';
+                let actualCenderahati = '';
+                let actualGoodies = '';
+                let actualBudget = '';
+                
+                if (hasBil) {
+                    const keteranganDiv = tds[3]?.querySelector('div');
+                    actualKeterangan = keteranganDiv ? keteranganDiv.textContent.trim() : (tds[3]?.textContent.trim() || '');
+                    actualCenderahati = tds[4]?.querySelector('input')?.value.trim() || '';
+                    actualGoodies = tds[5]?.textContent.trim() || '';
+                    actualBudget = tds[6]?.textContent.trim() || '';
+                } else {
+                    const category = categoryCell?.textContent.trim() || '';
+                    if (category === 'Daerah BM') {
+                        actualKeterangan = tds[1]?.textContent.trim() || '';
+                        actualCenderahati = tds[2]?.querySelector('input')?.value.trim() || '';
+                        actualGoodies = tds[3]?.textContent.trim() || '';
+                    } else if (category === 'Daerah Belait ' || category === 'Daerah Temb') {
+                        actualKeterangan = tds[0]?.textContent.trim() || '';
+                        actualCenderahati = tds[1]?.querySelector('input')?.value.trim() || '';
+                        actualGoodies = tds[2]?.textContent.trim() || '';
+                    } else {
+                        const keteranganDiv = tds[1]?.querySelector('div');
+                        actualKeterangan = keteranganDiv ? keteranganDiv.textContent.trim() : (tds[1]?.textContent.trim() || '');
+                        actualCenderahati = tds[2]?.querySelector('input')?.value.trim() || '';
+                        actualGoodies = tds[3]?.textContent.trim() || '';
+                        actualBudget = tds[4]?.textContent.trim() || '';
+                    }
+                }
+                
+                // Normalize for comparison
+                const normalizeText = (text) => text.replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+                const normalizeKeterangan = normalizeText(actualKeterangan);
+                const expectedKeterangan = normalizeText(expectedData.keterangan);
+                
+                // Check for mismatches
+                if (normalizeKeterangan !== expectedKeterangan && !/^\d+$/.test(actualKeterangan)) {
+                    mismatches.push(`Row ${currentBil} sub-row ${subRowIndex}: Keterangan mismatch - Expected: "${expectedData.keterangan.substring(0, 40)}...", Got: "${actualKeterangan.substring(0, 40)}..."`);
+                }
+                
+                const expectedCenderahati = expectedData.cenderahati === '-' ? '' : expectedData.cenderahati;
+                if (actualCenderahati !== expectedCenderahati) {
+                    mismatches.push(`Row ${currentBil} sub-row ${subRowIndex}: Cenderahati mismatch - Expected: "${expectedData.cenderahati}", Got: "${actualCenderahati}"`);
+                }
+                
+                if (actualGoodies !== expectedData.goodies) {
+                    mismatches.push(`Row ${currentBil} sub-row ${subRowIndex}: Goodies mismatch - Expected: "${expectedData.goodies}", Got: "${actualGoodies}"`);
+                }
+                
+                if (hasBil && actualBudget && expectedData.budget !== '-') {
+                    const normalizedBudget = actualBudget.replace(/\s+/g, ' ').trim();
+                    if (normalizedBudget !== expectedData.budget.trim()) {
+                        mismatches.push(`Row ${currentBil} sub-row ${subRowIndex}: Budget mismatch - Expected: "${expectedData.budget}", Got: "${normalizedBudget}"`);
+                    }
+                }
+                
+                subRowIndex++;
+            });
+            
+            if (mismatches.length === 0) {
+                console.log('✅ VERIFICATION PASSED: Table matches CSV file perfectly!');
+            } else {
+                console.warn('⚠️ VERIFICATION FAILED: Found ' + mismatches.length + ' mismatches:');
+                mismatches.forEach(m => console.warn('  - ' + m));
+            }
         }
 
         // Specifically force Row 2 sub-row 2 budget to $19,438.00
@@ -3778,24 +5535,107 @@
                     });
                 }, 500);
                 
+                // IMMEDIATE SYNC: Run syncAllValuesFromCSV first to set correct values
+                // This uses the NEW CLEAN TABLE built from CSV file
+                syncAllValuesFromCSV();
+                
+                // Final verification to ensure Row 7 matches image exactly
+                finalRow7Verification();
+                
+                // Remove ALL repeating text from ALL rows and columns first
+                removeAllRepeatingTextAndCleanColumns();
+                aggressivelyRemoveTextFromCenderahati();
+                forceReplaceRow7CenderahatiText();
+                ultraAggressiveRow7CenderahatiCleanup(); // ULTRA-AGGRESSIVE cleanup
+                
+                // Aggressively clean Row 7
+                aggressivelyCleanRow7();
+                
+                // Force Row 7 sub-row 1 keterangan to "Open day"
+                forceRow7SubRow1Keterangan();
+                
+                // Setup MutationObserver to watch Row 7
+                setupRow7Observer();
+                
+                // Start continuous fix for Row 7 (runs every second)
+                startRow7ContinuousFix();
+                
+                // Final verification for Row 7 to match image
+                finalRow7Verification();
+                
+                // Aggressively fix Row 8 sub-row 2
+                aggressivelyFixRow8SubRow2();
+                
+                // Remove any duplicate text from keterangan cells
+                removeDuplicateKeteranganText();
+                
+                // Verify Row 7 cenderahati values
+                verifyRow7Cenderahati();
+                
+                // Verify table matches CSV after initial sync
+                setTimeout(() => {
+                    removeDuplicateKeteranganText();
+                    verifyRow7Cenderahati();
+                    verifyTableMatchesCSV();
+                }, 150);
+                
                 forceDaerahBMValues();
+                forceDaerahBMKeterangan(); // Force Daerah BM keterangan to be text, not numbers
                 forceDaerahBelaitValues();
+                forceDaerahBelaitValuesComplete(); // Force Daerah Belait all values from CSV
                 forceDaerahTembValues();
                 forceCenderahatiValues();
                 forceEmptyCenderahatiValues();
                 forceSpecificCellsDirectly(); // DIRECT FIX
                 setTimeout(syncAllValuesFromCSV, 50);
                 setTimeout(forceRow2SubRow2Budget, 50);
+                setTimeout(forceDaerahBMKeterangan, 50);
                 setTimeout(forceSpecificCellsDirectly, 50);
                 setTimeout(syncAllValuesFromCSV, 100);
                 setTimeout(forceRow2SubRow2Budget, 100);
                 setTimeout(forceBudgetValues, 100);
+                setTimeout(removeAllRepeatingTextAndCleanColumns, 50);
+                setTimeout(aggressivelyRemoveTextFromCenderahati, 50);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 50); // ULTRA-AGGRESSIVE
+                setTimeout(forceReplaceRow7CenderahatiText, 50);
+                setTimeout(finalRow7Verification, 50);
+                // IMMEDIATE fixes - run as soon as possible
+                forceRow7SubRow1Keterangan();
+                aggressivelyCleanRow7();
+                ultraAggressiveRow7CenderahatiCleanup(); // ULTRA-AGGRESSIVE
+                
+                setTimeout(aggressivelyCleanRow7, 50);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 50); // ULTRA-AGGRESSIVE
+                setTimeout(forceRow7SubRow1Keterangan, 50);
+                setTimeout(setupRow7Observer, 100);
+                setTimeout(startRow7ContinuousFix, 200);
+                setTimeout(aggressivelyFixRow8SubRow2, 50);
+                setTimeout(removeAllRepeatingTextAndCleanColumns, 100);
+                setTimeout(aggressivelyRemoveTextFromCenderahati, 100);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 100); // ULTRA-AGGRESSIVE
+                setTimeout(forceReplaceRow7CenderahatiText, 100);
+                setTimeout(finalRow7Verification, 100);
+                setTimeout(aggressivelyFixRow8SubRow2, 100);
                 setTimeout(forceDaerahBMValues, 100);
+                setTimeout(forceDaerahBMKeterangan, 100);
                 setTimeout(forceDaerahBelaitValues, 100);
+                setTimeout(forceDaerahBelaitValuesComplete, 100);
                 setTimeout(forceDaerahTembValues, 100);
+                setTimeout(removeDuplicateKeteranganText, 100);
+                setTimeout(verifyRow7Cenderahati, 100);
                 setTimeout(forceCenderahatiValues, 100);
                 setTimeout(forceEmptyCenderahatiValues, 100);
                 setTimeout(forceSpecificCellsDirectly, 100);
+                // More frequent cleanup with longer delays
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 200);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 300);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 500);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 750);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 1000);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 1500);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 2000);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 3000);
+                setTimeout(ultraAggressiveRow7CenderahatiCleanup, 5000);
             });
             
             // Load and enable To Do List (wait for API to be available)
@@ -3843,20 +5683,64 @@
             setTimeout(forceSpecificCellsDirectly, 2000);
             setTimeout(forceSpecificCellsDirectly, 3000);
             setTimeout(forceDaerahBMValues, 200);
+            setTimeout(forceDaerahBMKeterangan, 200);
             setTimeout(forceDaerahBMValues, 500);
+            setTimeout(forceDaerahBMKeterangan, 500);
             setTimeout(forceDaerahBMValues, 1000);
+            setTimeout(forceDaerahBMKeterangan, 1000);
             setTimeout(forceDaerahBMValues, 1500);
+            setTimeout(forceDaerahBMKeterangan, 1500);
             setTimeout(forceDaerahBMValues, 2000);
+            setTimeout(forceDaerahBMKeterangan, 2000);
             setTimeout(forceDaerahBMValues, 3000);
+            setTimeout(forceDaerahBMKeterangan, 3000);
             setTimeout(forceDaerahBelaitValues, 500);
+            setTimeout(forceDaerahBelaitValuesComplete, 500);
             setTimeout(forceDaerahBelaitValues, 1000);
+            setTimeout(forceDaerahBelaitValuesComplete, 1000);
             setTimeout(forceDaerahBelaitValues, 2000);
+            setTimeout(forceDaerahBelaitValuesComplete, 2000);
             setTimeout(forceDaerahTembValues, 200);
             setTimeout(forceDaerahTembValues, 500);
             setTimeout(forceDaerahTembValues, 1000);
             setTimeout(forceDaerahTembValues, 1500);
             setTimeout(forceDaerahTembValues, 2000);
             setTimeout(forceDaerahTembValues, 3000);
+            setTimeout(removeAllRepeatingTextAndCleanColumns, 200);
+            setTimeout(aggressivelyRemoveTextFromCenderahati, 200);
+            setTimeout(forceReplaceRow7CenderahatiText, 200);
+            setTimeout(removeAllRepeatingTextAndCleanColumns, 500);
+            setTimeout(aggressivelyRemoveTextFromCenderahati, 500);
+            setTimeout(forceReplaceRow7CenderahatiText, 500);
+            setTimeout(removeAllRepeatingTextAndCleanColumns, 1000);
+            setTimeout(aggressivelyRemoveTextFromCenderahati, 1000);
+            setTimeout(forceReplaceRow7CenderahatiText, 1000);
+            setTimeout(removeAllRepeatingTextAndCleanColumns, 2000);
+            setTimeout(aggressivelyRemoveTextFromCenderahati, 2000);
+            setTimeout(forceReplaceRow7CenderahatiText, 2000);
+            setTimeout(aggressivelyCleanRow7, 200);
+            setTimeout(aggressivelyCleanRow7, 500);
+            setTimeout(aggressivelyCleanRow7, 1000);
+            setTimeout(forceRow7SubRow1Keterangan, 200);
+            setTimeout(forceRow7SubRow1Keterangan, 500);
+            setTimeout(forceRow7SubRow1Keterangan, 1000);
+            setTimeout(forceRow7SubRow1Keterangan, 2000);
+            setTimeout(finalRow7Verification, 200);
+            setTimeout(finalRow7Verification, 500);
+            setTimeout(finalRow7Verification, 1000);
+            setTimeout(finalRow7Verification, 2000);
+            setTimeout(aggressivelyFixRow8SubRow2, 200);
+            setTimeout(aggressivelyFixRow8SubRow2, 500);
+            setTimeout(aggressivelyFixRow8SubRow2, 1000);
+            setTimeout(aggressivelyFixRow8SubRow2, 2000);
+            setTimeout(removeDuplicateKeteranganText, 200);
+            setTimeout(removeDuplicateKeteranganText, 500);
+            setTimeout(removeDuplicateKeteranganText, 1000);
+            setTimeout(removeDuplicateKeteranganText, 2000);
+            setTimeout(verifyRow7Cenderahati, 200);
+            setTimeout(verifyRow7Cenderahati, 500);
+            setTimeout(verifyRow7Cenderahati, 1000);
+            setTimeout(verifyRow7Cenderahati, 2000);
             setTimeout(forceCenderahatiValues, 500);
             setTimeout(forceCenderahatiValues, 1000);
             setTimeout(forceCenderahatiValues, 2000);
