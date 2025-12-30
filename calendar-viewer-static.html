@@ -1730,22 +1730,20 @@
                 
                 tbody.innerHTML = html;
                 
-                // Attach click event listeners to all download links
+                // Attach click event listeners to all download links (for API data with base64)
                 document.querySelectorAll('.download-doc-link').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
                         const docId = this.getAttribute('data-doc-id');
                         const docInfo = window.meetingDocuments && window.meetingDocuments[docId];
-                        if (docInfo) {
-                            if (docInfo.isStatic) {
-                                alert('Document download is not available for static data. Please use the live version to download documents.');
-                            } else if (docInfo.data) {
-                                downloadMeetingDocument(docInfo.data, docInfo.name);
-                            } else {
-                                alert('Document data not available');
-                            }
+                        if (docInfo && docInfo.data) {
+                            // If we have base64 data, use the download function
+                            downloadMeetingDocument(docInfo.data, docInfo.name);
+                        } else if (docInfo && docInfo.filePath) {
+                            // If we have a file path, use direct link (fallback)
+                            window.location.href = docInfo.filePath;
                         } else {
-                            alert('Document data not found');
+                            alert('Document data not available');
                         }
                     });
                 });
@@ -1763,32 +1761,20 @@
             
             const staticMeetings = [
                 { no: 1, aktiviti: 'Mesyuarat 01/2025', tarikh: '05-Nov-2025', keterangan: 'Tetapkan objektif, peranan dan keperluan awal', dokumen: 'N/A', status: 'Pending' },
-                { no: 2, aktiviti: 'Mesyuarat 02/2025', tarikh: '12-Nov-2025', keterangan: 'Penyemakan terhadap cadangan aktiviti dan pembentangan awal anggaran peruntukan', dokumen: 'Minit meeting 02 12.11.2025.pdf', status: 'Pending' },
-                { no: 3, aktiviti: 'Mesyuarat 03/2025', tarikh: '25-Nov-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 03 25.11.2025.pdf', status: 'Pending' },
-                { no: 4, aktiviti: 'Mesyuarat 04/2025', tarikh: '03-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 04 03.12.2025.pdf', status: 'Pending' },
-                { no: 5, aktiviti: 'Mesyuarat 05/2025', tarikh: '10-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 05 10.12.2025.pdf', status: 'Pending' },
-                { no: 6, aktiviti: 'Mesyuarat 06/2025', tarikh: '31-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 06 31.12.2025.pdf', status: 'Pending' }
+                { no: 2, aktiviti: 'Mesyuarat 02/2025', tarikh: '12-Nov-2025', keterangan: 'Penyemakan terhadap cadangan aktiviti dan pembentangan awal anggaran peruntukan', dokumen: 'Minit meeting 01 05.11.2025.pdf', status: 'Pending' },
+                { no: 3, aktiviti: 'Mesyuarat 03/2025', tarikh: '25-Nov-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 02 12.11.2025.pdf', status: 'Pending' },
+                { no: 4, aktiviti: 'Mesyuarat 04/2025', tarikh: '03-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 03 25.11.2025.pdf', status: 'Pending' },
+                { no: 5, aktiviti: 'Mesyuarat 05/2025', tarikh: '10-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 04 3.12.2025.pdf', status: 'Pending' },
+                { no: 6, aktiviti: 'Mesyuarat 06/2025', tarikh: '31-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 05 10.12.2025.pdf', status: 'Pending' }
             ];
             
             let html = '';
             staticMeetings.forEach((meeting, index) => {
-                const docId = `static-doc-${index}`;
+                // For static meetings, use direct links to PDF files in documents/ folder
+                // GitHub Pages can serve these files directly
                 const documentCell = meeting.dokumen === 'N/A' 
                     ? '<span style="color: #9ca3af;">N/A</span>'
-                    : `<a href="#" class="download-doc-link" data-doc-id="${docId}" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">📄 ${meeting.dokumen}</a>`;
-                
-                // Store static document info (note: static data doesn't have actual document data)
-                if (meeting.dokumen !== 'N/A') {
-                    if (!window.meetingDocuments) {
-                        window.meetingDocuments = {};
-                    }
-                    // For static data, we can't download actual files, but we can show a message
-                    window.meetingDocuments[docId] = {
-                        data: null,
-                        name: meeting.dokumen,
-                        isStatic: true
-                    };
-                }
+                    : `<a href="documents/${meeting.dokumen}" download="${meeting.dokumen}" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">📄 ${meeting.dokumen}</a>`;
                 
                 html += `
                     <tr>
@@ -1801,24 +1787,7 @@
             });
             
             tbody.innerHTML = html;
-            
-            // Attach click event listeners to static download links
-            document.querySelectorAll('.download-doc-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const docId = this.getAttribute('data-doc-id');
-                    const docInfo = window.meetingDocuments && window.meetingDocuments[docId];
-                    if (docInfo) {
-                        if (docInfo.isStatic) {
-                            alert('Document download is not available for static data. Please use the live version to download documents.');
-                        } else {
-                            downloadMeetingDocument(docInfo.data, docInfo.name);
-                        }
-                    } else {
-                        alert('Document data not found');
-                    }
-                });
-            });
+            // Static links use direct href, no event listeners needed
         }
         
         // Download meeting document function
