@@ -1666,13 +1666,21 @@
                     
                     let documentCell = '<span style="color: #9ca3af;">N/A</span>';
                     if (meeting.document_data && meeting.document_name) {
-                        const safeDocumentData = meeting.document_data.replace(/'/g, "\\'");
-                        const safeDocumentName = meeting.document_name.replace(/'/g, "\\'");
+                        // Use data attributes to store document info instead of inline onclick
+                        const docId = `doc-${meeting.id || index}`;
                         documentCell = `
-                            <a href="#" onclick="downloadMeetingDocument('${safeDocumentData}', '${safeDocumentName}'); return false;" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                            <a href="#" class="download-doc-link" data-doc-id="${docId}" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
                                 📄 ${meeting.document_name}
                             </a>
                         `;
+                        // Store document data in a global object
+                        if (!window.meetingDocuments) {
+                            window.meetingDocuments = {};
+                        }
+                        window.meetingDocuments[docId] = {
+                            data: meeting.document_data,
+                            name: meeting.document_name
+                        };
                     }
                     
                     // Status cell
@@ -1704,6 +1712,26 @@
                 });
                 
                 tbody.innerHTML = html;
+                
+                // Attach click event listeners to all download links
+                document.querySelectorAll('.download-doc-link').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const docId = this.getAttribute('data-doc-id');
+                        const docInfo = window.meetingDocuments && window.meetingDocuments[docId];
+                        if (docInfo) {
+                            if (docInfo.isStatic) {
+                                alert('Document download is not available for static data. Please use the live version to download documents.');
+                            } else if (docInfo.data) {
+                                downloadMeetingDocument(docInfo.data, docInfo.name);
+                            } else {
+                                alert('Document data not available');
+                            }
+                        } else {
+                            alert('Document data not found');
+                        }
+                    });
+                });
             } catch (error) {
                 console.error('Error loading meetings:', error);
                 // Fallback to static data on error
@@ -1726,10 +1754,24 @@
             ];
             
             let html = '';
-            staticMeetings.forEach((meeting) => {
+            staticMeetings.forEach((meeting, index) => {
+                const docId = `static-doc-${index}`;
                 const documentCell = meeting.dokumen === 'N/A' 
                     ? '<span style="color: #9ca3af;">N/A</span>'
-                    : `<a href="#" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem;">📄 ${meeting.dokumen}</a>`;
+                    : `<a href="#" class="download-doc-link" data-doc-id="${docId}" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">📄 ${meeting.dokumen}</a>`;
+                
+                // Store static document info (note: static data doesn't have actual document data)
+                if (meeting.dokumen !== 'N/A') {
+                    if (!window.meetingDocuments) {
+                        window.meetingDocuments = {};
+                    }
+                    // For static data, we can't download actual files, but we can show a message
+                    window.meetingDocuments[docId] = {
+                        data: null,
+                        name: meeting.dokumen,
+                        isStatic: true
+                    };
+                }
                 
                 const statusCell = meeting.status === 'Pending'
                     ? '<span style="color: #6b7280; font-size: 0.875rem;">Pending</span>'
@@ -1755,31 +1797,71 @@
             });
             
             tbody.innerHTML = html;
+            
+            // Attach click event listeners to static download links
+            document.querySelectorAll('.download-doc-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const docId = this.getAttribute('data-doc-id');
+                    const docInfo = window.meetingDocuments && window.meetingDocuments[docId];
+                    if (docInfo) {
+                        if (docInfo.isStatic) {
+                            alert('Document download is not available for static data. Please use the live version to download documents.');
+                        } else {
+                            downloadMeetingDocument(docInfo.data, docInfo.name);
+                        }
+                    } else {
+                        alert('Document data not found');
+                    }
+                });
+            });
         }
         
         // Download meeting document function
         function downloadMeetingDocument(documentData, documentName) {
-            if (!documentData || !documentData.startsWith('data:')) {
-                alert('Document not available');
+            console.log('Download function called:', documentName, 'Data length:', documentData ? documentData.length : 0);
+            
+            if (!documentData) {
+                alert('Document data not available');
+                return;
+            }
+            
+            // Check if it's a base64 data URL
+            if (!documentData.startsWith('data:')) {
+                alert('Invalid document format');
+                console.error('Document data does not start with data:');
                 return;
             }
             
             try {
+                // Create a blob from the data URL
+                const byteString = atob(documentData.split(',')[1]);
+                const mimeString = documentData.split(',')[0].split(':')[1].split(';')[0];
+                const ab = new ArrayBuffer(byteString.length);
+                const ia = new Uint8Array(ab);
+                for (let i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+                const blob = new Blob([ab], { type: mimeString });
+                const url = URL.createObjectURL(blob);
+                
                 // Create a temporary anchor element to trigger download
                 const link = document.createElement('a');
-                link.href = documentData;
-                link.download = documentName;
+                link.href = url;
+                link.download = documentName || 'document.pdf';
                 link.style.display = 'none';
                 
                 // Append to body, click, and remove
                 document.body.appendChild(link);
                 link.click();
-                document.body.removeChild(link);
                 
-                // Show success message
+                // Clean up
                 setTimeout(() => {
-                    alert(`✅ Downloading: ${documentName}`);
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
                 }, 100);
+                
+                console.log('Download triggered successfully');
             } catch (error) {
                 console.error('Download error:', error);
                 
