@@ -1462,17 +1462,11 @@
                     </svg>
                     <span>Feb</span>
                 </button>
-                <button class="calendar-tab" onclick="switchCalendarTab('checklist')" id="tab-checklist">
+                <button class="calendar-tab" onclick="switchCalendarTab('meetings')" id="tab-meetings">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
-                    <span>Acara Checklist</span>
-                </button>
-                <button class="calendar-tab" onclick="switchCalendarTab('todolist')" id="tab-todolist">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                    </svg>
-                    <span>To Do List</span>
+                    <span>Minit Mesyuarat</span>
                 </button>
             </div>
             
@@ -1530,355 +1524,26 @@
                 <div class="calendar-footer">DKH@2025</div>
             </div>
             
-            <!-- Acara Checklist Tab -->
-            <div class="calendar-month" id="calendar-month-checklist">
+            <!-- Minit Mesyuarat Tab -->
+            <div class="calendar-month" id="calendar-month-meetings">
                 <div class="checklist-container">
+                    <h3 class="calendar-month-title" style="margin-bottom: 1.5rem;">Jadual Mesyuarat</h3>
                     <div class="checklist-table-wrapper">
-                        <table class="checklist-table">
+                        <table class="checklist-table" style="min-width: 900px;">
                             <thead>
                                 <tr>
-                                    <th>Bil</th>
-                                    <th>Perkara</th>
-                                    <th>Tindakan</th>
-                                    <th>Keterangan</th>
-                                    <th id="cenderahati-header">Cenderahati hp105</th>
-                                    <th>Goodies bag hp105</th>
-                                    <th>Budget</th>
+                                    <th style="min-width: 60px;">No.</th>
+                                    <th style="min-width: 150px;">Aktiviti</th>
+                                    <th style="min-width: 120px;">Tarikh</th>
+                                    <th style="min-width: 300px;">Keterangan</th>
+                                    <th style="min-width: 200px;">Dokumen</th>
+                                    <th style="min-width: 120px;">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- ============================================ -->
-                                <!-- NEW CLEAN TABLE - Built from CSV file -->
-                                <!-- Date: 2025-12-10 - All values match acarachecklist.csv -->
-                                <!-- Database loading DISABLED to prevent corruption -->
-                                <!-- ============================================ -->
-                                
-                                <!-- Row 1: Perbarisan -->
+                            <tbody id="meetingTableBody">
                                 <tr>
-                                    <td>1</td>
-                                    <td>Perbarisan</td>
-                                    <td class="tindakan-cell">P. Perbarisan</td>
-                                    <td>
-                                        <div>Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" value="376" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$35,065.50</td>
-                                </tr>
-                                
-                                <!-- Row 2: Mkn Beradat - Sub-row 1 -->
-                                <tr>
-                                    <td rowspan="2">2</td>
-                                    <td rowspan="2">Mkn Beradat </td>
-                                    <td class="tindakan-cell">P. Permakanan</td>
-                                    <td>
-                                        <div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,011.50</td>
-                                </tr>
-                                <!-- Row 2: Mkn Beradat - Sub-row 2 -->
-                                <tr>
-                                    <td class="tindakan-cell">Setiausaha Mes</td>
-                                    <td>
-                                        <div>Makan beradat pada 15/01/2026 (belum termasuk support staffs)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$19,438.00</td>
-                                </tr>
-                                
-                                <!-- Row 3: Keagamaan - Sub-row 1 -->
-                                <tr>
-                                    <td rowspan="2">3</td>
-                                    <td rowspan="2">Keagamaan</td>
-                                    <td class="tindakan-cell">BUI</td>
-                                    <td>
-                                        <div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,275.00</td>
-                                </tr>
-                                <!-- Row 3: Keagamaan - Sub-row 2 -->
-                                <tr>
-                                    <td class="tindakan-cell"></td>
-                                    <td>
-                                        <div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,325.00</td>
-                                </tr>
-                                
-                                <!-- Row 4: Pameran -->
-                                <tr>
-                                    <td>4</td>
-                                    <td>Pameran</td>
-                                    <td class="tindakan-cell">P. Pameran</td>
-                                    <td>
-                                        <div>Pameran diadakan selama dua(2) hari</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" value="50" /></td>
-                                    <td class="goodies-cell">600</td>
-                                    <td class="budget-cell">$9,750.00</td>
-                                </tr>
-                                
-                                <!-- Row 5: Daerah TT -->
-                                <tr>
-                                    <td>5</td>
-                                    <td>Daerah TT </td>
-                                    <td class="tindakan-cell">OCPD TT</td>
-                                    <td>
-                                        <div>Kejohanan Bolasepak</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" value="41" /></td>
-                                    <td class="goodies-cell">210</td>
-                                    <td class="budget-cell">$2,328.50</td>
-                                </tr>
-                                
-                                <!-- Row 6: Daerah BM - Sub-row 1 -->
-                                <tr>
-                                    <td rowspan="3">6</td>
-                                    <td rowspan="3">Daerah BM</td>
-                                    <td class="tindakan-cell">P. Derma Darah</td>
-                                    <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">100</td>
-                                    <td class="budget-cell" rowspan="3">$1,680.00</td>
-                                </tr>
-                                <!-- Row 6: Daerah BM - Sub-row 2 -->
-                                <tr>
-                                    <td class="tindakan-cell">OCPD BM</td>
-                                    <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                </tr>
-                                <!-- Row 6: Daerah BM - Sub-row 3 -->
-                                <tr>
-                                    <td class="tindakan-cell"></td>
-                                    <td>Walkaton</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="5" /></td>
-                                    <td class="goodies-cell">145</td>
-                                </tr>
-                                
-                                <!-- Row 7: Daerah Belait - Sub-row 1 -->
-                                <tr>
-                                    <td rowspan="3">7</td>
-                                    <td rowspan="3">Daerah Belait </td>
-                                    <td rowspan="3" class="tindakan-cell">OCPD Belait</td>
-                                    <td>Open day</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" value="1" /></td>
-                                    <td class="goodies-cell">500</td>
-                                    <td class="budget-cell" rowspan="3">$1,791.00</td>
-                                </tr>
-                                <!-- Row 7: Daerah Belait - Sub-row 2 -->
-                                <tr>
-                                    <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                </tr>
-                                <!-- Row 7: Daerah Belait - Sub-row 3 -->
-                                <tr>
-                                    <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">100</td>
-                                </tr>
-                                
-                                <!-- Row 8: Daerah Temb - Sub-row 1 -->
-                                <tr>
-                                    <td rowspan="3">8</td>
-                                    <td rowspan="3">Daerah Temb</td>
-                                    <td rowspan="3" class="tindakan-cell">OCPD Temb</td>
-                                    <td>Kempen Derma Darah </td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">100</td>
-                                    <td class="budget-cell" rowspan="3">$838.70</td>
-                                </tr>
-                                <!-- Row 8: Daerah Temb - Sub-row 2 -->
-                                <tr>
-                                    <td>Gotong Royong </td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                </tr>
-                                <!-- Row 8: Daerah Temb - Sub-row 3 -->
-                                <tr>
-                                    <td>Community Engagement @ POLSARA </td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" value="20" /></td>
-                                    <td class="goodies-cell">60</td>
-                                </tr>
-                                
-                                <!-- Row 9: Kelengkapan -->
-                                <tr>
-                                    <td>9</td>
-                                    <td>Kelengkapan</td>
-                                    <td class="tindakan-cell">P. Kelengkapan</td>
-                                    <td>
-                                        <div>Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$18,367.30</td>
-                                </tr>
-                                
-                                <!-- Row 10: PRO -->
-                                <tr>
-                                    <td>10</td>
-                                    <td>PRO</td>
-                                    <td class="tindakan-cell"></td>
-                                    <td>
-                                        <div>Digital poster HP ke -105 (tiada pencetakan)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="-" min="0" /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">-</td>
-                                </tr>
-                                
-                                <!-- Row 11: Cenderahati -->
-                                <tr>
-                                    <td>11</td>
-                                    <td>Cenderahati</td>
-                                    <td class="tindakan-cell"></td>
-                                    <td>
-                                        <div>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="493" /></td>
-                                    <td class="goodies-cell">1815</td>
-                                    <td class="budget-cell">-</td>
-                                </tr>
-                                
-                                <!-- Total Row -->
-                                <tr class="total-row">
-                                    <td colspan="4"></td>
-                                    <td class="total-label">Jumlah Keseluruhan</td>
-                                    <td class="budget-cell"></td>
-                                    <td class="budget-cell"><strong>$92,870.50</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="checklist-footer">DKH@2025</div>
-                </div>
-            </div>
-            
-            <!-- To Do List Tab -->
-            <div class="calendar-month" id="calendar-month-todolist">
-                <div class="todolist-container">
-                    <div class="todolist-save-button-wrapper">
-                        <button class="todolist-save-button" onclick="saveAllToDoListData()">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; margin-right: 0.5rem;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Save
-                        </button>
-                        <span class="todolist-save-status" id="todolist-save-status"></span>
-                    </div>
-                    <div class="todolist-table-wrapper">
-                        <table class="todolist-table">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>DATE</th>
-                                    <th>TASKS</th>
-                                    <th>DONE?</th>
-                                </tr>
-                            </thead>
-                            <tbody id="todolist-tbody">
-                                <tr data-row-id="1">
-                                    <td>1</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="1" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="1" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="1" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="2">
-                                    <td>2</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="2" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="2" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="2" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="3">
-                                    <td>3</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="3" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="3" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="3" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="4">
-                                    <td>4</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="4" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="4" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="4" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="5">
-                                    <td>5</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="5" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="5" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="5" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="6">
-                                    <td>6</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="6" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="6" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="6" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="7">
-                                    <td>7</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="7" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="7" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="7" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="8">
-                                    <td>8</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="8" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="8" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="8" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="9">
-                                    <td>9</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="9" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="9" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="9" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="10">
-                                    <td>10</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="10" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="10" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="10" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="11">
-                                    <td>11</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="11" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="11" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="11" />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="12">
-                                    <td>12</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="12" /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="12" rows="2"></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="12" />
+                                    <td colspan="6" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                        Loading meetings...
                                     </td>
                                 </tr>
                             </tbody>
@@ -2035,12 +1700,241 @@
             if (tab) tab.classList.add('active');
             if (monthEl) monthEl.classList.add('active');
             
-            // Apply To Do List restrictions when switching to todolist tab
-            if (month === 'todolist') {
-                setTimeout(() => {
-                    restrictToDoListAccess();
-                }, 100);
+            // Load meetings when switching to meetings tab
+            if (month === 'meetings') {
+                loadMeetings();
             }
+        }
+        
+        // Load and display meetings
+        async function loadMeetings() {
+            const tbody = document.getElementById('meetingTableBody');
+            
+            if (!tbody) return;
+            
+            try {
+                // Check if MeetingsAPI is available
+                if (typeof MeetingsAPI === 'undefined' || !MeetingsAPI.getAll) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem; color: #dc2626;">
+                                Meetings API not available
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const result = await MeetingsAPI.getAll();
+                
+                if (!result || !result.success) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem; color: #dc2626;">
+                                Error loading meetings: ${result ? result.message : 'Unknown error'}
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                const meetings = result.data || [];
+                
+                if (meetings.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                No meetings scheduled yet.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                // Sort meetings by date
+                meetings.sort((a, b) => {
+                    const dateA = new Date(a.meeting_date);
+                    const dateB = new Date(b.meeting_date);
+                    return dateA - dateB;
+                });
+                
+                let html = '';
+                meetings.forEach((meeting, index) => {
+                    const formattedDate = new Date(meeting.meeting_date).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                    
+                    // Format date as DD-MMM-YYYY (e.g., 05-Nov-2025)
+                    const [day, month, year] = formattedDate.split(' ');
+                    const finalDate = `${day}-${month}-${year}`;
+                    
+                    let documentCell = '<span style="color: #9ca3af;">N/A</span>';
+                    if (meeting.document_data && meeting.document_name) {
+                        const safeDocumentData = meeting.document_data.replace(/'/g, "\\'");
+                        const safeDocumentName = meeting.document_name.replace(/'/g, "\\'");
+                        documentCell = `
+                            <a href="#" onclick="downloadMeetingDocument('${safeDocumentData}', '${safeDocumentName}'); return false;" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                📄 ${meeting.document_name}
+                            </a>
+                        `;
+                    }
+                    
+                    // Status cell
+                    let statusCell = '<span style="color: #6b7280; font-size: 0.875rem;">Pending</span>';
+                    if (meeting.id <= 3) {
+                        statusCell = `
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span style="color: #10b981; font-weight: 600; font-size: 0.875rem;">Completed</span>
+                            </div>
+                        `;
+                    }
+                    
+                    // Use venue as Keterangan
+                    const keterangan = meeting.venue || '';
+                    
+                    html += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td style="font-weight: 600;">${meeting.title}</td>
+                            <td>${finalDate}</td>
+                            <td>${keterangan}</td>
+                            <td>${documentCell}</td>
+                            <td>${statusCell}</td>
+                        </tr>
+                    `;
+                });
+                
+                tbody.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading meetings:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem; color: #dc2626;">
+                            Error: ${error.message}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // Download meeting document function
+        function downloadMeetingDocument(documentData, documentName) {
+            if (!documentData || !documentData.startsWith('data:')) {
+                alert('Document not available');
+                return;
+            }
+            
+            try {
+                // Create a temporary anchor element to trigger download
+                const link = document.createElement('a');
+                link.href = documentData;
+                link.download = documentName;
+                link.style.display = 'none';
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`✅ Downloading: ${documentName}`);
+                }, 100);
+            } catch (error) {
+                console.error('Download error:', error);
+                
+                // Fallback: Try to open in new window if download fails
+                try {
+                    const newWindow = window.open('', '_blank');
+                    if (!newWindow) {
+                        alert('Unable to download or open document. Please check your browser settings.');
+                        return;
+                    }
+                    
+                    newWindow.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                            <head>
+                                <title>${documentName}</title>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>
+                                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                                    html, body { width: 100%; height: 100%; overflow: hidden; }
+                                    body { font-family: Arial, sans-serif; background: #f3f4f6; display: flex; flex-direction: column; }
+                                    .header { background: #4F46E5; color: white; padding: 0.75rem 1rem; text-align: center; }
+                                    .content { flex: 1; width: 100%; position: relative; background: white; }
+                                    iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+                                    .download-btn { display: block; margin: 1rem auto; padding: 0.75rem 1.5rem; background: #4F46E5; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
+                                    .download-btn:hover { background: #4338ca; }
+                                </style>
+                            </head>
+                            <body>
+                                <div class="header">
+                                    <h2>📄 ${documentName}</h2>
+                                    <a href="${documentData}" download="${documentName}" class="download-btn">⬇️ Download Document</a>
+                                </div>
+                                <div class="content">
+                                    <iframe src="${documentData}#toolbar=1&navpanes=1&scrollbar=1" type="application/pdf"></iframe>
+                                </div>
+                            </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                } catch (fallbackError) {
+                    alert('❌ Error: Unable to download or open document. ' + error.message);
+                }
+            }
+        }
+        
+        // View meeting document function (for viewing in browser)
+        function viewMeetingDocument(documentData, documentName) {
+            if (!documentData || !documentData.startsWith('data:')) {
+                alert('Document not available');
+                return;
+            }
+            
+            const newWindow = window.open('', '_blank');
+            if (!newWindow) {
+                alert('Pop-up blocked! Please allow pop-ups for this site.');
+                return;
+            }
+            
+            newWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>${documentName}</title>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <style>
+                            * { margin: 0; padding: 0; box-sizing: border-box; }
+                            html, body { width: 100%; height: 100%; overflow: hidden; }
+                            body { font-family: Arial, sans-serif; background: #f3f4f6; display: flex; flex-direction: column; }
+                            .header { background: #4F46E5; color: white; padding: 0.75rem 1rem; text-align: center; }
+                            .content { flex: 1; width: 100%; position: relative; background: white; }
+                            iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+                            .download-btn { display: block; margin: 1rem auto; padding: 0.75rem 1.5rem; background: #4F46E5; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
+                            .download-btn:hover { background: #4338ca; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h2>📄 ${documentName}</h2>
+                            <a href="${documentData}" download="${documentName}" class="download-btn">⬇️ Download Document</a>
+                        </div>
+                        <div class="content">
+                            <iframe src="${documentData}#toolbar=1&navpanes=1&scrollbar=1" type="application/pdf"></iframe>
+                        </div>
+                    </body>
+                </html>
+            `);
+            newWindow.document.close();
         }
         
         // Update countdown - using same logic as index.html

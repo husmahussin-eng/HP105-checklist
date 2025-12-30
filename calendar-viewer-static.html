@@ -11,6 +11,7 @@
     <meta http-equiv="Expires" content="0">
     <title>HP-105 Calendar - Viewer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/api-client.js?v=6"></script>
     <!-- Static mode: remove backend API calls; define no-op APIs -->
     <script>
         const CalendarEventsAPI = {
@@ -1497,17 +1498,11 @@
                         </svg>
                         <span>Feb</span>
                 </button>
-                <button class="calendar-tab" onclick="switchCalendarTab('checklist')" id="tab-checklist">
+                <button class="calendar-tab" onclick="switchCalendarTab('meetings')" id="tab-meetings">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
-                    <span>Acara Checklist</span>
-                </button>
-                <button class="calendar-tab" onclick="switchCalendarTab('todolist')" id="tab-todolist">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                    </svg>
-                    <span>To Do List</span>
+                    <span>Minit Mesyuarat</span>
                 </button>
             </div>
             
@@ -1565,329 +1560,32 @@
                 <div class="calendar-footer">DKH@2025</div>
             </div>
             
-            <!-- Acara Checklist Tab -->
-            <div class="calendar-month" id="calendar-month-checklist">
-                <div class="checklist-container">
-                    <div class="checklist-table-wrapper">
-                        <table class="checklist-table">
-                            <thead>
+            <!-- Minit Mesyuarat Tab -->
+            <div class="calendar-month" id="calendar-month-meetings">
+                <div style="background: white; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <h3 class="calendar-month-title" style="margin-bottom: 1.5rem;">Jadual Mesyuarat</h3>
+                    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                        <table style="width: 100%; border-collapse: collapse; min-width: 900px;">
+                            <thead style="background: #f9fafb;">
                                 <tr>
-                                    <th>Bil</th>
-                                    <th>Perkara</th>
-                                    <th>Tindakan</th>
-                                    <th>Keterangan</th>
-                                    <th id="cenderahati-header">Cenderahati hp105</th>
-                                    <th>Goodies bag hp105</th>
-                                    <th>Budget</th>
+                                    <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb;">No.</th>
+                                    <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb;">Aktiviti</th>
+                                    <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb;">Tarikh</th>
+                                    <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb;">Keterangan</th>
+                                    <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb;">Dokumen</th>
+                                    <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb;">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="meetingTableBody">
                                 <tr>
-                                    <td>1</td>
-                                    <td>Perbarisan</td>
-                                    <td class="tindakan-cell">P. Perbarisan</td>
-                                    <td>
-                                        <div>Anggaran Perbelanjaan merangkumi 7 hari latihan dan Majlis kemucak perbarisan</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="376" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$35,065.50</td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2">2</td>
-                                    <td rowspan="2">Mkn Beradat</td>
-                                    <td class="tindakan-cell">P. Permakanan</td>
-                                    <td>
-                                        <div>Raptai makan beradat bersama Pengerusi pada 10/01/2026 dan bersama PJP 13/01/2026. Support Staff untuk 15/01/2026</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="0" min="0" value="50" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,011.50</td>
-                                </tr>
-                                <tr>
-                                    <td class="tindakan-cell">Setiausaha Mes</td>
-                                    <td>
-                                        <div>Makan beradat pada 15/01/2026 (<strong>belum termasuk support staffs</strong>)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Mkn Beradat" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$19,438.00</td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2">3</td>
-                                    <td rowspan="2">Keagamaan</td>
-                                    <td class="tindakan-cell">BUI</td>
-                                    <td>
-                                        <div>Mencetak Surah Yassin sebanyak 300 Softcover dan 50 Hardtcover (Ezy Printing)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="0" min="0" value="41" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,275.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="tindakan-cell"></td>
-                                    <td>
-                                        <div>Majlis Doa Kesyukuran HP105 : perbelanjaan kelengkapan &amp; permakanan</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" data-category="Keagamaan" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$1,325.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Pameran</td>
-                                    <td class="tindakan-cell">P. Pameran</td>
-                                    <td>
-                                        <div>Pameran diadakan selama dua(2) hari</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="50" readonly /></td>
-                                    <td class="goodies-cell">600</td>
-                                    <td class="budget-cell">$9,750.00</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Daerah TT</td>
-                                    <td class="tindakan-cell">OCPD TT</td>
-                                    <td>
-                                        <div>Kejohanan Bolasepak</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="41" readonly /></td>
-                                    <td class="goodies-cell">210</td>
-                                    <td class="budget-cell">$2,328.50</td>
-                                </tr>
-                                <!-- Daerah BM (rowspan with detailed activities) -->
-                                <tr>
-                                    <td rowspan="3">6</td>
-                                    <td rowspan="3">Daerah BM</td>
-                                    <td class="tindakan-cell">P. Derma Darah, OCPD BM</td>
-                                    <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">100</td>
-                                    <td class="budget-cell" rowspan="3">$1,680.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="tindakan-cell">OCPD BM</td>
-                                    <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                </tr>
-                                <tr>
-                                    <td class="tindakan-cell"></td>
-                                    <td>Walkaton</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah BM" placeholder="-" min="0" value="5" readonly /></td>
-                                    <td class="goodies-cell">145</td>
-                                </tr>
-
-                                <!-- Daerah Belait -->
-                                <tr>
-                                    <td rowspan="3">7</td>
-                                    <td rowspan="3">Daerah Belait</td>
-                                    <td rowspan="3" class="tindakan-cell">OCPD Belait</td>
-                                    <td>Open day</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" value="1" readonly /></td>
-                                    <td class="goodies-cell">500</td>
-                                    <td class="budget-cell" rowspan="3">$1,791.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Belait" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">100</td>
-                                </tr>
-
-                                <!-- Daerah Temb -->
-                                <tr>
-                                    <td rowspan="3">8</td>
-                                    <td rowspan="3">Daerah Temb</td>
-                                    <td rowspan="3" class="tindakan-cell">OCPD Temb</td>
-                                    <td>Kempen Derma Darah</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">100</td>
-                                    <td class="budget-cell" rowspan="3">$838.70</td>
-                                </tr>
-                                <tr>
-                                    <td>Gotong Royong</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Community Engagement @ POLSARA</td>
-                                    <td><input type="number" class="cenderahati-input no-fallback" data-category="Daerah Temb" placeholder="-" min="0" value="20" readonly /></td>
-                                    <td class="goodies-cell">60</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Kelengkapan</td>
-                                    <td class="tindakan-cell">P. Kelengkapan</td>
-                                    <td>
-                                        <div>Perbelanjaan penyewaan kem, backdrop, fabric ceiling, Pull-up banners (4 sets)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell">$18,367.30</td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>PRO</td>
-                                    <td class="tindakan-cell"></td>
-                                    <td>
-                                        <div>Digital poster HP ke -105 (tiada pencetakan)</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="0" readonly /></td>
-                                    <td class="goodies-cell">-</td>
-                                    <td class="budget-cell"></td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Cenderahati</td>
-                                    <td class="tindakan-cell"></td>
-                                    <td>
-                                        <div>Cenderahati kepada Tetamu Kehormat, Peserta dan Pengunjung</div>
-                                    </td>
-                                    <td><input type="number" class="cenderahati-input" placeholder="0" min="0" value="493" readonly /></td>
-                                    <td class="goodies-cell">1815</td>
-                                    <td class="budget-cell"></td>
-                                </tr>
-                                <tr class="total-row">
-                                    <td colspan="4" class="total-label">Jumlah Keseluruhan</td>
-                                    <td class="budget-cell"><strong>493</strong></td>
-                                    <td class="budget-cell"><strong>1815</strong></td>
-                                    <td class="budget-cell"><strong>$92,870.50</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="checklist-footer">DKH@2025</div>
-                </div>
-            </div>
-            
-            <!-- To Do List Tab -->
-            <div class="calendar-month" id="calendar-month-todolist">
-                <div class="todolist-container">
-                    <div class="todolist-save-button-wrapper">
-                        <button class="todolist-save-button" onclick="saveAllToDoListData()">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem; margin-right: 0.5rem;">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Save
-                        </button>
-                        <span class="todolist-save-status" id="todolist-save-status"></span>
-                    </div>
-                    <div class="todolist-table-wrapper">
-                        <table class="todolist-table">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>DATE</th>
-                                    <th>TASKS</th>
-                                    <th>DONE?</th>
-                                </tr>
-                            </thead>
-                            <tbody id="todolist-tbody">
-                                <tr data-row-id="1">
-                                    <td>1</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="1" value="03/12/2025" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="1" rows="2" readonly>Setiausaha - Minit lantikan Timbalan Bendahari PG Mohd Wafiuddin (Sign, printed & pending despatch)</textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="1" checked disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="2">
-                                    <td>2</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="2" value="03/12/2025" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="2" rows="2" readonly>Setiausaha - Minit Pencalonan Sijil kepujian (Sign & circulated via despatch and email)</textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="2" checked disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="3">
-                                    <td>3</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="3" value="03/12/2025" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="3" rows="2" readonly>PRO - Design stand-up banner utk Kempen Derma Darah Daerah, Design Poster HP105 & Logo HP105.</textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="3" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="4">
-                                    <td>4</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="4" value="03/12/2025" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="4" rows="2" readonly>Setiausaha - Memo ke MOH bagi permohonan Kempen Derma Darah utk Daerah BM, Belait & Temb</textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="4" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="5">
-                                    <td>5</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="5" value="08/12/2025" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="5" rows="2" readonly>BUI - List 5 tema terpilih HP105 memerlukan naratif dari Tn Aimi untuk Tn Pengerusi</textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="5" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="6">
-                                    <td>6</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="6" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="6" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="6" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="7">
-                                    <td>7</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="7" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="7" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="7" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="8">
-                                    <td>8</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="8" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="8" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="8" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="9">
-                                    <td>9</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="9" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="9" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="9" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="10">
-                                    <td>10</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="10" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="10" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="10" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="11">
-                                    <td>11</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="11" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="11" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="11" disabled />
-                                    </td>
-                                </tr>
-                                <tr data-row-id="12">
-                                    <td>12</td>
-                                    <td><input type="text" class="todolist-date-input" placeholder="" data-row="12" readonly /></td>
-                                    <td><textarea class="todolist-task-input" placeholder="" data-row="12" rows="2" readonly></textarea></td>
-                                    <td class="todolist-checkbox-cell">
-                                        <input type="checkbox" class="todolist-checkbox" data-row="12" disabled />
+                                    <td colspan="6" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                        Loading meetings...
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="checklist-footer">DKH@2025</div>
+                    <div class="calendar-footer" style="margin-top: 1.5rem;">DKH@2025</div>
                 </div>
             </div>
             
@@ -1906,12 +1604,272 @@
             if (tab) tab.classList.add('active');
             if (monthEl) monthEl.classList.add('active');
             
-            // Apply To Do List restrictions when switching to todolist tab
-            if (month === 'todolist') {
-                setTimeout(() => {
-                    restrictToDoListAccess();
-                }, 100);
+            // Load meetings when switching to meetings tab
+            if (month === 'meetings') {
+                loadMeetings();
             }
+        }
+        
+        // Load and display meetings
+        async function loadMeetings() {
+            const tbody = document.getElementById('meetingTableBody');
+            
+            if (!tbody) return;
+            
+            try {
+                // Check if MeetingsAPI is available
+                if (typeof MeetingsAPI === 'undefined' || !MeetingsAPI.getAll) {
+                    // Fallback to static data if API is not available
+                    displayStaticMeetings();
+                    return;
+                }
+                
+                const result = await MeetingsAPI.getAll();
+                
+                if (!result || !result.success) {
+                    // Fallback to static data on error
+                    displayStaticMeetings();
+                    return;
+                }
+                
+                const meetings = result.data || [];
+                
+                if (meetings.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                No meetings scheduled yet.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                // Sort meetings by date
+                meetings.sort((a, b) => {
+                    const dateA = new Date(a.meeting_date);
+                    const dateB = new Date(b.meeting_date);
+                    return dateA - dateB;
+                });
+                
+                let html = '';
+                meetings.forEach((meeting, index) => {
+                    const formattedDate = new Date(meeting.meeting_date).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                    
+                    // Format date as DD-MMM-YYYY (e.g., 05-Nov-2025)
+                    const [day, month, year] = formattedDate.split(' ');
+                    const finalDate = `${day}-${month}-${year}`;
+                    
+                    let documentCell = '<span style="color: #9ca3af;">N/A</span>';
+                    if (meeting.document_data && meeting.document_name) {
+                        const safeDocumentData = meeting.document_data.replace(/'/g, "\\'");
+                        const safeDocumentName = meeting.document_name.replace(/'/g, "\\'");
+                        documentCell = `
+                            <a href="#" onclick="downloadMeetingDocument('${safeDocumentData}', '${safeDocumentName}'); return false;" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                📄 ${meeting.document_name}
+                            </a>
+                        `;
+                    }
+                    
+                    // Status cell
+                    let statusCell = '<span style="color: #6b7280; font-size: 0.875rem;">Pending</span>';
+                    if (meeting.id <= 3) {
+                        statusCell = `
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <svg style="width: 1.5rem; height: 1.5rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span style="color: #10b981; font-weight: 600; font-size: 0.875rem;">Completed</span>
+                            </div>
+                        `;
+                    }
+                    
+                    // Use venue as Keterangan
+                    const keterangan = meeting.venue || '';
+                    
+                    html += `
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                            <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${index + 1}</td>
+                            <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151; font-weight: 600;">${meeting.title}</td>
+                            <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${finalDate}</td>
+                            <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${keterangan}</td>
+                            <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${documentCell}</td>
+                            <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${statusCell}</td>
+                        </tr>
+                    `;
+                });
+                
+                tbody.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading meetings:', error);
+                // Fallback to static data on error
+                displayStaticMeetings();
+            }
+        }
+        
+        // Display static meetings data (fallback)
+        function displayStaticMeetings() {
+            const tbody = document.getElementById('meetingTableBody');
+            if (!tbody) return;
+            
+            const staticMeetings = [
+                { no: 1, aktiviti: 'Mesyuarat 01/2025', tarikh: '05-Nov-2025', keterangan: 'Tetapkan objektif, peranan dan keperluan awal', dokumen: 'N/A', status: 'Pending' },
+                { no: 2, aktiviti: 'Mesyuarat 02/2025', tarikh: '12-Nov-2025', keterangan: 'Penyemakan terhadap cadangan aktiviti dan pembentangan awal anggaran peruntukan', dokumen: 'Minit meeting 02 12.11.2025.pdf', status: 'Pending' },
+                { no: 3, aktiviti: 'Mesyuarat 03/2025', tarikh: '25-Nov-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 03 25.11.2025.pdf', status: 'Pending' },
+                { no: 4, aktiviti: 'Mesyuarat 04/2025', tarikh: '03-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 04 03.12.2025.pdf', status: 'Pending' },
+                { no: 5, aktiviti: 'Mesyuarat 05/2025', tarikh: '10-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 05 10.12.2025.pdf', status: 'Pending' },
+                { no: 6, aktiviti: 'Mesyuarat 06/2025', tarikh: '31-Dec-2025', keterangan: 'Penyemakan kemajuan aktiviti dan peruntukan', dokumen: 'Minit meeting 06 31.12.2025.pdf', status: 'Pending' }
+            ];
+            
+            let html = '';
+            staticMeetings.forEach((meeting) => {
+                const documentCell = meeting.dokumen === 'N/A' 
+                    ? '<span style="color: #9ca3af;">N/A</span>'
+                    : `<a href="#" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem;">📄 ${meeting.dokumen}</a>`;
+                
+                const statusCell = meeting.status === 'Pending'
+                    ? '<span style="color: #6b7280; font-size: 0.875rem;">Pending</span>'
+                    : `
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <svg style="width: 1.5rem; height: 1.5rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span style="color: #10b981; font-weight: 600; font-size: 0.875rem;">Completed</span>
+                        </div>
+                    `;
+                
+                html += `
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${meeting.no}</td>
+                        <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151; font-weight: 600;">${meeting.aktiviti}</td>
+                        <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${meeting.tarikh}</td>
+                        <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${meeting.keterangan}</td>
+                        <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${documentCell}</td>
+                        <td style="padding: 0.75rem 1rem; font-size: 0.875rem; color: #374151;">${statusCell}</td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // Download meeting document function
+        function downloadMeetingDocument(documentData, documentName) {
+            if (!documentData || !documentData.startsWith('data:')) {
+                alert('Document not available');
+                return;
+            }
+            
+            try {
+                // Create a temporary anchor element to trigger download
+                const link = document.createElement('a');
+                link.href = documentData;
+                link.download = documentName;
+                link.style.display = 'none';
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`✅ Downloading: ${documentName}`);
+                }, 100);
+            } catch (error) {
+                console.error('Download error:', error);
+                
+                // Fallback: Try to open in new window if download fails
+                try {
+                    const newWindow = window.open('', '_blank');
+                    if (!newWindow) {
+                        alert('Unable to download or open document. Please check your browser settings.');
+                        return;
+                    }
+                    
+                    newWindow.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                            <head>
+                                <title>${documentName}</title>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>
+                                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                                    html, body { width: 100%; height: 100%; overflow: hidden; }
+                                    body { font-family: Arial, sans-serif; background: #f3f4f6; display: flex; flex-direction: column; }
+                                    .header { background: #4F46E5; color: white; padding: 0.75rem 1rem; text-align: center; }
+                                    .content { flex: 1; width: 100%; position: relative; background: white; }
+                                    iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+                                    .download-btn { display: block; margin: 1rem auto; padding: 0.75rem 1.5rem; background: #4F46E5; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
+                                    .download-btn:hover { background: #4338ca; }
+                                </style>
+                            </head>
+                            <body>
+                                <div class="header">
+                                    <h2>📄 ${documentName}</h2>
+                                    <a href="${documentData}" download="${documentName}" class="download-btn">⬇️ Download Document</a>
+                                </div>
+                                <div class="content">
+                                    <iframe src="${documentData}#toolbar=1&navpanes=1&scrollbar=1" type="application/pdf"></iframe>
+                                </div>
+                            </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                } catch (fallbackError) {
+                    alert('❌ Error: Unable to download or open document. ' + error.message);
+                }
+            }
+        }
+        
+        // View document function (for viewing in browser)
+        function viewDocument(documentData, documentName) {
+            if (!documentData || !documentData.startsWith('data:')) {
+                alert('Document not available');
+                return;
+            }
+            
+            const newWindow = window.open('', '_blank');
+            if (!newWindow) {
+                alert('Pop-up blocked! Please allow pop-ups for this site.');
+                return;
+            }
+            
+            newWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>${documentName}</title>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <style>
+                            * { margin: 0; padding: 0; box-sizing: border-box; }
+                            html, body { width: 100%; height: 100%; overflow: hidden; }
+                            body { font-family: Arial, sans-serif; background: #f3f4f6; display: flex; flex-direction: column; }
+                            .header { background: #4F46E5; color: white; padding: 0.75rem 1rem; text-align: center; }
+                            .content { flex: 1; width: 100%; position: relative; background: white; }
+                            iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+                            .download-btn { display: block; margin: 1rem auto; padding: 0.75rem 1.5rem; background: #4F46E5; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
+                            .download-btn:hover { background: #4338ca; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h2>📄 ${documentName}</h2>
+                            <a href="${documentData}" download="${documentName}" class="download-btn">⬇️ Download Document</a>
+                        </div>
+                        <div class="content">
+                            <iframe src="${documentData}#toolbar=1&navpanes=1&scrollbar=1" type="application/pdf"></iframe>
+                        </div>
+                    </body>
+                </html>
+            `);
+            newWindow.document.close();
         }
         
         // To Do List Functions (Static mode - no API calls)
