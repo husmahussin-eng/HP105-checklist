@@ -594,6 +594,44 @@
             max-width: 600px;
         }
         
+        /* Override for meetings table - make table compact and not full width */
+        #calendar-month-meetings .checklist-table {
+            width: auto !important;
+            max-width: 500px !important;
+            margin: 0 auto !important;
+            table-layout: auto !important;
+        }
+        
+        /* Override for meetings table - make all columns more compact */
+        #calendar-month-meetings .checklist-table th:nth-child(1),
+        #calendar-month-meetings .checklist-table td:nth-child(1) {
+            width: auto !important;
+            min-width: 35px !important;
+            max-width: 45px !important;
+            padding: 0.5rem 0.4rem !important;
+        }
+        
+        #calendar-month-meetings .checklist-table th:nth-child(2),
+        #calendar-month-meetings .checklist-table td:nth-child(2) {
+            width: auto !important;
+            min-width: 140px !important;
+            max-width: 180px !important;
+        }
+        
+        #calendar-month-meetings .checklist-table th:nth-child(3),
+        #calendar-month-meetings .checklist-table td:nth-child(3) {
+            width: auto !important;
+            min-width: 110px !important;
+            max-width: 130px !important;
+        }
+        
+        #calendar-month-meetings .checklist-table th:nth-child(4),
+        #calendar-month-meetings .checklist-table td:nth-child(4) {
+            width: auto !important;
+            min-width: 165px !important;
+            max-width: 220px !important;
+        }
+        
         /* Cenderahati column */
         .checklist-table th:nth-child(5),
         .checklist-table td:nth-child(5) {
@@ -1527,22 +1565,19 @@
             <!-- Minit Mesyuarat Tab -->
             <div class="calendar-month" id="calendar-month-meetings">
                 <div class="checklist-container">
-                    <h3 class="calendar-month-title" style="margin-bottom: 1.5rem;">Jadual Mesyuarat</h3>
                     <div class="checklist-table-wrapper">
-                        <table class="checklist-table" style="min-width: 900px;">
+                        <table class="checklist-table" style="min-width: 450px;">
                             <thead>
                                 <tr>
-                                    <th style="min-width: 60px;">No.</th>
-                                    <th style="min-width: 150px;">Aktiviti</th>
-                                    <th style="min-width: 120px;">Tarikh</th>
-                                    <th style="min-width: 300px;">Keterangan</th>
-                                    <th style="min-width: 200px;">Dokumen</th>
-                                    <th style="min-width: 120px;">Status</th>
+                                    <th style="min-width: 35px;">No.</th>
+                                    <th style="min-width: 140px;">Aktiviti</th>
+                                    <th style="min-width: 110px;">Tarikh</th>
+                                    <th style="min-width: 165px;">Dokumen</th>
                                 </tr>
                             </thead>
                             <tbody id="meetingTableBody">
                                 <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: #6b7280;">
+                                    <td colspan="4" style="text-align: center; padding: 2rem; color: #6b7280;">
                                         Loading meetings...
                                     </td>
                                 </tr>
@@ -1717,7 +1752,7 @@
                 if (typeof MeetingsAPI === 'undefined' || !MeetingsAPI.getAll) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 2rem; color: #dc2626;">
+                            <td colspan="4" style="text-align: center; padding: 2rem; color: #dc2626;">
                                 Meetings API not available
                             </td>
                         </tr>
@@ -1730,7 +1765,7 @@
                 if (!result || !result.success) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 2rem; color: #dc2626;">
+                            <td colspan="4" style="text-align: center; padding: 2rem; color: #dc2626;">
                                 Error loading meetings: ${result ? result.message : 'Unknown error'}
                             </td>
                         </tr>
@@ -1743,7 +1778,7 @@
                 if (meetings.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 2rem; color: #6b7280;">
+                            <td colspan="4" style="text-align: center; padding: 2rem; color: #6b7280;">
                                 No meetings scheduled yet.
                             </td>
                         </tr>
@@ -1781,30 +1816,12 @@
                         `;
                     }
                     
-                    // Status cell
-                    let statusCell = '<span style="color: #6b7280; font-size: 0.875rem;">Pending</span>';
-                    if (meeting.id <= 3) {
-                        statusCell = `
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <svg style="width: 1.5rem; height: 1.5rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <span style="color: #10b981; font-weight: 600; font-size: 0.875rem;">Completed</span>
-                            </div>
-                        `;
-                    }
-                    
-                    // Use venue as Keterangan
-                    const keterangan = meeting.venue || '';
-                    
                     html += `
                         <tr>
                             <td>${index + 1}</td>
                             <td style="font-weight: 600;">${meeting.title}</td>
                             <td>${finalDate}</td>
-                            <td>${keterangan}</td>
                             <td>${documentCell}</td>
-                            <td>${statusCell}</td>
                         </tr>
                     `;
                 });
@@ -1814,7 +1831,7 @@
                 console.error('Error loading meetings:', error);
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 2rem; color: #dc2626;">
+                        <td colspan="4" style="text-align: center; padding: 2rem; color: #dc2626;">
                             Error: ${error.message}
                         </td>
                     </tr>
@@ -2009,7 +2026,7 @@
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
                 const isBloodDonation = day === 21 || day === 26;
                 const isFootball = day === 27;
-                const isWalking = day === 17;
+                const isWalking = day === 24;
                 const bloodIcon = isBloodDonation ? `
                     <div class="blood-donation-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -2041,7 +2041,7 @@
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
                 const isBloodDonation = day === 21 || day === 26;
                 const isFootball = day === 27;
-                const isWalking = day === 17;
+                const isWalking = day === 24;
                 const bloodIcon = isBloodDonation ? `
                     <div class="blood-donation-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2179,8 +2179,21 @@
             });
 
             // Group events by month-day
+            // IMPORTANT: Filter out any Walkaton events on day 17 - they should only be on day 24
+            const filteredEvents = staticEvents.filter(evt => {
+                const month = (evt.month || '').toString().toLowerCase();
+                const eventTitle = (evt.event_title || evt.title || '').toLowerCase();
+                // Remove any Walkaton events on January 17
+                if ((month === 'jan' || month === 'january' || month === '1') && 
+                    evt.day === 17 && 
+                    eventTitle.includes('walkaton')) {
+                    return false; // Exclude this event
+                }
+                return true;
+            });
+
             const grouped = {};
-            staticEvents.forEach(evt => {
+            filteredEvents.forEach(evt => {
                 let month = (evt.month || '').toString().toLowerCase();
                 if (month === 'december' || month === '12') month = 'dec';
                 else if (month === 'january' || month === '1') month = 'jan';
@@ -2190,6 +2203,12 @@
                 if (!grouped[key]) grouped[key] = [];
                 grouped[key].push(evt);
             });
+
+            // Explicitly clear January 17 to ensure no Walkaton event appears there
+            const jan17El = document.getElementById('jan-17-notes');
+            if (jan17El) {
+                jan17El.innerHTML = '';
+            }
 
             // Render
             Object.keys(grouped).forEach(key => {
@@ -2427,6 +2446,7 @@
         };
 
         // Static snapshot for calendar events (Dec 2025, Jan 2026 & Feb 2026) - Updated from live database
+        // NOTE: Walkaton event moved from Jan 17 to Jan 24 - v2
         const staticEvents = [
             // December 2025
             { month: 'dec', day: 3,  event_title: 'Mesyuarat 04/2025', activity: 'Mesyuarat', event_time: '', venue: '', description: '' },
@@ -2451,7 +2471,8 @@
             { month: 'jan', day: 14, event_title: 'Latihan Perbarisan', activity: 'Perbarisan', event_time: '', venue: 'PTC', description: '' },
             { month: 'jan', day: 15, event_title: 'Majlis Makan Beradat', activity: 'Makan beradat', event_time: '20:00', venue: 'Mes', description: '' },
             { month: 'jan', day: 15, event_title: 'Majlis Perbarisan HP105', activity: 'Perbarisan', event_time: '08:30', venue: 'PTC', description: '' },
-            { month: 'jan', day: 17, event_title: 'Aktiviti Daerah BM : Walkaton', activity: 'BM', event_time: '', venue: 'Taman Rekreasi Jalan Menteri Besar (Health Promotion Center)', description: '' },
+            // Walkaton moved from Jan 17 to Jan 24
+            { month: 'jan', day: 24, event_title: 'Aktiviti Daerah BM : Walkaton', activity: 'BM', event_time: '', venue: 'Taman Rekreasi Jalan Menteri Besar (Health Promotion Center)', description: '' },
             { month: 'jan', day: 21, event_title: 'Aktiviti Daerah BM : Kempen Derma Darah', activity: 'BM', event_time: '', venue: 'BP BKS', description: '' },
             { month: 'jan', day: 22, event_title: 'Aktiviti Daerah Temburong : Gotong Royong Membersihkan Tanah Perkuburan Islam', activity: 'Acara Daerah Temburong', event_time: '', venue: 'Belais & Semamang', description: '' },
             { month: 'jan', day: 23, event_title: 'Khutbah sempena HP105 dikeluarkan', activity: 'Acara Keugamaan', event_time: '', venue: '', description: '' },

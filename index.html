@@ -992,12 +992,6 @@
                     <a href="backup.html" class="user-dropdown-item" id="backupMenuItem" style="display: none;">
                         <span>Backup Manager</span>
                     </a>
-                    <a href="create-user.html" class="user-dropdown-item" id="createUserMenuItem" style="display: none;">
-                        <span>Create User</span>
-                    </a>
-                    <a href="users.html" class="user-dropdown-item" id="usersMenuItem" style="display: none;">
-                        <span>Users</span>
-                    </a>
                     <div class="user-dropdown-divider"></div>
                     <a href="#" onclick="resetMyPassword(); return false;" class="user-dropdown-item" style="color: #3b82f6;">
                         <span>Reset Password</span>
@@ -1147,24 +1141,19 @@
                 document.getElementById('userRole').textContent = user.role === 'super_admin' ? 'Super Admin' : (user.role === 'admin' ? 'Admin' : 'User');
                 
                 // Show dropdown for all users, but limit items based on role
+                // All admins can only change password and logout (no user management)
                 if (user.role === 'super_admin') {
-                    // Super admin sees everything
+                    // Super admin sees Activity Log and Backup Manager only
                     document.getElementById('activityMenuItem').style.display = 'block';
                     document.getElementById('backupMenuItem').style.display = 'block';
-                    document.getElementById('createUserMenuItem').style.display = 'block';
-                    document.getElementById('usersMenuItem').style.display = 'block';
                 } else if (user.role === 'admin') {
-                    // Admin only sees Create User, Users, and Logout
+                    // Admin sees nothing special (only password change and logout)
                     document.getElementById('activityMenuItem').style.display = 'none';
                     document.getElementById('backupMenuItem').style.display = 'none';
-                    document.getElementById('createUserMenuItem').style.display = 'block';
-                    document.getElementById('usersMenuItem').style.display = 'block';
                 } else {
                     // Regular users see nothing (shouldn't happen, but just in case)
                     document.getElementById('activityMenuItem').style.display = 'none';
                     document.getElementById('backupMenuItem').style.display = 'none';
-                    document.getElementById('createUserMenuItem').style.display = 'none';
-                    document.getElementById('usersMenuItem').style.display = 'none';
                 }
             }
         }
@@ -1430,7 +1419,7 @@
                 const isPublicHoliday = dayOfWeek === 0 || dayOfWeek === 5;
                 const isBloodDonation = day === 21 || day === 26;
                 const isFootball = day === 27;
-                const isWalking = day === 17;
+                const isWalking = day === 24;
                 const bloodIcon = isBloodDonation ? `
                     <div class="blood-donation-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
