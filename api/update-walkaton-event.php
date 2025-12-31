@@ -48,26 +48,50 @@ try {
         echo "ℹ️  Walkaton event already exists on January 24 (ID: {$existing['id']})\n";
     }
     
-    // Step 3: Ensure January 5 has Latihan Perbarisan event
-    $checkJan5Stmt = $pdo->prepare("
+    // Step 3: Ensure January 5 has both events
+    // Check for Gotong Royong event
+    $checkJan5GotongStmt = $pdo->prepare("
+        SELECT id FROM calendar_events 
+        WHERE month IN ('jan', 'January', '1') 
+          AND day = 5 
+          AND (event_title LIKE '%Gotong Royong%' OR event_title LIKE '%gotong royong%')
+          AND event_title LIKE '%Belait%'
+    ");
+    $checkJan5GotongStmt->execute();
+    $jan5GotongExists = $checkJan5GotongStmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$jan5GotongExists) {
+        $insertJan5GotongStmt = $pdo->prepare("
+            INSERT INTO calendar_events 
+            (month, day, event_time, event_title, venue, status, description, activity, created_by) 
+            VALUES ('jan', 5, '', 'Aktiviti Daerah Belait : Gotong Royong', 'Rumah Orang Tua Seria', 'not-started', '', 'Acara Daerah Belait', 'System')
+        ");
+        $insertJan5GotongStmt->execute();
+        echo "✅ Added Gotong Royong event to January 5\n";
+    } else {
+        echo "ℹ️  January 5 Gotong Royong event already exists (ID: {$jan5GotongExists['id']})\n";
+    }
+    
+    // Check for Latihan Perbarisan event
+    $checkJan5LatihanStmt = $pdo->prepare("
         SELECT id FROM calendar_events 
         WHERE month IN ('jan', 'January', '1') 
           AND day = 5 
           AND event_title LIKE '%Latihan Perbarisan%'
     ");
-    $checkJan5Stmt->execute();
-    $jan5Exists = $checkJan5Stmt->fetch(PDO::FETCH_ASSOC);
+    $checkJan5LatihanStmt->execute();
+    $jan5LatihanExists = $checkJan5LatihanStmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$jan5Exists) {
-        $insertJan5Stmt = $pdo->prepare("
+    if (!$jan5LatihanExists) {
+        $insertJan5LatihanStmt = $pdo->prepare("
             INSERT INTO calendar_events 
             (month, day, event_time, event_title, venue, status, description, activity, created_by) 
             VALUES ('jan', 5, '', 'Latihan Perbarisan', 'PTC', 'not-started', '', 'Perbarisan', 'System')
         ");
-        $insertJan5Stmt->execute();
+        $insertJan5LatihanStmt->execute();
         echo "✅ Added Latihan Perbarisan event to January 5\n";
     } else {
-        echo "ℹ️  January 5 event already exists (ID: {$jan5Exists['id']})\n";
+        echo "ℹ️  January 5 Latihan Perbarisan event already exists (ID: {$jan5LatihanExists['id']})\n";
     }
     
     $pdo->commit();
@@ -77,7 +101,8 @@ try {
         'message' => 'Calendar events updated successfully',
         'deleted_from_jan17' => $deletedCount,
         'added_to_jan24' => !$existing ? 1 : 0,
-        'jan5_event_exists' => $jan5Exists ? true : false
+        'jan5_gotong_royong_added' => !$jan5GotongExists ? 1 : 0,
+        'jan5_latihan_perbarisan_added' => !$jan5LatihanExists ? 1 : 0
     ], JSON_PRETTY_PRINT);
     
 } catch (PDOException $e) {
